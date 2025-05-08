@@ -107,20 +107,14 @@ export default function About() {
   ))}
 </div>
             
-            <Button 
-              variant="default"
-              size="lg"
-              className="flex items-center gap-2 hover:translate-y-[-4px] transition-all"
-              onClick={() => {
-                try {
-                  window.open('/your-resume.pdf', '_blank');
-                } catch (e) {
-                  console.error("Failed to open resume");
-                }
-              }}
+<a
+              href="/Resume_samarth.pdf" // Make sure this path matches your file in the public folder
+              download="Resume_samarth" // This will be the suggested filename for the download
+              className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-md gap-2 hover:translate-y-[-4px] transition-all"
+              // The className above mimics the shadcn Button default variant and lg size. Adjust if your default styles are different.
             >
               <FiDownload className="h-4 w-4" /> Download Resume
-            </Button>
+            </a>
           </motion.div>
         </div>
       </div>
