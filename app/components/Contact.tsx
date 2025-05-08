@@ -31,6 +31,7 @@ const formSchema = z.object({
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   // Initialize the form
   const form = useForm<z.infer<typeof formSchema>>({
@@ -43,20 +44,45 @@ export default function Contact() {
     },
   });
 
-  // Form submission handler
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  // Form submission handler with improved UX
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
-    
-    // Simulate API call
-    setTimeout(() => {
-      console.log(values);
+    setIsSuccess(false);
+    setSubmitError(null);
+
+    try {
+      // Start the email request
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        console.error("API Error:", result.error, result.details);
+        setSubmitError(result.details || result.error || 'Failed to send message. Please try again.');
+      } else {
+        console.log("Email sent:", result.message || "Success");
+        setIsSuccess(true);
+        form.reset(); // Reset form fields on success
+
+        // Reset success message after some time
+        setTimeout(() => setIsSuccess(false), 5000);
+      }
+    } catch (error) {
+      console.error("Network or other error:", error);
+      let errorMessage = "An unexpected error occurred. Please try again.";
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      setSubmitError(errorMessage);
+    } finally {
       setIsSubmitting(false);
-      setIsSuccess(true);
-      form.reset();
-      
-      // Reset success message after 3 seconds
-      setTimeout(() => setIsSuccess(false), 5000);
-    }, 1000);
+    }
   }
 
   const contactInfo = [
@@ -76,12 +102,12 @@ export default function Contact() {
       icon: <FiMapPin size={20} />,
       title: "Location",
       value: "Prayagraj, UP",
-      link: null,
+      link: null, // No link for location in this example
     },
   ];
 
   return (
-    <section className="py-24 px-4 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-850">
+    <section id="contact" className="py-24 px-4 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-850">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
@@ -89,8 +115,8 @@ export default function Contact() {
           viewport={{ once: true }}
           className="mb-16 text-center"
         >
-          <motion.span 
-            initial={{ opacity: 0, y: 20 }} 
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
@@ -138,7 +164,7 @@ export default function Contact() {
                       <div>
                         <CardTitle className="text-base mb-1">{info.title}</CardTitle>
                         {info.link ? (
-                          <a 
+                          <a
                             href={info.link}
                             className="text-muted-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm"
                           >
@@ -178,9 +204,9 @@ export default function Contact() {
                           <FormItem>
                             <FormLabel>Name</FormLabel>
                             <FormControl>
-                              <Input 
-                                placeholder="Your name" 
-                                {...field} 
+                              <Input
+                                placeholder="Your name"
+                                {...field}
                                 className="dark:bg-gray-700/50"
                               />
                             </FormControl>
@@ -195,10 +221,10 @@ export default function Contact() {
                           <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
-                              <Input 
-                                type="email" 
-                                placeholder="Your email" 
-                                {...field} 
+                              <Input
+                                type="email"
+                                placeholder="Your email"
+                                {...field}
                                 className="dark:bg-gray-700/50"
                               />
                             </FormControl>
@@ -215,9 +241,9 @@ export default function Contact() {
                         <FormItem>
                           <FormLabel>Subject</FormLabel>
                           <FormControl>
-                            <Input 
-                              placeholder="Message subject" 
-                              {...field} 
+                            <Input
+                              placeholder="Message subject"
+                              {...field}
                               className="dark:bg-gray-700/50"
                             />
                           </FormControl>
@@ -233,10 +259,10 @@ export default function Contact() {
                         <FormItem>
                           <FormLabel>Message</FormLabel>
                           <FormControl>
-                            <Textarea 
-                              placeholder="Your message" 
-                              {...field} 
-                              rows={5} 
+                            <Textarea
+                              placeholder="Your message"
+                              {...field}
+                              rows={5}
                               className="resize-none dark:bg-gray-700/50"
                             />
                           </FormControl>
@@ -246,22 +272,28 @@ export default function Contact() {
                     />
 
                     <div>
-                      {isSuccess ? (
-                        <div className="flex p-4 mb-4 text-sm rounded-lg bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300">
+                      {isSuccess && (
+                        <div className="flex p-4 mb-4 text-sm rounded-lg bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300" role="alert">
                           <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"></path>
                           </svg>
                           <span>Message sent successfully! I'll get back to you soon.</span>
                         </div>
-                      ) : null}
-                      
-                      <Button 
-                        type="submit" 
-                        size="lg" 
+                      )}
+                      {submitError && (
+                         <div className="flex p-4 mb-4 text-sm rounded-lg bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300" role="alert">
+                           <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"></path></svg>
+                           <span>Error: {submitError}</span>
+                         </div>
+                      )}
+
+                      <Button
+                        type="submit"
+                        size="lg"
                         className="w-full sm:w-auto gap-2"
                         disabled={isSubmitting}
                       >
-                        <FiSend className="h-4 w-4" /> 
+                        <FiSend className="h-4 w-4" />
                         {isSubmitting ? "Sending..." : "Send Message"}
                       </Button>
                     </div>
