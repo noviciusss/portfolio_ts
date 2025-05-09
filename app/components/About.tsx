@@ -16,7 +16,7 @@ export default function About() {
   ];
 
   return (
-    <section className="py-24 px-4 bg-gray-50 dark:bg-gray-900">
+    <section className="py-24 px-4">
       <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
@@ -54,8 +54,8 @@ export default function About() {
             className="rounded-2xl overflow-hidden shadow-xl relative"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 opacity-70 mix-blend-overlay"></div>
-            <div className="aspect-[4/3] bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-            <Avatar className="h-64 w-64 rounded-xl border-4 border-white/50">
+            <div className="aspect-[4/3] bg-slate-200/50 dark:bg-slate-700/50 flex items-center justify-center"> {/* MODIFIED */}
+             <Avatar className="h-64 w-64 rounded-xl border-4 border-white/50">
               <AvatarImage src={unnamed.src} alt="Professional photo" />
               <AvatarFallback className="text-4xl font-medium text-gray-400">YN</AvatarFallback>
             </Avatar>
@@ -90,7 +90,9 @@ export default function About() {
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: 0.1 * index }}
     >
-      <Card className="overflow-hidden h-full border-none shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 group">
+      <Card className="overflow-hidden h-full border-none shadow-lg hover:shadow-xl transition-all duration-300 
+               bg-white/70 dark:bg-gray-800/70 backdrop-blur-md /* <--- MODIFIED FOR GLASSMORPHISM */
+                group">
         <CardContent className="p-6 flex flex-col items-center text-center">
           <div className="inline-flex items-center justify-center w-14 h-14 mb-4 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full group-hover:scale-110 transition-transform duration-300">
             {stat.icon}

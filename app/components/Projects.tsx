@@ -18,17 +18,15 @@ import project_loom from "../../public/project_loom.png";
 import gif from "../../public/gif.gif";
 import portfolio from "../../public/portfolio.png";
 
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import { PinContainer } from "@/components/ui/pin"; 
 
 // Helper function to get tag style based on technology category
 const getTagStyle = (tag: string) => {
   // Frontend technologies
   if (['React', 'Next.js', 'Vue', 'Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Tailwind CSS', 'Framer Motion'].includes(tag)) {
-    return "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800";
+    return "bg-blue-100 dark:bg-blue-900/30 text-blue-700 border-blue-200 dark:border-blue-800";
   }
   
   // Backend technologies
@@ -74,7 +72,7 @@ const projects = [
   {
     title: "Modern Portfolio",
     description: "A personal portfolio website built with Next.js, TypeScript, and Tailwind CSS featuring modern UI elements and smooth animations.",
-    image: portfolio, // Add placeholder image in public folder
+    image: portfolio, 
     tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
     github: "https://github.com/noviciusss/portfolio_ts",
     demo: "https://your-portfolio.vercel.app",
@@ -83,7 +81,7 @@ const projects = [
   {
     title: "Project Loom",
     description: "A collaborative platform where developers showcase projects, pitch innovative ideas, and connect with like-minded creators to build together, gain feedback, and grow their network—empowering the dev community to thrive and innovate.",
-    image: project_loom, // Add placeholder image in public folder
+    image: project_loom,
     tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
     github: "https://github.com/noviciusss/projectloom",
     demo: "https://projectloom.vercel.app/",
@@ -91,8 +89,8 @@ const projects = [
   },
   {
     title: "Dexplorer",
-    description: "A fun web application where you can discover and search through the original 150 Pokémon!.",
-    image: gif, // Add placeholder image in public folder
+    description: "A fun web application where you can discover and search through the original 150 Pokémon!",
+    image: gif,
     tags: ["JavaScript", "Tailwind CSS", "React", "Node.js"],
     github: "https://github.com/noviciusss/Dexplorer",
     demo: "https://dexplorer-pokemon.vercel.app/",
@@ -101,11 +99,10 @@ const projects = [
 ];
 
 export default function Projects() {
-  // You could add filters here if you have more projects
   const [filter, setFilter] = useState("all");
   
   return (
-    <section className="py-24 px-4 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+    <section className="py-24 px-4 ">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
@@ -136,13 +133,13 @@ export default function Projects() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto"
+            className="text-lg text-gray-600 dark:text-gray-600 max-w-2xl mx-auto"
           >
             Explore my latest work showcasing my skills and expertise
           </motion.p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 py-10">
           {projects.map((project, index) => (
             <motion.div
               key={project.title}
@@ -150,116 +147,73 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="h-[450px] mb-24"
             >
-              <Card className="h-full overflow-hidden border-none shadow-lg hover:shadow-xl transition-all duration-300 bg-white dark:bg-gray-800/90 backdrop-blur-sm relative group">
-                {/* Top gradient bar */}
-                <div className="h-1 w-full bg-gradient-to-r from-blue-500 to-purple-600"></div>
-                
-                <div className="relative">
-                  <AspectRatio ratio={16/9} className="bg-gray-100 dark:bg-gray-700 overflow-hidden">
-                    {/* Project Image */}
-                    {project.image && (
-                      <Image
-                        src={project.image}
-                        alt={`${project.title} preview`}
-                        fill
-                        className="object-cover transition-transform group-hover:scale-105 duration-300"
-                        priority={index === 0}
-                      />
-                    )}
-                    
+              <PinContainer
+                title={project.title}
+                href={project.demo}
+                containerClassName="mt-10"
+              >
+                <div className="flex flex-col w-[320px] dark:bg-dot-white/[0.2] bg-gradient-to-br from-white to-gray-50 dark:bg-gray-400 h-[450px] rounded-xl overflow-hidden shadow-lg">
+                  <div className="relative w-full h-48">
+                    <Image
+                      src={project.image}
+                      alt={`${project.title} preview`}
+                      fill
+                      className="object-cover"
+                      priority={index === 0}
+                    />
                     {/* Gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 via-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
-                    
-                    {/* Hover buttons */}
-                    <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity z-20">
-                      <Button
-                        size="icon"
-                        variant="outline"
-                        className="rounded-full bg-white dark:bg-gray-800 shadow-md hover:shadow-lg"
-                        asChild
-                      >
-                        <a href={project.github} target="_blank" rel="noopener noreferrer">
-                          <FiGithub className="h-5 w-5" />
-                        </a>
-                      </Button>
-                      
-                      <Button
-                        size="icon"
-                        className="rounded-full bg-blue-600 hover:bg-blue-700 shadow-md hover:shadow-lg"
-                        asChild
-                      >
-                        <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                          <FiExternalLink className="h-5 w-5" />
-                        </a>
-                      </Button>
-                    </div>
-                  </AspectRatio>
-                </div>
-                
-                <CardHeader className="pt-6 pb-2">
-                  <CardTitle className="text-xl font-heading group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                    {project.title}
-                  </CardTitle>
-                </CardHeader>
-                
-                <CardContent className="pb-2">
-                  <p className="text-muted-foreground text-sm line-clamp-3">
-                    {project.description}
-                  </p>
-                </CardContent>
-                
-                <CardFooter className="flex flex-col items-start pt-0 pb-6">
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.map((tag, tagIndex) => (
-                      <motion.div
-                        key={tag}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: 0.4 + tagIndex * 0.1 }}
-                      >
-                        <Badge 
-                          variant="outline" 
-                          className={`${getTagStyle(tag)} text-xs font-medium py-1 px-2.5 rounded-full border flex items-center gap-1 transition-all duration-300 hover:shadow-md hover:scale-105`}
-                        >
-                          {getTagIcon(tag)}
-                          {tag}
-                        </Badge>
-                      </motion.div>
-                    ))}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
                   </div>
                   
-                  <HoverCard>
-                    <HoverCardTrigger asChild>
-                      <Button 
-                        variant="ghost" 
-                        size="sm"
-                        className="p-0 h-auto text-blue-600 dark:text-blue-400 hover:bg-transparent hover:text-blue-700 dark:hover:text-blue-300"
-                        asChild
-                      >
-                        <a 
-                          href={project.demo}
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1 font-medium text-sm"
-                        >
-                          View Project
-                          <FiChevronRight className="ml-1 transform group-hover:translate-x-1 transition-transform" />
-                        </a>
-                      </Button>
-                    </HoverCardTrigger>
-                    <HoverCardContent className="w-80 text-sm">
-                      <div className="flex justify-between">
-                        <div>
-                          <h4 className="font-medium">{project.title}</h4>
-                          <p className="text-xs text-muted-foreground mt-1">Click to view live demo</p>
-                        </div>
-                        <FiExternalLink className="h-4 w-4 text-muted-foreground" />
+                  <div className="p-5 flex flex-col flex-grow justify-between text-gray-900 dark:text-gray-900">
+                    <div>
+                      <h3 className="text-xl font-heading font-bold mb-2">{project.title}</h3>
+                      <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-600 line-clamp-4 mb-4">{project.description}</p>
+                      
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {project.tags.slice(0, 3).map((tag, tagIndex) => (
+                          <Badge 
+                            key={tag}
+                            variant="outline" 
+                            className={`${getTagStyle(tag)} text-[10px] font-medium py-0.5 px-2 rounded-full border flex items-center gap-1`}
+                          >
+                            {getTagIcon(tag)}
+                            {tag}
+                          </Badge>
+                        ))}
+                        {project.tags.length > 3 && (
+                          <Badge variant="outline" className="text-[10px] font-medium py-0.5 px-2 rounded-full">
+                            +{project.tags.length - 3}
+                          </Badge>
+                        )}
                       </div>
-                    </HoverCardContent>
-                  </HoverCard>
-                </CardFooter>
-              </Card>
+                    </div>
+                    
+                    <div className="flex justify-between items-center pt-3 mt-2 border-t border-gray-100 dark:border-gray-900">
+                      <a 
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
+                      >
+                        <FiGithub className="h-5 w-5" />
+                      </a>
+                      
+                      <a 
+                        href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline"
+                      >
+                        View Live
+                        <FiExternalLink className="ml-1.5 h-4 w-4" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </PinContainer>
             </motion.div>
           ))}
         </div>

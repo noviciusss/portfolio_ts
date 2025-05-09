@@ -43,7 +43,7 @@ const educationData = [
 
 export default function Education() {
   return (
-    <section className="py-24 px-4 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+    <section className="py-24 px-4 ">
       <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
@@ -99,7 +99,9 @@ export default function Education() {
                 <div className="hidden md:block absolute top-8 w-6 h-6 rounded-full bg-blue-500 dark:bg-blue-400 shadow-lg z-10 md:left-[calc(100%+10px)]"
                      style={{ left: index % 2 === 0 ? 'calc(100% + 10px)' : '-22px' }}></div>
                 
-                <Card className="overflow-hidden border border-gray-200 dark:border-gray-700 group hover:shadow-xl transition-all duration-300">
+                <Card className="overflow-hidden border border-gray-200/50 dark:border-gray-700/50 group hover:shadow-xl transition-all duration-300 
+               bg-white/70 dark:bg-gray-800/70 backdrop-blur-md /* <--- MODIFIED FOR GLASSMORPHISM */
+               ">
                   {/* Top gradient bar */}
                   <div className="h-1 w-full bg-gradient-to-r from-blue-500 to-purple-600"></div>
                   

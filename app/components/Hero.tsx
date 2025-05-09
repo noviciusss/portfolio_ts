@@ -11,7 +11,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
 
 export default function Hero() {
   return (
-    <section className="relative flex items-center min-h-screen py-20 px-4 overflow-hidden bg-gradient-to-b from-white to-blue-50 dark:from-gray-900 dark:to-gray-800">
+    <section className="relative flex items-center min-h-screen py-20 px-4 overflow-hidden ">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden z-0">
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-200 dark:bg-blue-900/20 rounded-full filter blur-3xl opacity-30"></div>

@@ -1,4 +1,3 @@
-
 import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
@@ -7,15 +6,16 @@ import Contact from './components/Contact';
 import Navbar from './components/Navbar';
 import Education from './components/Education';
 import CodingStats from './components/CodingStats';
-import BackgroundMesh from './components/BackgroundMesh';
+// ModernBackground is already in layout.tsx, no need to import here unless used differently
 import { FaArrowUp } from 'react-icons/fa';
 
 export default function Home() {
   return (
     <>
-      <BackgroundMesh />
+      {/* ModernBackground is in layout.tsx, so it's already active */}
       <Navbar />
-      <main className="overflow-hidden">
+      {/* Ensure 'main' does not have an opaque background class */}
+      <main className="overflow-hidden relative z-[1]"> {/* Added relative z-[1] to ensure content is above background */}
         <section id="hero" className="pt-16"><Hero /></section>
         <section id="about"><About /></section>
         <section id="skills"><Skills /></section>
@@ -24,8 +24,8 @@ export default function Home() {
         <section id="projects"><Projects /></section>
         <section id="contact"><Contact /></section>
         
-        {/* Footer */}
-        <footer className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm py-8 px-4 border-t border-gray-200 dark:border-gray-800">
+        {/* Footer can have its own semi-transparent background with backdrop-blur */}
+        <footer className="bg-white/50 dark:bg-gray-950/50 backdrop-blur-md py-8 px-4 border-t border-gray-200 dark:border-gray-800/50 relative z-[1]">
           <div className="max-w-5xl mx-auto text-center">
             <p className="text-gray-600 dark:text-gray-400 font-heading">
               © {new Date().getFullYear()} Noviciusss. All rights reserved.
