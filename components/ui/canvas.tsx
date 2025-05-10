@@ -193,22 +193,35 @@ const ShaderMaterial = ({
   uniforms: Uniforms;
 }) => {
   const { size } = useThree();
-  // Fix: Use null! to tell TypeScript this ref will be defined after mount
+  
+  // Use non-null assertion with null initializer - safe for Vercel build
   const ref = useRef<THREE.Mesh>(null!);
-  let lastFrameTime = 0;
+  let frameCountRef = useRef(0);
+  let lastFrameTimeRef = useRef(0);
 
   useFrame(({ clock }) => {
     if (!ref.current) return;
+    
+    // Limit updates for better performance
     const timestamp = clock.getElapsedTime();
-    if (timestamp - lastFrameTime < 1 / maxFps) {
+    if (timestamp - lastFrameTimeRef.current < 1 / maxFps) {
       return;
     }
-    lastFrameTime = timestamp;
-
-    // Fix: Use proper typing for the material
-    const material = ref.current.material as THREE.ShaderMaterial;
-    if (material && material.uniforms && material.uniforms.u_time) {
-      material.uniforms.u_time.value = timestamp;
+    
+    // Only update every few frames for better performance
+    frameCountRef.current++;
+    if (frameCountRef.current % 2 !== 0) return;
+    
+    lastFrameTimeRef.current = timestamp;
+    
+    try {
+      // Safe material access with proper type assertions
+      const material = ref.current.material as THREE.ShaderMaterial;
+      if (material?.uniforms?.u_time) {
+        material.uniforms.u_time.value = timestamp;
+      }
+    } catch (err) {
+      console.error("Error updating shader time:", err);
     }
   });
 
@@ -218,74 +231,81 @@ const ShaderMaterial = ({
     for (const uniformName in uniforms) {
       const uniform = uniforms[uniformName];
 
-      switch (uniform.type) {
-        case "uniform1f":
-          preparedUniforms[uniformName] = { value: uniform.value, type: "1f" };
-          break;
-        case "uniform3f":
-          preparedUniforms[uniformName] = {
-            value: new THREE.Vector3().fromArray(uniform.value as number[]),
-            type: "3f",
-          };
-          break;
-        case "uniform1fv":
-          preparedUniforms[uniformName] = { value: uniform.value, type: "1fv" };
-          break;
-        case "uniform3fv":
-          preparedUniforms[uniformName] = {
-            value: (uniform.value as number[][]).map((v: number[]) =>
-              new THREE.Vector3().fromArray(v)
-            ),
-            type: "3fv",
-          };
-          break;
-        case "uniform2f":
-          preparedUniforms[uniformName] = {
-            value: new THREE.Vector2().fromArray(uniform.value as number[]),
-            type: "2f",
-          };
-          break;
-        default:
-          console.error(`Invalid uniform type for '${uniformName}'.`);
-          break;
+      try {
+        switch (uniform.type) {
+          case "uniform1f":
+            preparedUniforms[uniformName] = { value: uniform.value, type: "1f" };
+            break;
+          case "uniform3f":
+            preparedUniforms[uniformName] = {
+              value: new THREE.Vector3().fromArray(uniform.value as number[]),
+              type: "3f",
+            };
+            break;
+          case "uniform1fv":
+            preparedUniforms[uniformName] = { value: uniform.value, type: "1fv" };
+            break;
+          case "uniform3fv":
+            preparedUniforms[uniformName] = {
+              value: (uniform.value as number[][]).map((v: number[]) =>
+                new THREE.Vector3().fromArray(v)
+              ),
+              type: "3fv",
+            };
+            break;
+          case "uniform2f":
+            preparedUniforms[uniformName] = {
+              value: new THREE.Vector2().fromArray(uniform.value as number[]),
+              type: "2f",
+            };
+            break;
+          default:
+            console.warn(`Invalid uniform type for '${uniformName}'.`);
+            break;
+        }
+      } catch (err) {
+        console.error(`Error processing uniform ${uniformName}:`, err);
       }
     }
 
     preparedUniforms["u_time"] = { value: 0, type: "1f" };
     preparedUniforms["u_resolution"] = {
       value: new THREE.Vector2(size.width * 2, size.height * 2),
-    }; // Initialize u_resolution
+    };
     return preparedUniforms;
   };
 
-  // Shader material
+  // Shader material with proper error handling
   const material = useMemo(() => {
-    const materialObject = new THREE.ShaderMaterial({
-      vertexShader: `
-      precision mediump float;
-      in vec2 coordinates;
-      uniform vec2 u_resolution;
-      out vec2 fragCoord;
-      void main(){
-        float x = position.x;
-        float y = position.y;
-        gl_Position = vec4(x, y, 0.0, 1.0);
-        fragCoord = (position.xy + vec2(1.0)) * 0.5 * u_resolution;
-        fragCoord.y = u_resolution.y - fragCoord.y;
-      }
-      `,
-      fragmentShader: source,
-      uniforms: getUniforms(),
-      glslVersion: THREE.GLSL3,
-      blending: THREE.CustomBlending,
-      blendSrc: THREE.SrcAlphaFactor,
-      blendDst: THREE.OneFactor,
-    });
-
-    return materialObject;
+    try {
+      return new THREE.ShaderMaterial({
+        vertexShader: `
+        precision mediump float;
+        in vec2 coordinates;
+        uniform vec2 u_resolution;
+        out vec2 fragCoord;
+        void main(){
+          float x = position.x;
+          float y = position.y;
+          gl_Position = vec4(x, y, 0.0, 1.0);
+          fragCoord = (position.xy + vec2(1.0)) * 0.5 * u_resolution;
+          fragCoord.y = u_resolution.y - fragCoord.y;
+        }
+        `,
+        fragmentShader: source,
+        uniforms: getUniforms(),
+        glslVersion: THREE.GLSL3,
+        blending: THREE.CustomBlending,
+        blendSrc: THREE.SrcAlphaFactor,
+        blendDst: THREE.OneFactor,
+      });
+    } catch (err) {
+      console.error("Error creating shader material:", err);
+      // Return a fallback material to prevent crashes
+      return new THREE.MeshBasicMaterial({ color: 0x000000, opacity: 0, transparent: true });
+    }
   }, [size.width, size.height, source]);
 
-  // Fix: Properly typed ref without using 'as any'
   return (
     <mesh ref={ref}>
       <planeGeometry args={[2, 2]} />
@@ -307,7 +327,7 @@ interface ShaderProps {
 
 const Shader: React.FC<ShaderProps> = ({ source, uniforms, maxFps = 60 }) => {
   return (
-    <Canvas className="absolute inset-0 h-full w-full">
+    <Canvas className="absolute inset-0 h-full w-full" dpr={[1, 1.5]}>
       <ShaderMaterial source={source} uniforms={uniforms} maxFps={maxFps} />
     </Canvas>
   );

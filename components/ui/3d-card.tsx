@@ -26,19 +26,45 @@ export const CardContainer = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const rafRef = useRef<number | null>(null);
+  const mousePositionRef = useRef({ x: 0, y: 0 });
 
   // SSR safe-guard - only run after mounting on client
   useEffect(() => {
     setIsMounted(true);
+    return () => {
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
   }, []);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  // Throttled transform update using requestAnimationFrame
+  const updateTransform = () => {
     if (!containerRef.current || !isMounted) return;
-    const { left, top, width, height } =
-      containerRef.current.getBoundingClientRect();
-    const x = (e.clientX - left - width / 2) / 25;
-    const y = (e.clientY - top - height / 2) / 25;
+    
+    // Get container dimensions
+    const { left, top, width, height } = containerRef.current.getBoundingClientRect();
+    
+    // Calculate rotation based on mouse position
+    const x = (mousePositionRef.current.x - left - width / 2) / 25;
+    const y = (mousePositionRef.current.y - top - height / 2) / 25;
+    
+    // Apply the transform
     containerRef.current.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+    
+    // Reset the RAF reference
+    rafRef.current = null;
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Store the mouse position for use in animation frame
+    mousePositionRef.current = { x: e.clientX, y: e.clientY };
+    
+    // Only request a new frame if we don't already have one pending
+    if (rafRef.current === null) {
+      rafRef.current = requestAnimationFrame(updateTransform);
+    }
   };
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -48,6 +74,13 @@ export const CardContainer = ({
   const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current || !isMounted) return;
     setIsMouseEntered(false);
+    
+    // Cancel any pending animation frame
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+    
     containerRef.current.style.transform = `rotateY(0deg) rotateX(0deg)`;
   };
   
@@ -68,7 +101,7 @@ export const CardContainer = ({
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
           className={cn(
-            "flex items-center justify-center relative transition-all duration-200 ease-linear",
+            "flex items-center justify-center relative transition-all duration-200 ease-linear will-change-transform",
             className
           )}
           style={{
@@ -128,27 +161,44 @@ export const CardItem = ({
   const itemRef = useRef<HTMLDivElement>(null);
   const [isMouseEntered] = useMouseEnter();
   const [isMounted, setIsMounted] = useState(false);
+  const rafRef = useRef<number | null>(null);
 
   // SSR safe-guard
   useEffect(() => {
     setIsMounted(true);
+    return () => {
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
   }, []);
 
+  // Update transform with throttling via rAF
   useEffect(() => {
     if (!itemRef.current || !isMounted) return;
     
-    if (isMouseEntered) {
-      itemRef.current.style.transform = `translateX(${translateX}px) translateY(${translateY}px) translateZ(${translateZ}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
-    } else {
-      itemRef.current.style.transform = `translateX(0px) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg)`;
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current);
     }
+    
+    rafRef.current = requestAnimationFrame(() => {
+      if (!itemRef.current) return;
+      
+      if (isMouseEntered) {
+        itemRef.current.style.transform = `translateX(${translateX}px) translateY(${translateY}px) translateZ(${translateZ}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
+      } else {
+        itemRef.current.style.transform = `translateX(0px) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg)`;
+      }
+      
+      rafRef.current = null;
+    });
   }, [isMouseEntered, translateX, translateY, translateZ, rotateX, rotateY, rotateZ, isMounted]);
 
   // Use a wrapper div with the ref and render the Component inside it
   return (
     <div
       ref={itemRef}
-      className={cn("w-fit transition duration-200 ease-linear", className)}
+      className={cn("w-fit transition duration-200 ease-linear will-change-transform", className)}
     >
       <Component {...rest}>
         {children}
