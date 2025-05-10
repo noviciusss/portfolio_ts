@@ -6,8 +6,10 @@ import Contact from './components/Contact';
 import Navbar from './components/Navbar';
 import Education from './components/Education';
 import CodingStats from './components/CodingStats';
+import Approach from './components/Approach';
 // ModernBackground is already in layout.tsx, no need to import here unless used differently
 import { FaArrowUp } from 'react-icons/fa';
+import Footer from './components/Footer';
 
 export default function Home() {
   return (
@@ -22,24 +24,12 @@ export default function Home() {
         <section id="education"><Education /></section>
         <section id="coding-stats"><CodingStats /></section>
         <section id="projects"><Projects /></section>
+        <section id="approach"><Approach /></section>
+        {/* Contact section can be added here */}
         <section id="contact"><Contact /></section>
         
         {/* Footer can have its own semi-transparent background with backdrop-blur */}
-        <footer className="bg-white/50 dark:bg-gray-950/50 backdrop-blur-md py-8 px-4 border-t border-gray-200 dark:border-gray-800/50 relative z-[1]">
-          <div className="max-w-5xl mx-auto text-center">
-            <p className="text-gray-600 dark:text-gray-400 font-heading">
-              © {new Date().getFullYear()} Noviciusss. All rights reserved.
-            </p>
-            <div className="mt-4">
-              <a 
-                href="#hero"
-                className="inline-flex items-center justify-center w-10 h-10 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full hover:bg-blue-200 dark:hover:bg-blue-800/50 transition-colors"
-              >
-                <FaArrowUp />
-              </a>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </main>
     </>
   );

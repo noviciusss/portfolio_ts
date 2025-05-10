@@ -10,9 +10,11 @@ import {
   FiUser, 
   FiCode, 
   FiGrid, 
-  FiMail 
+  FiMail,
+  FiBriefcase // Added for Services icon
 } from 'react-icons/fi';
 import { useTheme } from 'next-themes';
+import Link from 'next/link';
 
 // Shadcn UI components
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -24,11 +26,13 @@ const navItems = [
   { label: "Home", href: "#hero", icon: <FiHome className="h-5 w-5" /> },
   { label: "About", href: "#about", icon: <FiUser className="h-5 w-5" /> },
   { label: "Skills", href: "#skills", icon: <FiCode className="h-5 w-5" /> },
+  { label: "Services", href: "/services", icon: <FiBriefcase className="h-5 w-5" /> },
   { label: "Projects", href: "#projects", icon: <FiGrid className="h-5 w-5" /> },
   { label: "Contact", href: "#contact", icon: <FiMail className="h-5 w-5" /> },
 ];
 
 export default function Navbar() {
+  // ...existing code...
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const [mounted, setMounted] = useState(false);

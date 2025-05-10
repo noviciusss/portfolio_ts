@@ -6,13 +6,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
-import unnamed from "../../public/unnamed.jpg";
+import Image from "next/image";
+
+// Import the image directly using Next.js Image component
+import unnamed from "../../public/unnamed.jpg"; 
+
+import { EvervaultCard, Icon } from "@/components/ui/evervault-card"; 
+import { BackgroundGradient } from "@/components/ui/background-gradient";
 
 export default function About() {
   const stats = [
-    { icon: <FiUser />, label: "Years Experience", value: "1+" },
-    { icon: <FiCode />, label: "Projects Completed", value: "5+" },
-    { icon: <FiCoffee />, label: "Coffees Consumed", value: "1000+" },
+    { icon: <FiUser size={24} />, label: "Years Experience", value: "1+" },
+    { icon: <FiCode size={24} />, label: "Projects Completed", value: "5+" },
+    { icon: <FiCoffee size={24} />, label: "Coffees Consumed", value: "1000+" },
   ];
 
   return (
@@ -30,7 +36,7 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <Badge variant="outline" className="px-3 py-1 text-sm font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
+            <Badge variant="outline" className="px-4 py-1.5 text-sm font-medium bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-full shadow-sm">
               Who I Am
             </Badge>
           </motion.div>
@@ -39,28 +45,51 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-4xl sm:text-5xl font-heading font-bold mb-4"
+            className="text-4xl sm:text-5xl font-heading font-bold mt-3 mb-4 text-gray-800 dark:text-gray-100"
           >
             About Me
           </motion.h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-12 items-start">
+          {/* The parent container */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="rounded-2xl overflow-hidden shadow-xl relative"
+            className="relative h-[30rem] md:h-[32rem]"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 opacity-70 mix-blend-overlay"></div>
-            <div className="aspect-[4/3] bg-slate-200/50 dark:bg-slate-700/50 flex items-center justify-center"> {/* MODIFIED */}
-             <Avatar className="h-64 w-64 rounded-xl border-4 border-white/50">
-              <AvatarImage src={unnamed.src} alt="Professional photo" />
-              <AvatarFallback className="text-4xl font-medium text-gray-400">YN</AvatarFallback>
-            </Avatar>
+            {/* Decorative Icons */}
+            <Icon className="absolute h-6 w-6 -top-3 -left-3 dark:text-white text-black z-10" />
+            <Icon className="absolute h-6 w-6 -bottom-3 -left-3 dark:text-white text-black z-10" />
+            <Icon className="absolute h-6 w-6 -top-3 -right-3 dark:text-white text-black z-10" />
+            <Icon className="absolute h-6 w-6 -bottom-3 -right-3 dark:text-white text-black z-10" />
+
+            {/* APPROACH 1: EvervaultCard as backdrop with content overlay */}
+            <div className="w-full h-full relative">
+              <EvervaultCard text="Sam 😎" className="h-full w-full">
+                
+              </EvervaultCard>
+              
+              {/* Overlay content on top of the EvervaultCard */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
+                <div className="w-64 h-64 rounded-full overflow-hidden border-4 border-white/30 shadow-xl">
+                  <Image 
+                    src={unnamed}
+                    alt="Professional photo of Samarth Singh"
+                    className="object-cover"
+                    placeholder="blur"
+                  />
+                </div>
+                <p className="mt-6 text-center text-lg font-medium text-gray-700 dark:text-gray-300">
+                  Samarth Singh
+                </p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Full Stack Developer
+                </p>
+              </div>
             </div>
-            <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/70 to-transparent"></div>
           </motion.div>
           
           <motion.div
@@ -69,54 +98,58 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <h3 className="text-2xl font-heading font-bold mb-4">
+            <h3 className="text-3xl font-heading font-semibold mb-6 text-gray-800 dark:text-gray-100">
               Passionate Developer & Digital Creator
             </h3>
-            <div className="prose dark:prose-invert max-w-none">
-              <p className={cn("text-muted-foreground leading-relaxed mb-4")}>
+            <div className="prose dark:prose-invert max-w-none text-gray-600 dark:text-gray-300">
+              <p className={cn("leading-relaxed mb-4")}>
                 I am a passionate developer specializing in building modern web applications using the MERN stack, Next.js, and AI technologies. With expertise in both frontend and backend development, I create seamless user experiences with clean, efficient code.
               </p>
-              <p className={cn("text-muted-foreground leading-relaxed mb-6")}>
+              <p className={cn("leading-relaxed mb-8")}>
                 My journey in tech began with a curiosity about how things work on the web, which evolved into a career crafting digital experiences. I continuously expand my skill set to stay at the forefront of web development trends and technologies.
               </p>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-  {stats.map((stat, index) => (
-    <motion.div
-      key={stat.label}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: 0.1 * index }}
-    >
-      <Card className="overflow-hidden h-full border-none shadow-lg hover:shadow-xl transition-all duration-300 
-               bg-white/70 dark:bg-gray-800/70 backdrop-blur-md /* <--- MODIFIED FOR GLASSMORPHISM */
-                group">
-        <CardContent className="p-6 flex flex-col items-center text-center">
-          <div className="inline-flex items-center justify-center w-14 h-14 mb-4 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full group-hover:scale-110 transition-transform duration-300">
-            {stat.icon}
-          </div>
-          <CardTitle className="text-3xl font-bold mb-1 font-heading group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-            {stat.value}
-          </CardTitle>
-          <p className="text-sm text-muted-foreground">
-            {stat.label}
-          </p>
-        </CardContent>
-      </Card>
-    </motion.div>
-  ))}
-</div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.1 * index + 0.2 }}
+                >
+                  <BackgroundGradient
+                    className="rounded-xl h-full" 
+                    containerClassName="h-full"
+                    animate={true}
+                  >
+                    <Card className="overflow-hidden h-full border-none bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm group">
+                      <CardContent className="p-6 flex flex-col items-center text-center">
+                        <div className="inline-flex items-center justify-center w-14 h-14 mb-4 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300 rounded-full group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                          {stat.icon}
+                        </div>
+                        <CardTitle className="text-3xl font-bold mb-1 font-heading text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                          {stat.value}
+                        </CardTitle>
+                        <p className="text-sm text-muted-foreground">
+                          {stat.label}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </BackgroundGradient>
+                </motion.div>
+              ))}
+            </div>
             
-<a
-              href="/Resume_samarth.pdf" // Make sure this path matches your file in the public folder
-              download="Resume_samarth" // This will be the suggested filename for the download
-              className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-md gap-2 hover:translate-y-[-4px] transition-all"
-              // The className above mimics the shadcn Button default variant and lg size. Adjust if your default styles are different.
-            >
-              <FiDownload className="h-4 w-4" /> Download Resume
-            </a>
+            <Button asChild size="lg" className="gap-2 group hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+              <a
+                href="/Resume_samarth.pdf" 
+                download="Resume_samarth"
+              >
+                <FiDownload className="h-5 w-5 group-hover:animate-bounce" /> Download Resume
+              </a>
+            </Button>
           </motion.div>
         </div>
       </div>
