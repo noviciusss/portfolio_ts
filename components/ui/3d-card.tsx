@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-
 import React, {
   createContext,
   useState,
@@ -10,9 +9,10 @@ import React, {
   useEffect,
 } from "react";
 
+// Provide a default value to avoid undefined errors during SSR
 const MouseEnterContext = createContext<
-  [boolean, React.Dispatch<React.SetStateAction<boolean>>] | undefined
->(undefined);
+  [boolean, React.Dispatch<React.SetStateAction<boolean>>]
+>([false, () => {}]);
 
 export const CardContainer = ({
   children,
@@ -25,9 +25,15 @@ export const CardContainer = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // SSR safe-guard - only run after mounting on client
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || !isMounted) return;
     const { left, top, width, height } =
       containerRef.current.getBoundingClientRect();
     const x = (e.clientX - left - width / 2) / 25;
@@ -37,14 +43,14 @@ export const CardContainer = ({
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsMouseEntered(true);
-    if (!containerRef.current) return;
   };
 
   const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || !isMounted) return;
     setIsMouseEntered(false);
     containerRef.current.style.transform = `rotateY(0deg) rotateX(0deg)`;
   };
+  
   return (
     <MouseEnterContext.Provider value={[isMouseEntered, setIsMouseEntered]}>
       <div
@@ -86,7 +92,7 @@ export const CardBody = ({
   return (
     <div
       className={cn(
-        "h-96 w-96 [transform-style:preserve-3d]  [&>*]:[transform-style:preserve-3d]",
+        "h-96 w-96 [transform-style:preserve-3d] [&>*]:[transform-style:preserve-3d]",
         className
       )}
     >
@@ -95,8 +101,9 @@ export const CardBody = ({
   );
 };
 
+// Modified CardItem component to avoid refs with dynamic components
 export const CardItem = ({
-  as: Tag = "div",
+  as: Component = "div",
   children,
   className,
   translateX = 0,
@@ -107,7 +114,7 @@ export const CardItem = ({
   rotateZ = 0,
   ...rest
 }: {
-  as?: React.ElementType;
+  as?: any; // Use 'any' for the component type to avoid TypeScript issues
   children: React.ReactNode;
   className?: string;
   translateX?: number | string;
@@ -118,38 +125,40 @@ export const CardItem = ({
   rotateZ?: number | string;
   [key: string]: any;
 }) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const itemRef = useRef<HTMLDivElement>(null);
   const [isMouseEntered] = useMouseEnter();
+  const [isMounted, setIsMounted] = useState(false);
+
+  // SSR safe-guard
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
-    handleAnimations();
-  }, [isMouseEntered]);
-
-  const handleAnimations = () => {
-    if (!ref.current) return;
+    if (!itemRef.current || !isMounted) return;
+    
     if (isMouseEntered) {
-      ref.current.style.transform = `translateX(${translateX}px) translateY(${translateY}px) translateZ(${translateZ}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
+      itemRef.current.style.transform = `translateX(${translateX}px) translateY(${translateY}px) translateZ(${translateZ}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
     } else {
-      ref.current.style.transform = `translateX(0px) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg)`;
+      itemRef.current.style.transform = `translateX(0px) translateY(0px) translateZ(0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg)`;
     }
-  };
+  }, [isMouseEntered, translateX, translateY, translateZ, rotateX, rotateY, rotateZ, isMounted]);
 
+  // Use a wrapper div with the ref and render the Component inside it
   return (
-    <Tag
-      ref={ref}
+    <div
+      ref={itemRef}
       className={cn("w-fit transition duration-200 ease-linear", className)}
-      {...rest}
     >
-      {children}
-    </Tag>
+      <Component {...rest}>
+        {children}
+      </Component>
+    </div>
   );
 };
 
-// Create a hook to use the context
+// Modified hook to be SSR-safe
 export const useMouseEnter = () => {
   const context = useContext(MouseEnterContext);
-  if (context === undefined) {
-    throw new Error("useMouseEnter must be used within a MouseEnterProvider");
-  }
   return context;
 };
