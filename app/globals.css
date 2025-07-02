@@ -332,3 +332,40 @@ html {
   mix-blend-mode: screen; /* Screen blend mode looks better on dark backgrounds */
   opacity: 0.6;
 }
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Improve scroll performance */
+html {
+  scroll-behavior: smooth;
+}
+
+@supports (scroll-behavior: smooth) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* GPU acceleration for animations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* Optimize background effects */
+.aurora-bg {
+  will-change: background-position;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}

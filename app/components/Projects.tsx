@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { FiGithub, FiExternalLink, FiChevronRight } from "react-icons/fi";
+import { FiGithub, FiExternalLink } from "react-icons/fi";
 import { FaReact, FaNodeJs, FaPython, FaHtml5, FaCss3 } from "react-icons/fa";
 import { 
   SiNextdotjs, 
@@ -14,9 +14,6 @@ import {
   SiTensorflow 
 } from "react-icons/si";
 import Image from "next/image";
-import project_loom from "../../public/project_loom.png";
-import gif from "../../public/gif.gif";
-import portfolio from "../../public/portfolio.png";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -26,7 +23,7 @@ import { PinContainer } from "@/components/ui/pin";
 const getTagStyle = (tag: string) => {
   // Frontend technologies
   if (['React', 'Next.js', 'Vue', 'Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Tailwind CSS', 'Framer Motion'].includes(tag)) {
-    return "bg-blue-100 dark:bg-blue-900/30 text-blue-700 border-blue-200 dark:border-blue-800";
+    return "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800";
   }
   
   // Backend technologies
@@ -72,7 +69,7 @@ const projects = [
   {
     title: "Modern Portfolio",
     description: "A personal portfolio website built with Next.js, TypeScript, and Tailwind CSS featuring modern UI elements and smooth animations.",
-    image: portfolio, 
+    image: "/portfolio.png", 
     tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
     github: "https://github.com/noviciusss/portfolio_ts",
     demo: "https://your-portfolio.vercel.app",
@@ -81,7 +78,7 @@ const projects = [
   {
     title: "Project Loom",
     description: "A collaborative platform where developers showcase projects, pitch innovative ideas, and connect with like-minded creators to build together, gain feedback, and grow their network—empowering the dev community to thrive and innovate.",
-    image: project_loom,
+    image: "/project_loom.png",
     tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
     github: "https://github.com/noviciusss/projectloom",
     demo: "https://projectloom.vercel.app/",
@@ -90,7 +87,7 @@ const projects = [
   {
     title: "Dexplorer",
     description: "A fun web application where you can discover and search through the original 150 Pokémon!",
-    image: gif,
+    image: "/gif.gif",
     tags: ["JavaScript", "Tailwind CSS", "React", "Node.js"],
     github: "https://github.com/noviciusss/Dexplorer",
     demo: "https://dexplorer-pokemon.vercel.app/",
@@ -133,13 +130,13 @@ export default function Projects() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-lg text-gray-600 dark:text-gray-600 max-w-2xl mx-auto"
+            className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
           >
             Explore my latest work showcasing my skills and expertise
           </motion.p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 py-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 py-10">
           {projects.map((project, index) => (
             <motion.div
               key={project.title}
@@ -154,7 +151,7 @@ export default function Projects() {
                 href={project.demo}
                 containerClassName="mt-10"
               >
-                <div className="flex flex-col w-[320px] dark:bg-dot-white/[0.2] bg-gradient-to-br from-white to-gray-50 dark:bg-gray-400 h-[450px] rounded-xl overflow-hidden shadow-lg">
+                <div className="flex flex-col w-[320px] bg-white dark:bg-neutral-900 rounded-xl overflow-hidden shadow-lg border border-gray-200 dark:border-white/[0.2]">
                   <div className="relative w-full h-48">
                     <Image
                       src={project.image}
@@ -163,17 +160,16 @@ export default function Projects() {
                       className="object-cover"
                       priority={index === 0}
                     />
-                    {/* Gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
                   </div>
                   
-                  <div className="p-5 flex flex-col flex-grow justify-between text-gray-900 dark:text-gray-900">
+                  <div className="p-5 flex flex-col flex-grow justify-between">
                     <div>
-                      <h3 className="text-xl font-heading font-bold mb-2">{project.title}</h3>
-                      <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-600 line-clamp-4 mb-4">{project.description}</p>
+                      <h3 className="text-xl font-heading font-bold mb-2 text-gray-900 dark:text-gray-100">{project.title}</h3>
+                      <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-400 line-clamp-4 mb-4">{project.description}</p>
                       
                       <div className="flex flex-wrap gap-2 mb-4">
-                        {project.tags.slice(0, 3).map((tag, tagIndex) => (
+                        {project.tags.slice(0, 3).map((tag) => (
                           <Badge 
                             key={tag}
                             variant="outline" 
@@ -184,19 +180,19 @@ export default function Projects() {
                           </Badge>
                         ))}
                         {project.tags.length > 3 && (
-                          <Badge variant="outline" className="text-[10px] font-medium py-0.5 px-2 rounded-full">
+                          <Badge variant="outline" className="text-[10px] font-medium py-0.5 px-2 rounded-full border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300">
                             +{project.tags.length - 3}
                           </Badge>
                         )}
                       </div>
                     </div>
                     
-                    <div className="flex justify-between items-center pt-3 mt-2 border-t border-gray-100 dark:border-gray-900">
+                    <div className="flex justify-between items-center pt-3 mt-auto border-t border-gray-200 dark:border-gray-700">
                       <a 
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
+                        className="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
                       >
                         <FiGithub className="h-5 w-5" />
                       </a>
