@@ -131,4 +131,204 @@ html {
     @apply text-foreground;
   }
 }
+/* Add simple fade-in animation as replacement for basic Framer Motion effects */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInOnly {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Staggered animation classes */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+
+/* Scale animations */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseScale {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Utility classes for hover effects */
+.hover-lift {
+  transition: transform 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+}
+
+.hover-glow {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+  transform: translateY(-2px);
+}
+@keyframes tilt {
+  0%, 50%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(0.5deg);
+  }
+  75% {
+    transform: rotate(-0.5deg);
+  }
+}
+
+.animate-tilt {
+  animation: tilt 10s infinite linear;
+}
+@keyframes move-stars {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-2000px);
+  }
+}
+
+.starfield-bg {
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  opacity: 0.8; /* Increased opacity for better visibility on light backgrounds */
+}
+
+.dark .starfield-bg {
+  opacity: 0.7; /* Adjusted for a balanced look on dark backgrounds */
+}
+
+.starfield-bg::after {
+  content: "";
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  /* Particle color changed to blue and density doubled */
+  box-shadow: 
+    /* Set 1 */
+    1599px 1819px #8cb4ff, 1935px 1119px #8cb4ff, 1048px 1383px #8cb4ff, 1904px 138px #8cb4ff,
+    1215px 1473px #8cb4ff, 111px 1131px #8cb4ff, 154px 134px #8cb4ff, 1756px 1509px #8cb4ff,
+    1200px 1258px #8cb4ff, 1138px 133px #8cb4ff, 1880px 1181px #8cb4ff, 1312px 1493px #8cb4ff,
+    1468px 1088px #8cb4ff, 1300px 1819px #8cb4ff, 10px 1619px #8cb4ff, 1069px 1438px #8cb4ff,
+    133px 1024px #8cb4ff, 1294px 1113px #8cb4ff, 1388px 188px #8cb4ff, 1880px 110px #8cb4ff,
+    1199px 819px #8cb4ff, 935px 119px #8cb4ff, 108px 383px #8cb4ff, 904px 38px #8cb4ff,
+    215px 473px #8cb4ff, 111px 131px #8cb4ff, 54px 34px #8cb4ff, 756px 509px #8cb4ff,
+    200px 258px #8cb4ff, 138px 33px #8cb4ff, 880px 181px #8cb4ff, 312px 493px #8cb4ff,
+    468px 88px #8cb4ff, 300px 819px #8cb4ff, 10px 619px #8cb4ff, 69px 438px #8cb4ff,
+    33px 24px #8cb4ff, 294px 113px #8cb4ff, 388px 88px #8cb4ff, 880px 10px #8cb4ff,
+    /* Set 2 (doubled density) */
+    523px 871px #8cb4ff, 1821px 128px #8cb4ff, 82px 1827px #8cb4ff, 1499px 108px #8cb4ff,
+    1733px 1883px #8cb4ff, 833px 132px #8cb4ff, 1411px 1200px #8cb4ff, 581px 124px #8cb4ff,
+    186px 158px #8cb4ff, 1270px 1152px #8cb4ff, 1402px 143px #8cb4ff, 1508px 100px #8cb4ff,
+    101px 100px #8cb4ff, 100px 100px #8cb4ff, 100px 100px #8cb4ff, 100px 100px #8cb4ff,
+    100px 100px #8cb4ff, 100px 100px #8cb4ff, 100px 100px #8cb4ff, 100px 100px #8cb4ff;
+  animation: move-stars 200s linear infinite;
+}
+
+/* 2. CSS-only Aurora (replaces BackgroundBeams) */
+/* This uses animated gradients on pseudo-elements to create a soft, moving aurora effect. */
+@keyframes aurora {
+  from {
+    background-position: 50% 50%, 50% 50%;
+  }
+  to {
+    background-position: 350% 50%, 350% 50%;
+  }
+}
+
+.aurora-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  mix-blend-mode: normal;
+  /* Using colors from your reference image for a soft, pastel look */
+  background-image: radial-gradient(
+      ellipse at 100% 0%,
+      rgba(221, 232, 203, 0.4) 0%, /* Soft Green */
+      rgba(221, 232, 203, 0) 50%
+    ),
+    radial-gradient(
+      ellipse at 0% 100%,
+      rgba(240, 230, 140, 0.3) 0%, /* Pale Yellow */
+      rgba(240, 230, 140, 0) 50%
+    ),
+    radial-gradient(
+      ellipse at 50% 50%,
+      rgba(216, 191, 216, 0.2) 0%, /* Lavender */
+      rgba(216, 191, 216, 0) 40%
+    );
+  animation: aurora 40s infinite alternate;
+}
+
+.dark .aurora-bg {
+  mix-blend-mode: screen; /* Screen blend mode looks better on dark backgrounds */
+  opacity: 0.6;
+}
