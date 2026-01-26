@@ -153,8 +153,8 @@ export default function About() {
             <div className="flex justify-center lg:justify-start w-full">
               <Button asChild size="lg" className="gap-2 group hover:shadow-lg hover:-translate-y-1 transition-all duration-300 text-sm sm:text-base">
                 <a
-                  href="/Resume_samarth.pdf" 
-                  download="Resume_samarth"
+                  href="/Resume.pdf" 
+                  download="Resume"
                 >
                   <FiDownload className="h-4 w-4 sm:h-5 sm:w-5 group-hover:animate-bounce" /> Download Resume
                 </a>
