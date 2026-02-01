@@ -34,9 +34,9 @@ export default function CodingStats() {
   const githubStatsUrl = `https://github-readme-stats.vercel.app/api?username=${GITHUB_USERNAME}&show_icons=true&theme=radical&count_private=true&hide_border=true`;
   const githubStreakUrl = `https://github-readme-streak-stats.herokuapp.com/?user=${GITHUB_USERNAME}&theme=radical&hide_border=true`;
   
-  // LeetCode API Fetch
+  // LeetCode API Fetch - Using alfa-leetcode-api
   const { data: leetcodeData, error: leetcodeError, isLoading: leetcodeLoading } = useSWR(
-    `https://leetcode-stats-api.herokuapp.com/${LEETCODE_USERNAME}`,
+    `https://alfa-leetcode-api.onrender.com/${LEETCODE_USERNAME}/solved`,
     fetcher,
     {
       revalidateOnFocus: false,
@@ -53,20 +53,20 @@ export default function CodingStats() {
   
   // Fallback LeetCode stats
   const fallbackLeetcodeStats = {
-    problemsSolved: 250,
+    problemsSolved: 200,
     ranking: 45000,
     contestRating: 1750,
     username: LEETCODE_USERNAME,
     problems: {
-      easy: 100,
-      medium: 120,
-      hard: 30
+      easy: 108,
+      medium: 89,
+      hard: 3
     }
   };
   
   // Use dynamic data if available, otherwise use fallback
   const leetcodeStats = {
-    problemsSolved: leetcodeData?.totalSolved || fallbackLeetcodeStats.problemsSolved,
+    problemsSolved: leetcodeData?.solvedProblem || fallbackLeetcodeStats.problemsSolved,
     ranking: leetcodeData?.ranking || fallbackLeetcodeStats.ranking,
     contestRating: leetcodeData?.contestRating || fallbackLeetcodeStats.contestRating,
     username: LEETCODE_USERNAME,
