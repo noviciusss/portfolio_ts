@@ -2,11 +2,13 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
+import Achievements from './components/Achievements';
 import Contact from './components/Contact';
 import Navbar from './components/Navbar';
 import Education from './components/Education';
 import CodingStats from './components/CodingStats';
 import Approach from './components/Approach';
+import FloatingResumeButton from './components/FloatingResumeButton';
 // ModernBackground is already in layout.tsx, no need to import here unless used differently
 import { FaArrowUp } from 'react-icons/fa';
 import Footer from './components/Footer';
@@ -24,6 +26,7 @@ export default function Home() {
         <section id="education"><Education /></section>
         <section id="coding-stats"><CodingStats /></section>
         <section id="projects"><Projects /></section>
+        <section id="achievements"><Achievements /></section>
         <section id="approach"><Approach /></section>
         {/* Contact section can be added here */}
         <section id="contact"><Contact /></section>
@@ -31,6 +34,9 @@ export default function Home() {
         {/* Footer can have its own semi-transparent background with backdrop-blur */}
         <Footer />
       </main>
+      
+      {/* Floating Resume Download Button */}
+      <FloatingResumeButton />
     </>
   );
 }

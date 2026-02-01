@@ -1,6 +1,6 @@
 "use client";
 
-import { FaGithub, FaLinkedin, FaTwitter, FaArrowUp } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaArrowUp } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
@@ -17,17 +17,12 @@ export default function Footer() {
     {
       name: "GitHub",
       icon: <FaGithub className="h-5 w-5" />,
-      href: "https://github.com/noviciusss", // Replace with your GitHub link
+      href: "https://github.com/noviciusss",
     },
     {
       name: "LinkedIn",
       icon: <FaLinkedin className="h-5 w-5" />,
-      href: "https://linkedin.com/in/your-linkedin-profile", // Replace with your LinkedIn link
-    },
-    {
-      name: "Twitter",
-      icon: <FaTwitter className="h-5 w-5" />,
-      href: "https://twitter.com/your-twitter-handle", // Replace with your Twitter link
+      href: "https://www.linkedin.com/in/spsamar/",
     },
   ];
 
@@ -39,7 +34,7 @@ export default function Footer() {
             {/* Left: Copyright */}
             <div className="text-center md:text-left">
               <p className="text-sm text-muted-foreground">
-                &copy; {new Date().getFullYear()} Samarth Singh.
+                &copy; {new Date().getFullYear()} Samarth Pratap Singh.
                 <br />
                 All rights reserved.
               </p>

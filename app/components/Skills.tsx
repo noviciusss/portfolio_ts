@@ -1,8 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
-import { FaReact, FaNodeJs, FaPython, FaJava, FaGithub, FaGitAlt, FaDocker, FaHtml5, FaCss3Alt } from "react-icons/fa";
-import { SiMongodb, SiNextdotjs, SiTailwindcss, SiTypescript, SiPostgresql, SiMysql, SiSqlite, SiPrisma, SiJavascript, SiC } from "react-icons/si";
-import { SiPytorch, SiTensorflow, SiScikitlearn, SiPandas, SiJupyter } from "react-icons/si";
+import { FaReact, FaNodeJs, FaPython, FaJava, FaGithub, FaGitAlt, FaDocker, FaHtml5, FaCss3Alt, FaDatabase, FaBrain } from "react-icons/fa";
+import { SiMongodb, SiNextdotjs, SiTailwindcss, SiTypescript, SiPostgresql, SiMysql, SiSqlite, SiPrisma, SiJavascript, SiCplusplus } from "react-icons/si";
+import { SiPytorch, SiTensorflow, SiScikitlearn, SiPandas, SiJupyter, SiHuggingface, SiOpenai, SiAmazon, SiLinux } from "react-icons/si";
 
 // Shadcn UI Components
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
@@ -31,110 +31,134 @@ const fadeInUp = {
 
 const skillCategories = [
   {
-    category: "Frontend Development",
-    id: "frontend",
+    category: "LLMOps & GenAI",
+    id: "llmops",
     skills: [
       { 
-        icon: <SiNextdotjs size={30} />, 
-        name: "Next.js", 
-        level: 90,
-        color: "bg-black dark:bg-white/90",
-        textColor: "text-white dark:text-black",
-        description: "Server-side rendering, static site generation and API routes for modern web applications."
-      },
-      { 
-        icon: <FaReact size={30} />, 
-        name: "React", 
-        level: 92,
-        color: "bg-blue-500",
+        icon: <SiOpenai size={30} />, 
+        name: "LangChain", 
+        level: 85,
+        color: "bg-green-600",
         textColor: "text-white",
-        description: "Component-based UI development with hooks and context API for dynamic user interfaces."
+        description: "Building RAG pipelines, semantic search, and LLM orchestration for production systems."
       },
       { 
-        icon: <SiTypescript size={30} />, 
-        name: "TypeScript", 
-        level: 88,
+        icon: <FaBrain size={30} />, 
+        name: "LangGraph", 
+        level: 75,
+        color: "bg-emerald-600",
+        textColor: "text-white",
+        description: "Building stateful, multi-agent workflows with graph-based orchestration and cyclic flows."
+      },
+      { 
+        icon: <SiOpenai size={30} />, 
+        name: "Agno", 
+        level: 70,
+        color: "bg-purple-500",
+        textColor: "text-white",
+        description: "Creating fast, lightweight AI agents with minimal overhead for production deployments."
+      },
+      { 
+        icon: <FaDatabase size={30} />, 
+        name: "Vector Databases", 
+        level: 80,
+        color: "bg-purple-600",
+        textColor: "text-white",
+        description: "Qdrant, FAISS for hybrid search (BM25 + dense), reranking, and semantic retrieval."
+      },
+      { 
+        icon: <FaPython size={30} />, 
+        name: "FastAPI", 
+        level: 85,
+        color: "bg-teal-600",
+        textColor: "text-white",
+        description: "Building production-grade API backends for LLM applications and RAG systems."
+      },
+      { 
+        icon: <SiHuggingface size={30} />, 
+        name: "Hugging Face", 
+        level: 90,
+        color: "bg-yellow-500",
+        textColor: "text-black",
+        description: "Transformers, model deployment, fine-tuning, and publishing to Spaces/Hub."
+      },
+      { 
+        icon: <FaBrain size={30} />, 
+        name: "Prompt Engineering", 
+        level: 85,
+        color: "bg-indigo-600",
+        textColor: "text-white",
+        description: "Designing effective prompts, guardrails, PII redaction, and source-grounding for LLMs."
+      },
+      { 
+        icon: <SiPandas size={30} />, 
+        name: "MLflow & W&B", 
+        level: 75,
         color: "bg-blue-700",
         textColor: "text-white",
-        description: "Type-safe JavaScript development for more robust and maintainable applications."
+        description: "Experiment tracking, model versioning, and evaluation with Weights & Biases."
       },
       { 
-        icon: <SiTailwindcss size={30} />, 
-        name: "Tailwind CSS", 
-        level: 95,
-        color: "bg-cyan-500",
-        textColor: "text-white",
-        description: "Utility-first CSS framework for rapid and custom UI development."
-      },
-      { 
-        icon: <FaHtml5 size={30} />, 
-        name: "HTML5", 
-        level: 95,
+        icon: <SiJupyter size={30} />, 
+        name: "Gradio/Streamlit", 
+        level: 85,
         color: "bg-orange-500",
         textColor: "text-white",
-        description: "Semantic markup language for structuring accessible web content."
-      },
-      { 
-        icon: <FaCss3Alt size={30} />, 
-        name: "CSS3", 
-        level: 92,
-        color: "bg-blue-600",
-        textColor: "text-white",
-        description: "Styling language for designing visually appealing web page presentations."
+        description: "Interactive ML app deployment with configurable UI for demos and user testing."
       }
     ]
   },
   {
-    category: "Backend & Databases",
-    id: "backend",
+    category: "ML/DL & AI Engineering",
+    id: "ml",
     skills: [
       { 
-        icon: <FaNodeJs size={30} />, 
-        name: "Node.js", 
-        level: 85,
-        color: "bg-green-600",
+        icon: <SiPytorch size={30} />, 
+        name: "PyTorch", 
+        level: 88,
+        color: "bg-orange-600",
         textColor: "text-white",
-        description: "JavaScript runtime for building scalable and efficient server-side applications."
+        description: "Deep learning, transformer fine-tuning, PEFT/LoRA, and GPU-accelerated training."
       },
       { 
-        icon: <SiMongodb size={30} />, 
-        name: "MongoDB", 
+        icon: <SiTensorflow size={30} />, 
+        name: "TensorFlow", 
+        level: 75,
+        color: "bg-orange-400",
+        textColor: "text-white",
+        description: "Neural networks, model deployment, and production ML pipelines."
+      },
+      { 
+        icon: <SiScikitlearn size={30} />, 
+        name: "Scikit-learn", 
         level: 82,
-        color: "bg-green-700",
-        textColor: "text-white",
-        description: "NoSQL document database with flexible schema design for diverse data."
-      },
-      { 
-        icon: <SiPostgresql size={30} />, 
-        name: "PostgreSQL", 
-        level: 80,
-        color: "bg-blue-900",
-        textColor: "text-white",
-        description: "Advanced open-source relational database system known for reliability."
-      },
-      { 
-        icon: <SiMysql size={30} />, 
-        name: "MySQL", 
-        level: 78,
         color: "bg-blue-600",
         textColor: "text-white",
-        description: "Popular relational database management system for web applications."
+        description: "Classical ML algorithms, preprocessing, and model evaluation."
       },
       { 
-        icon: <SiSqlite size={30} />, 
-        name: "SQLite", 
-        level: 75,
-        color: "bg-blue-500",
+        icon: <FaPython size={30} />, 
+        name: "Transformers", 
+        level: 90,
+        color: "bg-yellow-600",
+        textColor: "text-black",
+        description: "BERT, RoBERTa, FLAN-T5 fine-tuning with LoRA/PEFT for efficient training."
+      },
+      { 
+        icon: <SiPandas size={30} />, 
+        name: "Pandas/NumPy", 
+        level: 88,
+        color: "bg-blue-400",
         textColor: "text-white",
-        description: "Lightweight disk-based database, ideal for embedded systems and small apps."
+        description: "Data manipulation, analysis, and preprocessing for ML workflows."
       },
       { 
-        icon: <SiPrisma size={30} />, 
-        name: "Prisma ORM", 
-        level: 83,
-        color: "bg-slate-900 dark:bg-slate-200",
-        textColor: "text-white dark:text-slate-900",
-        description: "Next-generation ORM for Node.js and TypeScript, simplifying database interactions."
+        icon: <SiJupyter size={30} />, 
+        name: "Jupyter", 
+        level: 85,
+        color: "bg-orange-400",
+        textColor: "text-white",
+        description: "Interactive notebooks for research, experimentation, and model development."
       }
     ]
   },
@@ -143,82 +167,90 @@ const skillCategories = [
     id: "languages",
     skills: [
       { 
-        icon: <SiJavascript size={30} />, 
-        name: "JavaScript", 
-        level: 90,
-        color: "bg-yellow-400",
-        textColor: "text-black",
-        description: "Core language for web development, enabling interactive and dynamic content."
-      },
-      { 
         icon: <FaPython size={30} />, 
         name: "Python", 
-        level: 78,
+        level: 92,
         color: "bg-blue-600",
         textColor: "text-white",
-        description: "Versatile language for web, data analysis, machine learning, and automation."
+        description: "Primary language for ML/DL, data science, backend APIs, and automation."
       },
       { 
-        icon: <SiC size={30} />, 
-        name: "C Programming", 
-        level: 75,
-        color: "bg-gray-700",
+        icon: <SiCplusplus size={30} />, 
+        name: "C++", 
+        level: 80,
+        color: "bg-blue-700",
         textColor: "text-white",
-        description: "Powerful low-level systems programming language for performance-critical tasks."
+        description: "Systems programming, competitive programming, and performance-critical tasks."
       },
       { 
-        icon: <FaJava size={30} />, 
-        name: "Java", 
-        level: 70,
-        color: "bg-red-600",
+        icon: <SiJavascript size={30} />, 
+        name: "JavaScript", 
+        level: 88,
+        color: "bg-yellow-400",
+        textColor: "text-black",
+        description: "Full-stack development with modern frameworks and async programming."
+      },
+      { 
+        icon: <SiTypescript size={30} />, 
+        name: "TypeScript", 
+        level: 90,
+        color: "bg-blue-700",
         textColor: "text-white",
-        description: "Object-oriented programming language for cross-platform enterprise applications."
+        description: "Type-safe development for scalable, maintainable full-stack applications."
+      },
+      { 
+        icon: <SiMysql size={30} />, 
+        name: "SQL", 
+        level: 85,
+        color: "bg-blue-600",
+        textColor: "text-white",
+        description: "Database design, complex queries, optimization, and data modeling."
       }
     ]
   },
   {
-    category: "Data Science & Machine Learning",
-    id: "ml",
+    category: "Full-Stack Development",
+    id: "fullstack",
     skills: [
       { 
-        icon: <SiPytorch size={30} />, 
-        name: "PyTorch", 
-        level: 25, 
-        color: "bg-orange-500",
-        textColor: "text-white",
-        description: "Open-source deep learning framework for building and training neural network models."
+        icon: <SiNextdotjs size={30} />, 
+        name: "Next.js", 
+        level: 90,
+        color: "bg-black dark:bg-white/90",
+        textColor: "text-white dark:text-black",
+        description: "SSR, ISR, API routes for performant, production-ready web applications."
       },
       { 
-        icon: <SiTensorflow size={30} />, 
-        name: "TensorFlow", 
-        level: 20,
-        color: "bg-orange-400",
+        icon: <FaNodeJs size={30} />, 
+        name: "Node.js", 
+        level: 85,
+        color: "bg-green-600",
         textColor: "text-white",
-        description: "Comprehensive end-to-end ML platform for model development and deployment."
+        description: "Backend development, RESTful APIs, and microservices architecture."
       },
       { 
-        icon: <SiScikitlearn size={30} />, 
-        name: "Scikit-learn", 
-        level: 50,
-        color: "bg-blue-600",
+        icon: <SiPostgresql size={30} />, 
+        name: "PostgreSQL", 
+        level: 82,
+        color: "bg-blue-900",
         textColor: "text-white",
-        description: "Machine learning library for classical ML algorithms and data preprocessing tasks."
+        description: "Relational database for production apps with complex queries and indexing."
       },
       { 
-        icon: <SiPandas size={30} />, 
-        name: "Pandas/NumPy", 
-        level: 75,
-        color: "bg-blue-400",
+        icon: <FaReact size={30} />, 
+        name: "React", 
+        level: 90,
+        color: "bg-blue-500",
         textColor: "text-white",
-        description: "Essential data manipulation and numerical analysis tools for Python."
+        description: "Component-based UI with hooks, context, and modern React patterns."
       },
       { 
-        icon: <SiJupyter size={30} />, 
-        name: "Jupyter", 
-        level: 70,
-        color: "bg-orange-600",
+        icon: <SiTailwindcss size={30} />, 
+        name: "Tailwind CSS", 
+        level: 95,
+        color: "bg-cyan-500",
         textColor: "text-white",
-        description: "Interactive computing environment for data science, machine learning, and education."
+        description: "Utility-first styling for rapid, responsive UI development."
       }
     ]
   },
@@ -228,27 +260,35 @@ const skillCategories = [
     skills: [
       { 
         icon: <FaGitAlt size={30} />, 
-        name: "Git", 
-        level: 88,
+        name: "Git/GitHub", 
+        level: 90,
         color: "bg-orange-600",
         textColor: "text-white",
-        description: "Distributed version control system for tracking changes and collaborating on code."
-      },
-      { 
-        icon: <FaGithub size={30} />, 
-        name: "GitHub", 
-        level: 85,
-        color: "bg-gray-900 dark:bg-gray-200",
-        textColor: "text-white dark:text-gray-900",
-        description: "Web-based hosting service for software development and version control using Git."
+        description: "Version control, collaboration, CI/CD, and open-source contributions."
       },
       { 
         icon: <FaDocker size={30} />, 
         name: "Docker", 
-        level: 75,
+        level: 80,
         color: "bg-blue-500",
         textColor: "text-white",
-        description: "Containerization platform for developing, shipping, and running applications consistently."
+        description: "Containerization for consistent ML/web deployments across environments."
+      },
+      { 
+        icon: <SiAmazon size={30} />, 
+        name: "AWS", 
+        level: 70,
+        color: "bg-orange-500",
+        textColor: "text-black",
+        description: "Cloud deployment, S3, EC2, Lambda for scalable applications."
+      },
+      { 
+        icon: <SiLinux size={30} />, 
+        name: "Linux/CUDA", 
+        level: 85,
+        color: "bg-black",
+        textColor: "text-white",
+        description: "GPU-accelerated training, system administration, and shell scripting."
       }
     ]
   }
@@ -415,10 +455,10 @@ export default function Skills() {
         <Tabs defaultValue="all" className="mb-12">
           <TabsList className="w-full max-w-2xl mx-auto grid grid-cols-3 sm:grid-cols-6 mb-10 bg-gray-200/70 dark:bg-gray-800/70 backdrop-blur-sm p-1.5 rounded-lg shadow-inner">
             <TabsTrigger value="all" className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md rounded-md py-1.5 text-sm">All</TabsTrigger>
-            <TabsTrigger value="frontend" className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md rounded-md py-1.5 text-sm">Frontend</TabsTrigger>
-            <TabsTrigger value="backend" className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md rounded-md py-1.5 text-sm">Backend</TabsTrigger>
+            <TabsTrigger value="llmops" className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md rounded-md py-1.5 text-sm">LLMOps</TabsTrigger>
+            <TabsTrigger value="ml" className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md rounded-md py-1.5 text-sm">ML/DL</TabsTrigger>
             <TabsTrigger value="languages" className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md rounded-md py-1.5 text-sm">Languages</TabsTrigger>
-            <TabsTrigger value="ml" className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md rounded-md py-1.5 text-sm">ML/AI</TabsTrigger>
+            <TabsTrigger value="fullstack" className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md rounded-md py-1.5 text-sm">Full-Stack</TabsTrigger>
             <TabsTrigger value="tools" className="data-[state=active]:bg-white dark:data-[state=active]:bg-slate-700 data-[state=active]:shadow-md rounded-md py-1.5 text-sm">Tools</TabsTrigger>
           </TabsList>
           

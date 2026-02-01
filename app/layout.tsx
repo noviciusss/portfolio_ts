@@ -19,13 +19,13 @@ const inter = Inter({
 
 // Improved metadata for SEO
 export const metadata: Metadata = {
-  title: "Samarth Singh - Full Stack Developer Portfolio",
-  description: "Full stack developer specializing in Next.js, React, and modern web technologies, creating beautiful and responsive web applications.",
-  keywords: ["developer", "nextjs", "react", "portfolio", "fullstack", "web developer"],
-  authors: [{ name: "Samarth Singh" }],
+  title: "Samarth Pratap Singh | GenAI & RAG Engineer | BTech CSE",
+  description: "BTech CSE student (CGPA 8.45) specializing in GenAI, RAG systems, and LLMOps. Building production LLM applications with hybrid search, LoRA fine-tuning, and semantic retrieval. Published models on Hugging Face.",
+  keywords: "GenAI, RAG, Retrieval Augmented Generation, LLMOps, LangChain, Qdrant, FAISS, Vector Database, PEFT, LoRA, Transformers, FLAN-T5, RoBERTa, Hugging Face, FastAPI, PyTorch, Semantic Search, AI Engineer Intern, Machine Learning Intern",
+  authors: [{ name: "Samarth Pratap Singh" }],
   openGraph: {
-    title: "Samarth Singh - Full Stack Developer",
-    description: "Full stack developer specializing in Next.js, React, and modern web technologies.",
+    title: "Samarth Pratap Singh | GenAI & RAG Engineer",
+    description: "Building production RAG systems and fine-tuning LLMs. 8.45 CGPA BTech CSE student seeking GenAI internships.",
     url: "https://samarthsingh.vercel.app/",
     siteName: "Samarth Singh Portfolio",
     locale: "en_US",
@@ -41,8 +41,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Samarth Singh - Full Stack Developer",
-    description: "Full stack developer specializing in Next.js, React, and modern web technologies.",
+    title: "Samarth Pratap Singh | GenAI & RAG Engineer",
+    description: "Specialist in RAG, LLMOps, and production LLM systems",
   },
   applicationName: "Samarth Singh Portfolio",
   viewport: "width=device-width, initial-scale=1",
@@ -71,14 +71,24 @@ export default function RootLayout({
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Person",
-            "name": "Samarth Singh",
+            "name": "Samarth Pratap Singh",
             "url": "https://samarthsingh.vercel.app",
-            "jobTitle": "Full Stack Developer",
+            "jobTitle": "GenAI & RAG Engineer | BTech CSE Student",
+            "alumniOf": {
+              "@type": "EducationalOrganization",
+              "name": "VIT Bhopal University"
+            },
             "sameAs": [
               "https://github.com/noviciusss",
-              "https://linkedin.com/in/samarth-singh"
+              "https://linkedin.com/in/spsamar"
             ],
-            "knowsAbout": ["React", "Next.js", "TypeScript", "Node.js", "MongoDB"]
+            "knowsAbout": [
+              "RAG", "Retrieval Augmented Generation", "GenAI", "LLMOps",
+              "LangChain", "Qdrant", "FAISS", "Vector Databases",
+              "PEFT", "LoRA", "Transformers", "Fine-Tuning",
+              "PyTorch", "FastAPI", "Hugging Face", "Semantic Search",
+              "Python", "TypeScript", "Next.js", "Machine Learning"
+            ]
           })}
         </Script>
       </head>

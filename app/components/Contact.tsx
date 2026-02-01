@@ -79,8 +79,8 @@ export default function Contact() {
     {
       icon: <FiMapPin size={20} />,
       title: "Location",
-      value: "Prayagraj, UP",
-      link: null, // No link for location in this example
+      value: "Pratapgarh, U.P.",
+      link: null,
     },
   ];
 

@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { FiDownload, FiUser, FiCode, FiCoffee } from "react-icons/fi";
+import { FiDownload, FiUser, FiCode, FiStar } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -46,9 +46,9 @@ StatCard.displayName = "StatCard";
 
 export default function About() {
   const stats = useMemo(() => [
-    { icon: <FiUser size={16} className="sm:w-5 sm:h-5" />, label: "Years Experience", value: "1+" },
-    { icon: <FiCode size={16} className="sm:w-5 sm:h-5" />, label: "Projects Completed", value: "5+" },
-    { icon: <FiCoffee size={16} className="sm:w-5 sm:h-5" />, label: "Coffees Consumed", value: "1000+" },
+    { icon: <FiUser size={16} className="sm:w-5 sm:h-5" />, label: "Years Experience", value: "2+" },
+    { icon: <FiCode size={16} className="sm:w-5 sm:h-5" />, label: "Projects Completed", value: "10+" },
+    { icon: <FiStar size={16} className="sm:w-5 sm:h-5" />, label: "CGPA", value: "8.45/10" },
   ], []);
 
   return (
@@ -131,14 +131,14 @@ export default function About() {
             className="w-full max-w-full order-2 lg:order-none flex flex-col items-center lg:items-start"
           >
             <h3 className="text-xl sm:text-2xl md:text-3xl font-heading font-semibold mb-4 sm:mb-6 text-gray-800 dark:text-gray-100 text-center lg:text-left">
-              Passionate Developer & Digital Creator
+              GenAI Engineer & Research Enthusiast
             </h3>
             <div className="prose dark:prose-invert max-w-full text-gray-600 dark:text-gray-300 text-center lg:text-left">
               <p className="text-sm sm:text-base leading-relaxed mb-3 sm:mb-4">
-                I am a passionate developer specializing in building modern web applications using the MERN stack, Next.js, and AI technologies. With expertise in both frontend and backend development, I create seamless user experiences with clean, efficient code.
+                BTech Computer Science student at VIT Bhopal (CGPA 8.45) specializing in Generative AI, RAG systems, and LLMOps. Proven expertise in building production-ready LLM applications with semantic search, hybrid retrieval (BM25 + dense vectors), and parameter-efficient fine-tuning (LoRA/PEFT). Experienced in deploying transformer models with evaluation frameworks achieving 89%+ correctness.
               </p>
               <p className="text-sm sm:text-base leading-relaxed mb-6 sm:mb-8">
-                My journey in tech began with a curiosity about how things work on the web, which evolved into a career crafting digital experiences. I continuously expand my skill set to stay at the forefront of web development trends and technologies.
+                Passionate about making LLMs more accurate and grounded through intelligent retrieval architectures. Published fine-tuned models on Hugging Face with comprehensive evaluation (ROUGE, BERTScore, METEOR). Seeking GenAI/LLMOps internships to build scalable AI systems that solve real-world problems with measurable impact.
               </p>
             </div>
             

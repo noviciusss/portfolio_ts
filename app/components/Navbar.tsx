@@ -229,7 +229,7 @@ export default function Navbar() {
                       </div>
                     </nav>
                     <div className="mt-auto pb-8 text-center text-sm text-gray-500 dark:text-gray-400">
-                      &copy; {new Date().getFullYear()} Your Name
+                      &copy; {new Date().getFullYear()} Samarth Pratap Singh
                     </div>
                   </div>
                 </SheetContent>

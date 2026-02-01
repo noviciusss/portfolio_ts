@@ -1,36 +1,47 @@
 # Modern Portfolio Website
 
-A stunning, responsive portfolio website built with cutting-edge technologies, featuring smooth animations, dark/light mode support, and modern UI components.
+A stunning, responsive portfolio website showcasing GenAI, RAG, and LLMOps expertise with cutting-edge technologies, featuring smooth animations, dark/light mode support, and modern UI components. Optimized for GenAI/RAG/LLMOps internship opportunities.
 
 ![Portfolio Preview](./public/portfolio-preview.png)
 
 ## 🌟 Features
 
+- **GenAI-Focused Content**: Showcasing RAG applications, LLM fine-tuning, and production ML systems
+- **Interactive Metrics**: Real-time project metrics (accuracy, latency, ROUGE scores) displayed with animated cards
+- **Featured Projects**: Gradient-bordered cards highlighting DoCopilot, FLAN-T5, and RoBERTa projects
+- **Floating Resume Download**: Easy-access resume button with animated tooltips
 - **Responsive Design**: Fully responsive across all devices and screen sizes
 - **Dark/Light Mode**: Seamless theme switching with system preference detection
 - **Smooth Animations**: Powered by Framer Motion for delightful user interactions
 - **Modern UI Components**: Custom-built components with shadcn/ui
-- **Performance Optimized**: Fast loading times with Next.js 14 optimizations
+- **Performance Optimized**: Fast loading times with Next.js 15 optimizations
 - **TypeScript**: Full type safety throughout the application
 - **Interactive Elements**: Engaging hover effects and micro-interactions
-- **SEO Optimized**: Meta tags and structured data for better search visibility
+- **SEO Optimized**: Meta tags and structured data for GenAI/RAG engineer visibility
 
 ## 🚀 Tech Stack
 
 ### Core Framework
-- **[Next.js 14](https://nextjs.org/)** - React framework with App Router
-- **[TypeScript](https://www.typescriptlang.org/)** - Type-safe JavaScript
-- **[React 18](https://react.dev/)** - UI library with latest features
+- **[Next.js 15](https://nextjs.org/)** - React framework with App Router and Turbopack
+- **[TypeScript 5](https://www.typescriptlang.org/)** - Type-safe JavaScript
+- **[React 19](https://react.dev/)** - UI library with latest features
 
 ### Styling & UI
-- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework
+- **[Tailwind CSS 4](https://tailwindcss.com/)** - Utility-first CSS framework
 - **[shadcn/ui](https://ui.shadcn.com/)** - Re-usable component library
 - **[Framer Motion](https://www.framer.com/motion/)** - Production-ready motion library
+- **[Aceternity UI](https://ui.aceternity.com/)** - 3D effects and advanced components
 - **[Lucide React](https://lucide.dev/)** - Beautiful SVG icon library
 - **[React Icons](https://react-icons.github.io/react-icons/)** - Popular icon library
 
+### GenAI & Data Fetching
+- **[SWR](https://swr.vercel.app/)** - Data fetching for GitHub and LeetCode stats
+- **[Resend](https://resend.com/)** - Email service for contact form
+
 ### Additional Libraries
 - **[next-themes](https://github.com/pacocoursey/next-themes)** - Theme management
+- **[React Hook Form](https://react-hook-form.com/)** - Form validation
+- **[Zod](https://zod.dev/)** - TypeScript-first schema validation
 - **[clsx](https://github.com/lukeed/clsx)** - Conditional className utility
 - **[tailwind-merge](https://github.com/dcastil/tailwind-merge)** - Merge Tailwind classes
 
@@ -66,21 +77,33 @@ portfolio_ts/
 ├── app/
 │   ├── components/          # React components
 │   │   ├── ui/             # shadcn/ui components
-│   │   ├── About.tsx       # About section
+│   │   ├── About.tsx       # About section with CGPA stats
+│   │   ├── Achievements.tsx # Google cert, Coursera, HF models
+│   │   ├── Approach.tsx    # Development approach
+│   │   ├── CodingStats.tsx # GitHub & LeetCode stats
 │   │   ├── Contact.tsx     # Contact form
+│   │   ├── Education.tsx   # VIT Bhopal education
+│   │   ├── FloatingResumeButton.tsx # Animated resume download
 │   │   ├── Footer.tsx      # Footer component
-│   │   ├── Header.tsx      # Navigation header
-│   │   ├── Hero.tsx        # Hero section
-│   │   ├── Projects.tsx    # Projects showcase
-│   │   └── Skills.tsx      # Skills section
+│   │   ├── Hero.tsx        # GenAI Engineer hero section
+│   │   ├── Navbar.tsx      # Navigation header
+│   │   ├── Projects.tsx    # Projects with metrics & featured badges
+│   │   └── Skills.tsx      # 9 LLMOps skills + ML/DL/Full-Stack
+│   ├── api/
+│   │   └── send-email/
+│   │       └── route.ts    # Email API endpoint
 │   ├── globals.css         # Global styles
-│   ├── layout.tsx          # Root layout
+│   ├── layout.tsx          # Root layout with SEO
 │   └── page.tsx           # Home page
+├── components/
+│   └── ui/                # shadcn/ui components
 ├── lib/
 │   └── utils.ts           # Utility functions
 ├── public/                # Static assets
-│   ├── images/           # Project images
-│   └── Resume_samarth.pdf # Resume file
+│   ├── docopilot.png     # RAG project image
+│   ├── flan-t5.png       # Dialogue summarizer image
+│   ├── roberta-banking.png # Intent classifier image
+│   └── Resume.pdf        # Resume file
 └── components.json       # shadcn/ui config
 ```
 
@@ -116,34 +139,52 @@ portfolio_ts/
 ## 🎯 Key Components
 
 ### Hero Section
-- Animated name and title
+- **GenAI Engineer & RAG Specialist** positioning
+- Animated name with gradient text effects
+- LinkedIn/GitHub hover cards with stats
 - Call-to-action buttons
-- Background gradient effects
-- Responsive typography
+- Background gradient mesh effects
 
 ### About Section
 - Interactive profile card with EvervaultCard effect
-- Statistics cards with hover animations
-- Professional summary
-- Downloadable resume
+- **Live statistics**: 2+ years, 10+ projects, 8.45 CGPA
+- GenAI-focused professional summary
+- Resume-aligned content for internship optimization
+
+### Skills Section
+- **9 LLMOps & GenAI skills**: LangChain, LangGraph, Agno, Vector DBs, FastAPI, Hugging Face, Prompt Engineering, MLflow/W&B, Gradio/Streamlit
+- 5 categorized sections: LLMOps, ML/DL, Languages, Full-Stack, Tools
+- Progress indicators with skill levels
+- Interactive hover effects with descriptions
+- Technology icons from react-icons
 
 ### Projects Section
-- 3D pin container effects
-- Project cards with image previews
+- **Featured badge system** for GenAI projects
+- **Metric cards** displaying project results (accuracy, latency, ROUGE scores)
+- **Gradient borders** on featured cards (DoCopilot, FLAN-T5, RoBERTa)
+- 3D pin container effects with hover animations
+- Real project images: docopilot.png, flan-t5.png, roberta-banking.png
 - Technology tags with color coding
 - Live demo and GitHub links
 
-### Skills Section
-- Categorized skill display
-- Progress indicators
-- Interactive hover effects
-- Technology icons
+### Achievements Section
+- Google IT Support Certificate with Credly verification
+- Applied ML in Python - Coursera completion
+- Published Hugging Face models (dialogue summarizer, intent classifier)
+- VIT Bhopal academic excellence (8.45 CGPA)
+
+### Floating Resume Button
+- **Animated FAB** (Floating Action Button) appearing on scroll
+- Gradient background with pulse animation
+- Tooltip showing "GenAI Engineer & RAG Specialist"
+- Smooth expand/collapse on hover
+- Downloads Resume.pdf with custom filename
 
 ### Contact Section
-- Functional contact form
-- Social media links
+- Functional contact form with Resend integration
+- Social media links (LinkedIn, GitHub)
+- Location: Pratapgarh, U.P.
 - Professional email
-- Location information
 
 ## 🔧 Configuration
 
@@ -204,10 +245,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👨‍💻 Author
 
-**Samarth Singh**
-- Portfolio: [my-portfolio-url.vercel.app](https://portfolio-noviciusss.vercel.app/)
+**Samarth Pratap Singh** - GenAI Engineer & RAG Specialist
+- Portfolio: [portfolio-noviciusss.vercel.app](https://portfolio-noviciusss.vercel.app/)
 - GitHub: [@noviciusss](https://github.com/noviciusss)
-- LinkedIn: [My LinkedIn Profile](https://www.linkedin.com/in/spsamar/)
+- LinkedIn: [Samarth Pratap Singh](https://www.linkedin.com/in/spsamar/)
+- Hugging Face: [@noviciusss](https://huggingface.co/noviciusss)
+- Location: Pratapgarh, U.P., India
+- Education: BTech CSE, VIT Bhopal (8.45 CGPA)
 
 ## 🙏 Acknowledgments
 

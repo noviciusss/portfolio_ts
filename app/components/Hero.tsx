@@ -32,7 +32,7 @@ export default function Hero() {
               transition={{ delay: 0.3, duration: 0.5 }}
               className="inline-block px-3 py-1 mb-4 text-sm font-medium bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 rounded-full"
             >
-              FullStack & ML Developer
+              BTech CSE | GenAI & RAG Engineer
             </motion.span>
             
             <motion.h1
@@ -50,7 +50,7 @@ export default function Hero() {
               transition={{ delay: 0.5, duration: 0.8 }}
               className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-lg"
             >
-              Crafting beautiful web experiences with modern technologies. Specialized in MERN stack, Next.js, and AI development.
+              Building production-ready GenAI systems with RAG and LLMOps. Specialized in semantic search, fine-tuning transformers, and deploying intelligent LLM applications with retrieval architectures.
             </motion.p>
             
             <motion.div 
@@ -88,7 +88,7 @@ export default function Hero() {
               
                 <HoverCard>
                   <HoverCardTrigger asChild>
-                    <a href="https://github.com" target="_blank" rel="noreferrer" 
+                    <a href="https://github.com/noviciusss" target="_blank" rel="noreferrer" 
                       className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                       <FaGithub size={24} />
                     </a>
@@ -96,37 +96,22 @@ export default function Hero() {
                   <HoverCardContent className="w-48">
                     <div className="flex flex-col gap-2">
                       <span className="text-sm font-semibold">GitHub</span>
-                      <span className="text-xs text-gray-500">View my open-source projects</span>
+                      <span className="text-xs text-gray-500">Check out my code and projects</span>
                     </div>
                   </HoverCardContent>
                 </HoverCard>
                 {/* For linkedin */}
                 <HoverCard>
                   <HoverCardTrigger asChild>
-                    <a href="https://github.com" target="_blank" rel="noreferrer" 
+                    <a href="https://www.linkedin.com/in/spsamar/" target="_blank" rel="noreferrer" 
                       className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                       <FaLinkedin size={24} />
                     </a>
                   </HoverCardTrigger>
                   <HoverCardContent className="w-48">
                     <div className="flex flex-col gap-2">
-                      <span className="text-sm font-semibold">Linkden</span>
-                      <span className="text-xs text-gray-500">View my open-source projects</span>
-                    </div>
-                  </HoverCardContent>
-                </HoverCard>
-                {/* for instagram */}
-                <HoverCard>
-                  <HoverCardTrigger asChild>
-                    <a href="https://github.com" target="_blank" rel="noreferrer" 
-                      className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                      <FaTwitter size={24} />
-                    </a>
-                  </HoverCardTrigger>
-                  <HoverCardContent className="w-48">
-                    <div className="flex flex-col gap-2">
-                      <span className="text-sm font-semibold">Twitter</span>
-                      <span className="text-xs text-gray-500">View my open-source projects</span>
+                      <span className="text-sm font-semibold">LinkedIn</span>
+                      <span className="text-xs text-gray-500">View my professional network</span>
                     </div>
                   </HoverCardContent>
                 </HoverCard>

@@ -22,22 +22,21 @@ const fadeInUp = {
 
 const educationData = [
   {
-    degree: "Bachelor of Science in Computer Science",
-    institution: "Vit Bhopal University",
+    degree: "Bachelor of Technology in Computer Science and Engineering",
+    institution: "VIT Bhopal University",
     years: "2023 - 2027",
-    location: "Bhopal, India",
-    description: "Specialized in Artificial Intelligence and Machine Learning.",
-    courses: ["Data Structures", "Algorithms", "Machine Learning", "Web Development"],
+    location: "Bhopal, Madhya Pradesh",
+    description: "CGPA: 8.45/10 | Focus on Artificial Intelligence, Machine Learning, and Cloud Computing",
+    courses: [
+      "Data Structures & Algorithms",
+      "Operating Systems",
+      "Object-Oriented Programming",
+      "Computer Networks",
+      "Database Management Systems",
+      "Cloud Computing",
+      "Software Engineering"
+    ],
     icon: <FiBookOpen className="h-5 w-5" />
-  },
-  {
-    degree: "Full Stack Web Development Bootcamp",
-    institution: "Tech Academy",
-    years: "2023",
-    location: "Online",
-    description: "Intensive bootcamp focused on modern web technologies.",
-    courses: ["React", "Node.js", "MongoDB", "Express"],
-    icon: <FiAward className="h-5 w-5" />
   }
 ];
 
