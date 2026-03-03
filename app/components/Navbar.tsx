@@ -93,7 +93,7 @@ export default function Navbar() {
               className="flex items-center gap-2"
             >
               <Avatar className="h-8 w-8 border-2 border-blue-500">
-                <AvatarImage src="/your-avatar.jpg" alt="Your Name" />
+                <AvatarImage src="/unnamed.jpg" alt="Samarth Singh" />
                 <AvatarFallback className="bg-gradient-to-br from-blue-600 to-purple-600 text-white">SS</AvatarFallback>
               </Avatar>
               <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -196,7 +196,7 @@ export default function Navbar() {
                   <div className="flex flex-col h-full">
                     <div className="py-8 flex justify-center">
                       <Avatar className="h-16 w-16 border-4 border-blue-500">
-                        <AvatarImage src="/your-avatar.jpg" alt="Your Name" />
+                        <AvatarImage src="/unnamed.jpg" alt="Samarth Singh" />
                         <AvatarFallback className="text-2xl bg-gradient-to-br from-blue-600 to-purple-600 text-white">SS</AvatarFallback>
                       </Avatar>
                     </div>

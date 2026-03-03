@@ -74,6 +74,14 @@ const skillCategories = [
         textColor: "text-white",
         description: "Building production-grade API backends for LLM applications and RAG systems."
       },
+      {
+        icon: <SiOpenai size={30} />,
+        name: "Groq",
+        level: 82,
+        color: "bg-orange-500",
+        textColor: "text-white",
+        description: "Ultra-fast LLM inference via Groq API \u2014 powering Argus and DoCopilot with Llama and Gemma models."
+      },
       { 
         icon: <SiHuggingface size={30} />, 
         name: "Hugging Face", 

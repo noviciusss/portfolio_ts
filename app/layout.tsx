@@ -154,7 +154,7 @@ export default function RootLayout({
               }
             ],
             "description": "BTech CSE student (CGPA 8.45) at VIT Bhopal specializing in Generative AI, RAG systems, and LLMOps. Building production LLM applications with hybrid search, LoRA fine-tuning, and semantic retrieval.",
-            "email": "samarth9415@gmail.com"
+            "email": "samarthsin2006@gmail.com"
           })}
         </Script>
         
@@ -210,7 +210,7 @@ export default function RootLayout({
         </NextThemesProvider>
         
         {/* Preload crucial resources */}
-        <link rel="preload" as="image" href="/profile.jpg" />
+        <link rel="preload" as="image" href="/unnamed.jpg" />
       </body>
     </html>
   );

@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { memo, useMemo } from "react";
 
-import { EvervaultCard, Icon } from "@/components/ui/evervault-card"; 
+import { Icon } from "@/components/ui/evervault-card"; 
 import { BackgroundGradient } from "@/components/ui/background-gradient";
 
 const StatCard = memo(({ stat, index }: { stat: any; index: number }) => (
@@ -116,7 +116,7 @@ export default function About() {
                   Samarth Singh
                 </p>
                 <p className="text-xs sm:text-sm text-gray-300 dark:text-gray-400">
-                  Full Stack Developer
+                  GenAI &amp; RAG Engineer
                 </p>
               </div>
             </div>

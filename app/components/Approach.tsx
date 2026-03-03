@@ -43,9 +43,7 @@ const Approach = () => {
         <Card
           title="Deployment & Launch"
           icon={<AceternityIcon order="Phase 3" />}
-          des="This is where the magic happens! Based on the approved design, 
-          I'll translate everything into functional code, building your website
-          from the ground up."
+          des="After thorough testing and your final sign-off, I deploy your project to production with CI/CD pipelines, monitoring, and a smooth launch. Post-launch support ensures everything runs flawlessly from day one."
         >
           <CanvasRevealEffect
             animationSpeed={3.5}

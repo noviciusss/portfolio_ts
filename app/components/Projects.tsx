@@ -1,7 +1,6 @@
 "use client";
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { FiGithub, FiExternalLink } from "react-icons/fi";
+import { FiGithub, FiExternalLink, FiBookOpen } from "react-icons/fi";
 import { FaReact, FaNodeJs, FaPython, FaHtml5, FaCss3 } from "react-icons/fa";
 import { 
   SiNextdotjs, 
@@ -31,6 +30,7 @@ type Project = {
   tags: string[];
   github: string;
   demo: string;
+  blog?: string;
   featured: boolean;
   metrics?: ProjectMetric[];
 }; 
@@ -38,12 +38,12 @@ type Project = {
 // Helper function to get tag style based on technology category
 const getTagStyle = (tag: string) => {
   // Frontend technologies
-  if (['React', 'Next.js', 'Vue', 'Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Tailwind CSS', 'Framer Motion'].includes(tag)) {
+  if (['React', 'Next.js', 'Vue', 'Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Tailwind CSS', 'Framer Motion', 'Gradio'].includes(tag)) {
     return "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800";
   }
   
   // Backend technologies
-  if (['Node.js', 'Express', 'Django', 'Flask', 'Spring', 'FastAPI'].includes(tag)) {
+  if (['Node.js', 'Express', 'Django', 'Flask', 'Spring', 'FastAPI', 'Docker'].includes(tag)) {
     return "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800";
   }
   
@@ -53,7 +53,7 @@ const getTagStyle = (tag: string) => {
   }
   
   // AI/ML technologies
-  if (['Python', 'TensorFlow', 'PyTorch', 'spaCy', 'scikit-learn'].includes(tag)) {
+  if (['Python', 'TensorFlow', 'PyTorch', 'spaCy', 'scikit-learn', 'LangChain', 'LangGraph', 'LangSmith', 'Groq', 'Qdrant', 'RAG', 'NLP', 'PEFT', 'LoRA', 'Transformers', 'CUDA', 'Hugging Face'].includes(tag)) {
     return "bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-800";
   }
   
@@ -83,6 +83,20 @@ const getTagIcon = (tag: string) => {
 
 const projects = [
   {
+    title: "Argus — Autonomous Research Engine",
+    description: "Production-grade multi-agent research pipeline using LangGraph supervisor pattern with 5 specialist agents (planner, researcher, critic, writer, supervisor) orchestrated via LLM-driven routing. Async job architecture with SQLite persistence and LangGraph checkpointing — research jobs survive agent failures and every LLM call is traced end-to-end in LangSmith. Integrates Tavily, ArXiv, and Wikipedia to synthesize cited markdown reports in 30–90 seconds.",
+    image: "/argus.png",
+    metrics: [
+      { label: "Agents", value: "5" },
+      { label: "Report Time", value: "30–90s" },
+      { label: "Tools", value: "3" }
+    ],
+    tags: ["LangGraph", "FastAPI", "Groq", "Docker", "LangSmith", "Python"],
+    github: "https://github.com/noviciusss/argus",
+    demo: "https://argus-h0uw.onrender.com/",
+    featured: true,
+  },
+  {
     title: "DoCopilot - RAG Document Q&A System",
     description: "Production-grade RAG application with hybrid search (BM25 + dense vectors) using Qdrant and reranking. Achieved 89.2% correctness, 90.5% relevance, 100% source grounding on 40-query evaluation with guardrails for PII redaction and prompt injection detection. Built full-stack with Next.js frontend and FastAPI backend, processing PDFs/TXT with 2.86s average latency.",
     image: "/docopilot.png",
@@ -94,6 +108,7 @@ const projects = [
     tags: ["Next.js", "FastAPI", "Qdrant", "LangChain", "RAG", "Python"],
     github: "https://github.com/noviciusss/DoCopilot",
     demo: "",
+    blog: "https://medium.com/@samarthsin2006/docopilot-building-a-production-grade-rag-system-with-hybrid-search-reranking-and-safety-c943fc2626be",
     featured: true,
   },
   {
@@ -154,8 +169,6 @@ const projects = [
 ];
 
 export default function Projects() {
-  const [filter, setFilter] = useState("all");
-  
   return (
     <section className="py-24 px-4 ">
       <div className="max-w-6xl mx-auto">
@@ -206,7 +219,7 @@ export default function Projects() {
             >
               <PinContainer
                 title={project.title}
-                href={project.demo}
+                href={project.demo || project.github}
                 containerClassName="mt-10"
               >
                 <div className={`flex flex-col w-[320px] bg-white dark:bg-neutral-900 rounded-xl overflow-hidden shadow-lg border ${
@@ -272,24 +285,50 @@ export default function Projects() {
                     </div>
                     
                     <div className="flex justify-between items-center pt-3 mt-auto border-t border-gray-200 dark:border-gray-700">
-                      <a 
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
-                      >
-                        <FiGithub className="h-5 w-5" />
-                      </a>
+                      <div className="flex items-center gap-3">
+                        <a 
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
+                          title="View on GitHub"
+                        >
+                          <FiGithub className="h-5 w-5" />
+                        </a>
+                        {project.blog && (
+                          <a
+                            href={project.blog}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gray-500 hover:text-green-600 dark:text-gray-400 dark:hover:text-green-400 transition-colors"
+                            title="Read Blog Post"
+                          >
+                            <FiBookOpen className="h-5 w-5" />
+                          </a>
+                        )}
+                      </div>
                       
-                      <a 
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline"
-                      >
-                        View Live
-                        <FiExternalLink className="ml-1.5 h-4 w-4" />
-                      </a>
+                      {project.demo ? (
+                        <a 
+                          href={project.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline"
+                        >
+                          View Live
+                          <FiExternalLink className="ml-1.5 h-4 w-4" />
+                        </a>
+                      ) : (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                        >
+                          View Code
+                          <FiExternalLink className="ml-1.5 h-4 w-4" />
+                        </a>
+                      )}
                       </div>
                     </div>
                   </div>

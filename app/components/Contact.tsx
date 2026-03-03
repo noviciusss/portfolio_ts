@@ -59,8 +59,28 @@ export default function Contact() {
 
   // Form submission handler with improved UX
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // Existing submission logic
-    // ...
+    setIsSubmitting(true);
+    setSubmitError(null);
+    setIsSuccess(false);
+    try {
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send message. Please try again.");
+      }
+      setIsSuccess(true);
+      form.reset();
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error ? error.message : "Something went wrong. Please try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   const contactInfo = [

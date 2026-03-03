@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaGithub, FaCode, FaExternalLinkAlt } from "react-icons/fa";
 import { SiLeetcode } from "react-icons/si";
+import Image from "next/image";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
@@ -82,7 +83,7 @@ export default function CodingStats() {
   const leetcodeRatingPercentage = (leetcodeStats.contestRating / 3000) * 100;
   
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-850">
+    <section className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-900">
       <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
@@ -158,11 +159,14 @@ export default function CodingStats() {
               <CardContent className="pt-2 pb-6">
                 <div className="space-y-4 overflow-hidden">
                   {/* GitHub Stats Card */}
-                  <div className="rounded-lg overflow-hidden border border-gray-800">
-                    <img 
-                      src={githubStatsUrl} 
-                      alt="GitHub Stats" 
+                  <div className="rounded-lg overflow-hidden border border-gray-800 relative w-full" style={{ minHeight: '195px' }}>
+                    <Image
+                      src={githubStatsUrl}
+                      alt="GitHub Stats for noviciusss"
+                      width={495}
+                      height={195}
                       className="w-full h-auto"
+                      unoptimized
                     />
                   </div>
                   
