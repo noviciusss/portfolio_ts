@@ -1,3 +1,4 @@
 fastapi
 groq
 rank-bm25
+python-dotenv

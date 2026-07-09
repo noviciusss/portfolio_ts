@@ -9,16 +9,19 @@ import pathlib
 import time
 import string
 from collections import defaultdict
-from dotenv import load_dotenv
 
-# Load environment variables from .env.local or .env in local development
-_root_dir = pathlib.Path(__file__).parent.parent
-_env_local = _root_dir / ".env.local"
-_env_base = _root_dir / ".env"
-if _env_local.exists():
-    load_dotenv(dotenv_path=_env_local)
-elif _env_base.exists():
-    load_dotenv(dotenv_path=_env_base)
+try:
+    from dotenv import load_dotenv
+    # Load environment variables from .env.local or .env in local development
+    _root_dir = pathlib.Path(__file__).parent.parent
+    _env_local = _root_dir / ".env.local"
+    _env_base = _root_dir / ".env"
+    if _env_local.exists():
+        load_dotenv(dotenv_path=_env_local)
+    elif _env_base.exists():
+        load_dotenv(dotenv_path=_env_base)
+except ImportError:
+    pass
 
 app = FastAPI()
 
