@@ -1,61 +1,40 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  FiMenu, 
-  FiX, 
-  FiMoon, 
-  FiSun, 
-  FiHome, 
-  FiUser, 
-  FiCode, 
-  FiGrid, 
-  FiMail,
-  FiBriefcase // Added for Services icon
-} from 'react-icons/fi';
+import { FiMenu, FiMoon, FiSun } from 'react-icons/fi';
 import { useTheme } from 'next-themes';
-import Link from 'next/link';
-
-// Shadcn UI components
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const navItems = [
-  { label: "Home", href: "#hero", icon: <FiHome className="h-5 w-5" /> },
-  { label: "About", href: "#about", icon: <FiUser className="h-5 w-5" /> },
-  { label: "Skills", href: "#skills", icon: <FiCode className="h-5 w-5" /> },
-  { label: "Services", href: "/services", icon: <FiBriefcase className="h-5 w-5" /> },
-  { label: "Projects", href: "#projects", icon: <FiGrid className="h-5 w-5" /> },
-  { label: "Contact", href: "#contact", icon: <FiMail className="h-5 w-5" /> },
+  { label: "Home", href: "#hero" },
+  { label: "About", href: "#about" },
+  { label: "Experience", href: "#experience" },
+  { label: "Skills", href: "#skills" },
+  { label: "Projects", href: "#projects" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
-  // ...existing code...
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
-  // Handle initial mounting (to avoid hydration issues with theme)
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Scroll handling
   useEffect(() => {
     const handleScroll = () => {
-      // Update navbar background
-      const isScrolled = window.scrollY > 10;
+      const isScrolled = window.scrollY > 20;
       if (isScrolled !== scrolled) {
         setScrolled(isScrolled);
       }
       
-      // Determine active section
       const sections = navItems.map(item => item.href.substring(1));
-      const scrollPosition = window.scrollY + 100;
+      const scrollPosition = window.scrollY + 120;
       
       for (const section of sections.reverse()) {
         const element = document.getElementById(section);
@@ -68,176 +47,143 @@ export default function Navbar() {
       }
     };
 
-    document.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      document.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [scrolled, activeSection]);
-  
+
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
+
   return (
-    <TooltipProvider>
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ type: 'spring', stiffness: 100, damping: 20 }}
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-          scrolled 
-            ? 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800' 
-            : 'bg-transparent'
-        }`}
-      >
-        <div className="max-w-6xl mx-auto px-6 py-3">
-          <div className="flex items-end justify-between">
-            <a 
-              href="#" 
-              className="flex items-center gap-2"
-            >
-              <Avatar className="h-8 w-8 border-2 border-blue-500">
-                <AvatarImage src="/unnamed.jpg" alt="Samarth Singh" />
-                <AvatarFallback className="bg-gradient-to-br from-blue-600 to-purple-600 text-white">SS</AvatarFallback>
-              </Avatar>
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Portfolio
-              </span>
-            </a>
-            
-            {/* Desktop Navigation - Icons Only */}
-            <div className="hidden md:flex items-center gap-4">
-              <div className="flex items-center gap-1">
-                {navItems.map((item, index) => {
-                  const isActive = activeSection === item.href.substring(1);
-                  return (
-                    <motion.div 
-                      key={item.href}
-                      initial={{ opacity: 0, y: -20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1 * index, duration: 0.5 }}
-                    >
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <a
-                            href={item.href}
-                            className={`relative p-2.5 rounded-full transition-all duration-300 flex items-center justify-center ${
-                              isActive 
-                                ? 'text-white' 
-                                : 'text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400'
-                            }`}
-                          >
-                            {isActive && (
-                              <motion.span
-                                className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full -z-10"
-                                layoutId="activeSection"
-                                transition={{ type: "spring", duration: 0.6 }}
-                              />
-                            )}
-                            {item.icon}
-                          </a>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>{item.label}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </motion.div>
-                  );
-                })}
-              </div>
-              
-              {/* Theme Toggle Button */}
-              {mounted && (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                  className="rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 ml-2"
-                  aria-label="Toggle theme"
-                >
-                  <AnimatePresence mode="wait" initial={false}>
-                    <motion.div
-                      key={theme}
-                      initial={{ y: -20, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      exit={{ y: 20, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {theme === "dark" ? <FiSun className="h-5 w-5" /> : <FiMoon className="h-5 w-5" />}
-                    </motion.div>
-                  </AnimatePresence>
-                </Button>
-              )}
-            </div>
-            
-            {/* Mobile Navigation */}
-            <div className="flex items-center gap-4 md:hidden">
-              {/* Theme Toggle - Mobile */}
-              {mounted && (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                  className="rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
-                  aria-label="Toggle theme"
-                >
-                  {theme === "dark" ? <FiSun className="h-5 w-5" /> : <FiMoon className="h-5 w-5" />}
-                </Button>
-              )}
-              
-              {/* Mobile Menu Trigger */}
-              <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-                <SheetTrigger asChild>
-                  <Button 
-                    variant="ghost" 
-                    size="icon"
-                    className="rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+    <motion.nav
+      initial={{ y: -80 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        scrolled 
+          ? 'bg-background/80 backdrop-blur-md border-b border-border/80' 
+          : 'bg-transparent'
+      }`}
+    >
+      <div className="max-w-6xl mx-auto px-6 py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <a href="#" className="font-mono text-sm tracking-wider uppercase font-bold text-foreground">
+            SYS_LOG//<span className="text-accent">SAMARTH</span>
+          </a>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-8">
+            <div className="flex items-center gap-6">
+              {navItems.map((item) => {
+                const isLinkActive = activeSection === item.href.substring(1);
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className={`font-mono text-xs uppercase tracking-widest relative py-1.5 transition-colors ${
+                      isLinkActive 
+                        ? 'text-accent font-bold' 
+                        : 'text-muted-foreground hover:text-foreground'
+                    }`}
                   >
-                    <FiMenu className="h-5 w-5" />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="right" className="w-[300px] bg-white dark:bg-gray-900 border-l border-gray-200 dark:border-gray-800">
-                  <div className="flex flex-col h-full">
-                    <div className="py-8 flex justify-center">
-                      <Avatar className="h-16 w-16 border-4 border-blue-500">
-                        <AvatarImage src="/unnamed.jpg" alt="Samarth Singh" />
-                        <AvatarFallback className="text-2xl bg-gradient-to-br from-blue-600 to-purple-600 text-white">SS</AvatarFallback>
-                      </Avatar>
-                    </div>
-                    <nav className="mt-8 flex-1 flex justify-center">
-                      <div className="grid grid-cols-3 gap-4">
-                        {navItems.map((item) => {
-                          const isActive = activeSection === item.href.substring(1);
-                          return (
-                            <Tooltip key={item.href}>
-                              <TooltipTrigger asChild>
-                                <a
-                                  href={item.href}
-                                  onClick={() => setIsSheetOpen(false)}
-                                  className={`flex flex-col items-center justify-center p-4 rounded-lg transition-colors ${
-                                    isActive 
-                                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white' 
-                                      : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800'
-                                  }`}
-                                >
-                                  <div className="text-2xl mb-1">{item.icon}</div>
-                                  <span className="text-xs">{item.label}</span>
-                                </a>
-                              </TooltipTrigger>
-                              <TooltipContent side="bottom">
-                                <p>{item.label}</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          );
-                        })}
-                      </div>
-                    </nav>
-                    <div className="mt-auto pb-8 text-center text-sm text-gray-500 dark:text-gray-400">
-                      &copy; {new Date().getFullYear()} Samarth Pratap Singh
-                    </div>
-                  </div>
-                </SheetContent>
-              </Sheet>
+                    {item.label}
+                    {isLinkActive && (
+                      <motion.span
+                        className="absolute bottom-0 left-0 w-full h-[1px] bg-accent"
+                        layoutId="navUnderline"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </a>
+                );
+              })}
             </div>
+
+            {/* Theme Toggle */}
+            {mounted && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={toggleTheme}
+                className="rounded-none hover:bg-secondary w-8 h-8 flex items-center justify-center border border-border/50 text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="Toggle theme"
+              >
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={theme}
+                    initial={{ rotate: -45, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 45, opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    {theme === "dark" ? <FiSun className="h-4 w-4" /> : <FiMoon className="h-4 w-4" />}
+                  </motion.div>
+                </AnimatePresence>
+              </Button>
+            )}
+          </div>
+
+          {/* Mobile Actions */}
+          <div className="flex items-center gap-3 md:hidden">
+            {mounted && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={toggleTheme}
+                className="rounded-none hover:bg-secondary w-8 h-8 flex items-center justify-center border border-border/50 text-muted-foreground hover:text-foreground transition-colors"
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? <FiSun className="h-4 w-4" /> : <FiMoon className="h-4 w-4" />}
+              </Button>
+            )}
+            
+            <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+              <SheetTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  className="rounded-none hover:bg-secondary w-8 h-8 flex items-center justify-center border border-border/50 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <FiMenu className="h-4 w-4" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[280px] bg-background border-l border-border px-6 py-12 flex flex-col justify-between">
+                <div>
+                  <div className="font-mono text-sm tracking-wider uppercase font-bold text-foreground border-b border-border/40 pb-4 mb-8">
+                    SYS_LOG//<span className="text-accent">SAMARTH</span>
+                  </div>
+                  <nav className="flex flex-col gap-6">
+                    {navItems.map((item) => {
+                      const isLinkActive = activeSection === item.href.substring(1);
+                      return (
+                        <a
+                          key={item.href}
+                          href={item.href}
+                          onClick={() => setIsSheetOpen(false)}
+                          className={`font-mono text-sm uppercase tracking-widest py-1 border-b border-border/20 ${
+                            isLinkActive 
+                              ? 'text-accent font-bold' 
+                              : 'text-muted-foreground hover:text-foreground'
+                          }`}
+                        >
+                          {item.label}
+                        </a>
+                      );
+                    })}
+                  </nav>
+                </div>
+                <div className="text-center font-mono text-[10px] text-muted-foreground/60 border-t border-border/40 pt-4">
+                  &copy; {new Date().getFullYear()} SAMARTH PRATAP SINGH
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
-      </motion.nav>
-    </TooltipProvider>
+      </div>
+    </motion.nav>
   );
 }

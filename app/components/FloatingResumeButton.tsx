@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiDownload, FiX } from "react-icons/fi";
+import { FiDownload } from "react-icons/fi";
 
 export default function FloatingResumeButton() {
   const [isVisible, setIsVisible] = useState(false);
@@ -9,7 +9,6 @@ export default function FloatingResumeButton() {
 
   useEffect(() => {
     const toggleVisibility = () => {
-      // Show button after scrolling 300px
       if (window.pageYOffset > 300) {
         setIsVisible(true);
       } else {
@@ -22,7 +21,6 @@ export default function FloatingResumeButton() {
   }, []);
 
   const handleDownload = () => {
-    // Track download event (optional: add analytics here)
     const link = document.createElement('a');
     link.href = '/Resume.pdf';
     link.download = 'Samarth_Pratap_Singh_Resume.pdf';
@@ -45,16 +43,13 @@ export default function FloatingResumeButton() {
         >
           <motion.button
             onClick={handleDownload}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="group relative flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="group relative flex items-center gap-3 px-5 py-3 bg-accent text-accent-foreground border border-accent/30 rounded-none shadow-lg transition-all duration-200"
           >
-            {/* Animated gradient background */}
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-purple-700 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            
             {/* Content */}
             <div className="relative flex items-center gap-2">
-              <FiDownload className="h-5 w-5" />
+              <FiDownload className="h-4 w-4" />
               <AnimatePresence mode="wait">
                 {isHovered ? (
                   <motion.span
@@ -62,8 +57,8 @@ export default function FloatingResumeButton() {
                     initial={{ width: 0, opacity: 0 }}
                     animate={{ width: "auto", opacity: 1 }}
                     exit={{ width: 0, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="font-medium whitespace-nowrap overflow-hidden"
+                    transition={{ duration: 0.15 }}
+                    className="font-mono text-xs uppercase tracking-wider whitespace-nowrap overflow-hidden"
                   >
                     Download Resume
                   </motion.span>
@@ -73,8 +68,8 @@ export default function FloatingResumeButton() {
                     initial={{ width: 0, opacity: 0 }}
                     animate={{ width: "auto", opacity: 1 }}
                     exit={{ width: 0, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="font-medium whitespace-nowrap overflow-hidden"
+                    transition={{ duration: 0.15 }}
+                    className="font-mono text-xs uppercase tracking-wider whitespace-nowrap overflow-hidden"
                   >
                     Resume
                   </motion.span>
@@ -83,9 +78,9 @@ export default function FloatingResumeButton() {
             </div>
 
             {/* Pulse animation */}
-            <span className="absolute -top-1 -right-1 flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>
+            <span className="absolute -top-1 -right-1 flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
             </span>
           </motion.button>
 
@@ -96,10 +91,10 @@ export default function FloatingResumeButton() {
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 10 }}
-                className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-3 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm rounded-lg whitespace-nowrap shadow-lg"
+                className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-3 py-2 bg-foreground text-background font-mono text-[10px] uppercase tracking-wider border border-border/80 shadow-lg whitespace-nowrap"
               >
-                GenAI Engineer & RAG Specialist
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 rotate-45 w-2 h-2 bg-gray-900 dark:bg-gray-100"></div>
+                AI/ML Engineer & RAG Specialist
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 rotate-45 w-1.5 h-1.5 bg-foreground"></div>
               </motion.div>
             )}
           </AnimatePresence>

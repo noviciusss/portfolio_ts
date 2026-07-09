@@ -2,165 +2,97 @@
 import { motion } from "framer-motion";
 import { FiDownload, FiUser, FiCode, FiStar } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { memo, useMemo } from "react";
-
-import { Icon } from "@/components/ui/evervault-card"; 
-import { BackgroundGradient } from "@/components/ui/background-gradient";
-
-const StatCard = memo(({ stat, index }: { stat: any; index: number }) => (
-  <motion.div
-    key={stat.label}
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-50px" }}
-    transition={{ duration: 0.4, delay: index * 0.1 }}
-    className="w-full"
-  >
-    <BackgroundGradient
-      className="rounded-xl h-full" 
-      containerClassName="h-full w-full"
-      animate={false}
-    >
-      <Card className="overflow-hidden h-full border-none bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm group w-full">
-        <CardContent className="p-3 sm:p-4 md:p-6 flex flex-col items-center text-center">
-          <div className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 mb-3 sm:mb-4 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300 rounded-full group-hover:scale-110 transition-transform duration-300 shadow-sm">
-            {stat.icon}
-          </div>
-          <CardTitle className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-1 font-heading text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-            {stat.value}
-          </CardTitle>
-          <p className="text-xs sm:text-sm text-muted-foreground">
-            {stat.label}
-          </p>
-        </CardContent>
-      </Card>
-    </BackgroundGradient>
-  </motion.div>
-));
-
-StatCard.displayName = "StatCard";
+import { useMemo } from "react";
 
 export default function About() {
   const stats = useMemo(() => [
-    { icon: <FiUser size={16} className="sm:w-5 sm:h-5" />, label: "Years Experience", value: "2+" },
-    { icon: <FiCode size={16} className="sm:w-5 sm:h-5" />, label: "Projects Completed", value: "10+" },
-    { icon: <FiStar size={16} className="sm:w-5 sm:h-5" />, label: "CGPA", value: "8.45/10" },
+    { icon: <FiUser size={16} />, label: "Years Experience", value: "2+" },
+    { icon: <FiCode size={16} />, label: "Projects Completed", value: "10+" },
+    { icon: <FiStar size={16} />, label: "CGPA (VIT Bhopal)", value: "8.57 / 10" },
   ], []);
 
   return (
-    <section className="py-12 sm:py-16 md:py-20 lg:py-24 px-4 overflow-x-hidden">
+    <section className="py-24 px-4 border-t border-border/40">
       <div className="max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="mb-8 sm:mb-12 md:mb-16 text-center"
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 20 }} 
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
-          >
-            <Badge variant="outline" className="px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm font-medium bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-full shadow-sm">
-              Who I Am
-            </Badge>
-          </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading font-bold mt-3 mb-4 text-gray-800 dark:text-gray-100"
-          >
-            About Me
-          </motion.h2>
-        </motion.div>
+        {/* Monospace Log Header */}
+        <div className="log-header">
+          <span>// 01 — BIO DATA</span>
+        </div>
 
-        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-center">
-          {/* Image Section - KEEPING EXACTLY AS IT WAS */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative h-[20rem] sm:h-[24rem] md:h-[28rem] lg:h-[30rem] w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto order-1 lg:order-none"
-          >
-            <Icon className="absolute h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 -top-2 sm:-top-3 -left-2 sm:-left-3 dark:text-white text-black z-10" />
-            <Icon className="absolute h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 -bottom-2 sm:-bottom-3 -left-2 sm:-left-3 dark:text-white text-black z-10" />
-            <Icon className="absolute h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 -top-2 sm:-top-3 -right-2 sm:-right-3 dark:text-white text-black z-10" />
-            <Icon className="absolute h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 -bottom-2 sm:-bottom-3 -right-2 sm:-right-3 dark:text-white text-black z-10" />
-
-            <div className="w-full h-full relative">
-              {/* <EvervaultCard text="Sam 😎" className="h-full w-full" /> */}
-              
-              <div className="absolute inset-0 flex flex-col items-center justify-center z-10 p-3 sm:p-4">
-                <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden border-3 sm:border-4 border-white/30 shadow-xl">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Image Section */}
+          <div className="lg:col-span-5 flex justify-center w-full">
+            <div className="relative w-64 h-64 sm:w-72 sm:h-72 border border-border p-2 bg-card/50 schematic-bracket-card">
+              <div className="relative w-full h-full border border-border overflow-hidden bg-background flex flex-col items-center justify-center p-4">
+                <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden border border-border bg-card shadow-md">
                   <Image 
                     src="/unnamed.jpg"
-                    alt="Professional photo of Samarth Singh"
-                    width={224}
-                    height={224}
-                    className="object-cover w-full h-full"
-                    placeholder="blur"
-                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAI8wNPvd7POQAAAABJRU5ErkJggg=="
+                    alt="Samarth Singh profile"
+                    width={128}
+                    height={128}
+                    className="object-cover w-full h-full grayscale contrast-[1.05]"
+                    sizes="128px"
                     priority
-                    sizes="(max-width: 640px) 128px, (max-width: 768px) 160px, (max-width: 1024px) 192px, 224px"
                   />
                 </div>
-                <p className="mt-3 sm:mt-4 md:mt-6 text-center text-sm sm:text-base md:text-lg font-medium text-gray-200 dark:text-gray-200">
+                <h4 className="mt-4 font-display font-medium text-foreground text-sm">
                   Samarth Singh
-                </p>
-                <p className="text-xs sm:text-sm text-gray-300 dark:text-gray-400">
-                  GenAI &amp; RAG Engineer
-                </p>
+                </h4>
+                <span className="font-mono text-[10px] text-accent mt-0.5 tracking-wider uppercase">
+                  AI/ML Engineer
+                </span>
               </div>
             </div>
-          </motion.div>
+          </div>
           
-          {/* Content Section - CENTERED FOR MOBILE */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="w-full max-w-full order-2 lg:order-none flex flex-col items-center lg:items-start"
-          >
-            <h3 className="text-xl sm:text-2xl md:text-3xl font-heading font-semibold mb-4 sm:mb-6 text-gray-800 dark:text-gray-100 text-center lg:text-left">
-              GenAI Engineer & Research Enthusiast
+          {/* Content Section */}
+          <div className="lg:col-span-7 flex flex-col items-start w-full">
+            <h3 className="text-2xl sm:text-3xl font-display font-medium text-foreground mb-4">
+              AI/ML Engineer & Systems Research Enthusiast
             </h3>
-            <div className="prose dark:prose-invert max-w-full text-gray-600 dark:text-gray-300 text-center lg:text-left">
-              <p className="text-sm sm:text-base leading-relaxed mb-3 sm:mb-4">
-                BTech Computer Science student at VIT Bhopal (CGPA 8.45) specializing in Generative AI, RAG systems, and LLMOps. Proven expertise in building production-ready LLM applications with semantic search, hybrid retrieval (BM25 + dense vectors), and parameter-efficient fine-tuning (LoRA/PEFT). Experienced in deploying transformer models with evaluation frameworks achieving 89%+ correctness.
+            
+            <div className="space-y-4 text-sm leading-relaxed text-muted-foreground mb-8 font-sans">
+              <p>
+                BTech Computer Science student at VIT Bhopal University (CGPA 8.57) specializing in Generative AI, RAG systems, and LLMOps. Proven expertise in building production-ready LLM applications with semantic search, hybrid retrieval (BM25 + dense vectors), and parameter-efficient fine-tuning (LoRA/PEFT). Experienced in deploying transformer models with evaluation frameworks achieving 89%+ correctness.
               </p>
-              <p className="text-sm sm:text-base leading-relaxed mb-6 sm:mb-8">
-                Passionate about making LLMs more accurate and grounded through intelligent retrieval architectures. Published fine-tuned models on Hugging Face with comprehensive evaluation (ROUGE, BERTScore, METEOR). Seeking GenAI/LLMOps internships to build scalable AI systems that solve real-world problems with measurable impact.
+              <p>
+                Passionate about making LLMs more accurate and grounded through intelligent retrieval architectures. Published fine-tuned models on Hugging Face with comprehensive evaluation (ROUGE, BERTScore, METEOR). Seeking AI/ML and LLMOps roles to build scalable AI systems that solve real-world problems with measurable, verified impact.
               </p>
             </div>
             
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-10 w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 w-full">
               {stats.map((stat, index) => (
-                <StatCard key={stat.label} stat={stat} index={index} />
+                <div 
+                  key={index} 
+                  className="border border-border/80 p-4 bg-card/20 font-mono text-xs flex flex-col justify-between"
+                >
+                  <div className="flex items-center gap-2 text-accent">
+                    {stat.icon}
+                    <span className="text-[10px] uppercase text-muted-foreground/60 tracking-wider">
+                      {stat.label}
+                    </span>
+                  </div>
+                  <div className="text-base font-bold text-foreground mt-2">
+                    {stat.value}
+                  </div>
+                </div>
               ))}
             </div>
             
             {/* Download Button */}
-            <div className="flex justify-center lg:justify-start w-full">
-              <Button asChild size="lg" className="gap-2 group hover:shadow-lg hover:-translate-y-1 transition-all duration-300 text-sm sm:text-base">
+            <div className="w-full">
+              <Button asChild size="lg" className="bg-transparent hover:bg-secondary hover:text-foreground text-muted-foreground rounded-none px-6 font-mono text-sm tracking-wider uppercase border border-border/80 transition-all duration-200 gap-2">
                 <a
                   href="/Resume.pdf" 
                   download="Resume"
                 >
-                  <FiDownload className="h-4 w-4 sm:h-5 sm:w-5 group-hover:animate-bounce" /> Download Resume
+                  <FiDownload className="h-4 w-4" /> DOWNLOAD_RESUME.PDF
                 </a>
               </Button>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

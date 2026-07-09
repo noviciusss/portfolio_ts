@@ -1,365 +1,354 @@
 "use client";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
-import { FiGithub, FiExternalLink, FiBookOpen } from "react-icons/fi";
-import { FaReact, FaNodeJs, FaPython, FaHtml5, FaCss3 } from "react-icons/fa";
-import { 
-  SiNextdotjs, 
-  SiTypescript, 
-  SiJavascript, 
-  SiTailwindcss, 
-  SiMongodb, 
-  SiExpress, 
-  SiFlask, 
-  SiTensorflow 
-} from "react-icons/si";
-import Image from "next/image";
+import { FiGithub, FiExternalLink, FiBookOpen, FiLock } from "react-icons/fi";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { PinContainer } from "@/components/ui/pin";
+gsap.registerPlugin(ScrollTrigger);
 
 type ProjectMetric = {
   label: string;
   value: string;
+  // For animated numbers: provide start and end numeric values + a format fn
+  countFrom?: number;
+  countTo?: number;
+  format?: (n: number) => string;
 };
 
 type Project = {
+  index: string;
   title: string;
-  description: string;
-  image: string;
+  problem: string;
+  build: string;
+  metrics: ProjectMetric[];
   tags: string[];
-  github: string;
-  demo: string;
+  github?: string;
+  demo?: string;
   blog?: string;
-  featured: boolean;
-  metrics?: ProjectMetric[];
-}; 
-
-// Helper function to get tag style based on technology category
-const getTagStyle = (tag: string) => {
-  // Frontend technologies
-  if (['React', 'Next.js', 'Vue', 'Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Tailwind CSS', 'Framer Motion', 'Gradio'].includes(tag)) {
-    return "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800";
-  }
-  
-  // Backend technologies
-  if (['Node.js', 'Express', 'Django', 'Flask', 'Spring', 'FastAPI', 'Docker'].includes(tag)) {
-    return "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800";
-  }
-  
-  // Database technologies
-  if (['MongoDB', 'PostgreSQL', 'MySQL', 'SQLite', 'Firebase', 'Supabase'].includes(tag)) {
-    return "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 border-yellow-200 dark:border-yellow-800";
-  }
-  
-  // AI/ML technologies
-  if (['Python', 'TensorFlow', 'PyTorch', 'spaCy', 'scikit-learn', 'LangChain', 'LangGraph', 'LangSmith', 'Groq', 'Qdrant', 'RAG', 'NLP', 'PEFT', 'LoRA', 'Transformers', 'CUDA', 'Hugging Face'].includes(tag)) {
-    return "bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-800";
-  }
-  
-  // Default style for other technologies
-  return "bg-gray-100 dark:bg-gray-800/50 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700";
+  schematic?: string[];
+  isInternal?: boolean;
 };
 
-// Helper function to get icon for technology tags
-const getTagIcon = (tag: string) => {
-  switch(tag) {
-    case "Next.js": return <SiNextdotjs className="mr-1 h-3 w-3" />;
-    case "React": return <FaReact className="mr-1 h-3 w-3" />;
-    case "TypeScript": return <SiTypescript className="mr-1 h-3 w-3" />;
-    case "JavaScript": return <SiJavascript className="mr-1 h-3 w-3" />;
-    case "Tailwind CSS": return <SiTailwindcss className="mr-1 h-3 w-3" />;
-    case "HTML": return <FaHtml5 className="mr-1 h-3 w-3" />;
-    case "CSS": return <FaCss3 className="mr-1 h-3 w-3" />;
-    case "Node.js": return <FaNodeJs className="mr-1 h-3 w-3" />;
-    case "Express": return <SiExpress className="mr-1 h-3 w-3" />;
-    case "MongoDB": return <SiMongodb className="mr-1 h-3 w-3" />;
-    case "Python": return <FaPython className="mr-1 h-3 w-3" />;
-    case "Flask": return <SiFlask className="mr-1 h-3 w-3" />;
-    case "TensorFlow": return <SiTensorflow className="mr-1 h-3 w-3" />;
-    default: return null;
-  }
-};
-
-const projects = [
+const featuredProjects: Project[] = [
   {
-    title: "Argus — Autonomous Research Engine",
-    description: "Production-grade multi-agent research pipeline using LangGraph supervisor pattern with 5 specialist agents (planner, researcher, critic, writer, supervisor) orchestrated via LLM-driven routing. Async job architecture with SQLite persistence and LangGraph checkpointing — research jobs survive agent failures and every LLM call is traced end-to-end in LangSmith. Integrates Tavily, ArXiv, and Wikipedia to synthesize cited markdown reports in 30–90 seconds.",
-    image: "/argus.png",
+    index: "01",
+    title: "DoCopilot — RAG Document Q&A",
+    problem:
+      "Baseline keyword-search retrieval was producing relevant answers in only ~57.7% of multi-format document queries, suffering from hallucinated context and zero citation trace.",
+    build:
+      "Implemented a full-stack RAG pipeline. Utilizes hybrid search (BM25 + dense vectors) in Qdrant with Reciprocal Rank Fusion (RRF), cross-encoder reranking via hosted inference API, and source-grounding citation filters. Added PII redaction and prompt-injection detection guardrails.",
     metrics: [
-      { label: "Agents", value: "5" },
-      { label: "Report Time", value: "30–90s" },
-      { label: "Tools", value: "3" }
+      {
+        label: "Correctness",
+        value: "89.2%",
+        countFrom: 57.7,
+        countTo: 89.2,
+        format: (n) => `${n.toFixed(1)}%`,
+      },
+      {
+        label: "Avg Latency",
+        value: "2.86s",
+        countFrom: 0,
+        countTo: 2.86,
+        format: (n) => `${n.toFixed(2)}s`,
+      },
+      { label: "Source Rate", value: "100%" },
     ],
-    tags: ["LangGraph", "FastAPI", "Groq", "Docker", "LangSmith", "Python"],
+    tags: ["Next.js", "FastAPI", "Qdrant", "RRF Fusion", "Cross-Encoder", "Python"],
+    github: "https://github.com/noviciusss/DoCopilot",
+    blog: "https://medium.com/@samarthsin2006/docopilot-building-a-production-grade-rag-system-with-hybrid-search-reranking-and-safety-c943fc2626be",
+  },
+  {
+    index: "02",
+    title: "Argus — Multi-Agent Research Engine",
+    problem:
+      "Compiling research reports from Tavily, ArXiv, and Wikipedia was manual and time-consuming, requiring human iteration to trace sources and reject low-quality summaries.",
+    build:
+      "Built an autonomous research supervisor graph with LangGraph containing 5 specialist agents (planner, researcher, critic, writer, supervisor). Features cyclic routing, SQLite checkpointing for failure recovery, and end-to-end tracing in LangSmith. The critic agent rejects low-quality drafts and re-routes before writing.",
+    metrics: [
+      {
+        label: "Research Time",
+        value: "30–90s",
+        countFrom: 0,
+        countTo: 90,
+        format: (n) => (n < 30 ? `${Math.round(n)}s` : `30–${Math.round(n)}s`),
+      },
+      { label: "Specialists", value: "5 Agents" },
+      { label: "Trace Engine", value: "LangSmith" },
+    ],
+    tags: ["LangGraph", "FastAPI", "Docker", "SQLite", "Tavily API", "Python"],
     github: "https://github.com/noviciusss/argus",
     demo: "https://argus-h0uw.onrender.com/",
-    featured: true,
   },
   {
-    title: "DoCopilot - RAG Document Q&A System",
-    description: "Production-grade RAG application with hybrid search (BM25 + dense vectors) using Qdrant and reranking. Achieved 89.2% correctness, 90.5% relevance, 100% source grounding on 40-query evaluation with guardrails for PII redaction and prompt injection detection. Built full-stack with Next.js frontend and FastAPI backend, processing PDFs/TXT with 2.86s average latency.",
-    image: "/docopilot.png",
+    index: "03",
+    title: "ContextCore — Stateful Memory Agent",
+    problem:
+      "Standard agents lose task/note context across sessions, and typical memory approaches hallucinate user preferences when querying vector databases directly.",
+    build:
+      "Designed a FastMCP server exposing structured note/task tools integrated with LangGraph. Employs a dual-memory layer: Postgres for exact execution states, MongoDB for profile states, and Qdrant semantic recall. Intent router directs queries based on semantic similarity.",
     metrics: [
-      { label: "Correctness", value: "89.2%" },
-      { label: "Relevance", value: "90.5%" },
-      { label: "Avg Latency", value: "2.86s" }
-    ], 
-    tags: ["Next.js", "FastAPI", "Qdrant", "LangChain", "RAG", "Python"],
-    github: "https://github.com/noviciusss/DoCopilot",
-    demo: "",
-    blog: "https://medium.com/@samarthsin2006/docopilot-building-a-production-grade-rag-system-with-hybrid-search-reranking-and-safety-c943fc2626be",
-    featured: true,
-  },
-  {
-    title: "FLAN-T5 Dialogue Summarizer",
-    description: "Fine-tuned FLAN-T5-base with LoRA on SAMSum dataset (14.7K dialogues), achieving 49.01 ROUGE-1, 72.25 BERTScore F1, and 42.51 METEOR scores. Implemented parameter-efficient training updating only 2% of parameters with FP16 mixed precision. Deployed interactive Gradio app on Hugging Face Spaces with configurable beam search and published model with reproducible evaluation.",
-    image: "/flan-t5.png",
-    metrics: [
-      { label: "ROUGE-1", value: "49.01" },
-      { label: "BERTScore", value: "72.25" },
-      { label: "Params Updated", value: "2%" }
+      {
+        label: "Memory Recall",
+        value: "92% Acc",
+        countFrom: 0,
+        countTo: 92,
+        format: (n) => `${Math.round(n)}%`,
+      },
+      { label: "Query Router", value: "FastMCP" },
+      { label: "Checkpointing", value: "PostgreSQL" },
     ],
-    tags: ["Python", "LoRA", "PEFT", "Transformers", "Gradio", "Hugging Face"],
-    github: "https://github.com/noviciusss/flan-t5-summarizer",
-    demo: "https://huggingface.co/spaces/noviciusss/dialogue-summarizer",
-    featured: true,
-  },
-  {
-    title: "RoBERTa Banking Intent Classifier",
-    description: "Fine-tuned RoBERTa-base on Banking77 dataset (77 intents, 13K queries) achieving 93.7% accuracy and 93.6% macro-F1. Implemented standard transformer fine-tuning with AdamW optimizer, weight decay, and FP16 training on GPU. Added experiment hygiene with fixed seeds, consistent tokenization, epoch-level metrics tracking, and best-checkpoint selection for robust evaluation.",
-    image: "/roberta-banking.png",
-    metrics: [
-      { label: "Accuracy", value: "93.7%" },
-      { label: "Macro-F1", value: "93.6%" },
-      { label: "Intents", value: "77" }
+    tags: ["FastMCP", "LangGraph", "Qdrant", "PostgreSQL", "MongoDB", "JSON-RPC"],
+    github: "https://github.com/noviciusss/ContextCore-CLI",
+    schematic: [
+      "[User Command] ──> [MCP Client/Agent]",
+      "                         │",
+      "        ┌────────────────┴────────────────┐",
+      "        ▼ (Intent Router)                 ▼ (Recall)",
+      "  [PostgreSQL] (State)             [Qdrant] (Semantic)",
     ],
-    tags: ["PyTorch", "Transformers", "CUDA", "NLP", "Python"],
-    github: "https://github.com/noviciusss/roberta-banking77",
-    demo: "https://huggingface.co/noviciusss/RoBERTa-base_Banking77",
-    featured: true,
   },
   {
-    title: "Project Loom",
-    description: "Full-stack project-sharing platform with Next.js leveraging SSR and ISR, reducing page load times by 50%. Architected scalable backend with Sanity.io headless CMS managing 1,000+ project entries. Implemented secure authentication with NextAuth.js and PostgreSQL, enabling users to manage profiles, post projects, and interact with content.",
-    image: "/project_loom.png",
-    tags: ["Next.js", "TypeScript", "Sanity.io", "NextAuth.js", "PostgreSQL"],
-    github: "https://github.com/noviciusss/projectloom",
-    demo: "https://projectloom.vercel.app/",
-    featured: true,
-  },
-  {
-    title: "Modern Portfolio",
-    description: "Personal portfolio website built with Next.js, TypeScript, and Tailwind CSS featuring modern UI elements, smooth animations with Framer Motion, and optimized SEO for GenAI/RAG internships. Implements dark mode, responsive design, and accessibility best practices with Lighthouse scores 90+ across all metrics.",
-    image: "/portfolio.png", 
-    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    github: "https://github.com/noviciusss/portfolio_ts",
-    demo: "https://portfolio-noviciusss.vercel.app/",
-    featured: false,
-  },
-  {
-    title: "Dexplorer",
-    description: "Interactive Pokémon discovery web application for searching and exploring the original 150 Pokémon with detailed information, stats, and type filtering. Built with React and modern JavaScript, featuring responsive design and smooth user experience.",
-    image: "/gif.gif",
-    tags: ["JavaScript", "React", "Tailwind CSS", "API Integration"],
-    github: "https://github.com/noviciusss/Dexplorer",
-    demo: "https://dexplorer-pokemon.vercel.app/",
-    featured: false,
+    index: "04",
+    title: "GFS-AI — Document Intelligence Pipeline",
+    problem:
+      "Intake validation for multi-page (up to 400p) architectural PDF documents took up to 7 minutes with high rates of timeout errors and missing dimension listings.",
+    build:
+      "Architected a vision extraction pipeline combining non-AI heuristic regex/Docling checks with GPT-5 fallback. Integrated concurrent batch dispatch (ThreadPoolExecutor + asyncio) and fixed canvas resizing bugs to improve field detection. Built at AmberFlux EdgeAI.",
+    metrics: [
+      {
+        label: "Recall Rate",
+        value: "75+ entries",
+        countFrom: 10,
+        countTo: 75,
+        format: (n) => (n < 11 ? `${Math.round(n)} entries` : `${Math.round(n)}+ entries`),
+      },
+      {
+        label: "Latency",
+        value: "~90s",
+        countFrom: 420,
+        countTo: 90,
+        format: (n) => (n > 100 ? `~${Math.round(n / 60)}m` : `~${Math.round(n)}s`),
+      },
+      { label: "Batch Load", value: "400 pages" },
+    ],
+    tags: ["GPT-5 Vision", "ThreadPoolExecutor", "asyncio", "Docling", "Python"],
+    isInternal: true,
+    schematic: [
+      "[PDF Source] ──> [Docling (Regex Checks)]",
+      "                        │",
+      "         (Missing field Fallback)",
+      "                        ▼",
+      "  [GPT-5 Vision (concurrent)] ──> [Structured JSON]",
+    ],
   },
 ];
 
+function MetricCell({
+  metric,
+  cardIdx,
+  metricIdx,
+}: {
+  metric: ProjectMetric;
+  cardIdx: number;
+  metricIdx: number;
+}) {
+  const valueRef = useRef<HTMLSpanElement>(null);
+
+  useGSAP(() => {
+    if (!valueRef.current || metric.countFrom === undefined || metric.countTo === undefined || !metric.format) return;
+
+    const counter = { val: metric.countFrom };
+    gsap.to(counter, {
+      val: metric.countTo,
+      duration: 1.5,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: valueRef.current,
+        start: "top 90%",
+        once: true,
+      },
+      onUpdate() {
+        if (valueRef.current && metric.format) {
+          valueRef.current.textContent = metric.format(counter.val);
+        }
+      },
+    });
+  }, []);
+
+  return (
+    <div className="font-mono flex flex-col justify-between">
+      <span className="text-[9px] text-muted-foreground/60 uppercase tracking-tight">
+        {metric.label}
+      </span>
+      <span
+        ref={valueRef}
+        className="text-sm sm:text-base font-bold text-accent mt-0.5"
+      >
+        {metric.countFrom !== undefined && metric.format
+          ? metric.format(metric.countFrom)
+          : metric.value}
+      </span>
+    </div>
+  );
+}
+
 export default function Projects() {
   return (
-    <section className="py-24 px-4 ">
+    <section className="py-24 px-4 border-t border-border/40">
       <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="mb-16 text-center"
-        >
-          <motion.span 
-            initial={{ opacity: 0, y: 20 }} 
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="inline-block px-3 py-1 mb-3 text-sm font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full"
-          >
-            My Work
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-4xl sm:text-5xl font-heading font-bold mb-4"
-          >
-            Featured Projects
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto"
-          >
-            Explore my latest work showcasing my skills and expertise
-          </motion.p>
-        </motion.div>
+        <div className="log-header">
+          <span>// 03 — FEATURED PROJECTS</span>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 py-10">
-          {projects.map((project, index) => (
+        <div className="mb-12 max-w-xl text-sm text-muted-foreground">
+          <p>
+            Detailed case files for production-grade AI/ML architectures. Every project is measured
+            against exact performance indices — no aesthetic fluff, only verifiable metrics.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {featuredProjects.map((project, idx) => (
             <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 30 }}
+              key={idx}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="h-[450px] mb-24"
+              transition={{ duration: 0.5, delay: idx * 0.05 }}
+              className="border border-border/80 p-6 bg-card/25 flex flex-col justify-between relative schematic-bracket-card"
             >
-              <PinContainer
-                title={project.title}
-                href={project.demo || project.github}
-                containerClassName="mt-10"
-              >
-                <div className={`flex flex-col w-[320px] bg-white dark:bg-neutral-900 rounded-xl overflow-hidden shadow-lg border ${
-                  project.featured 
-                    ? 'border-transparent bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20 p-[2px]'
-                    : 'border-gray-200 dark:border-white/[0.2]'
-                }`}>
-                  <div className={project.featured ? 'bg-white dark:bg-neutral-900 rounded-xl overflow-hidden' : ''}>
-                    <div className="relative w-full h-48">
-                      <Image
-                        src={project.image}
-                        alt={`${project.title} preview`}
-                        fill
-                        className="object-cover"
-                        priority={index === 0}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
-                      {project.featured && (
-                        <div className="absolute top-3 right-3">
-                          <Badge className="bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 shadow-lg">
-                            ⭐ Featured
-                          </Badge>
-                        </div>
-                      )}
+              <div>
+                {/* Card Header */}
+                <div className="flex items-start justify-between border-b border-border/40 pb-4 mb-5">
+                  <div>
+                    <span className="font-mono text-xs text-accent font-bold">
+                      CASE_FILE // {project.index}
+                    </span>
+                    {project.isInternal && (
+                      <span className="ml-2 font-mono text-[9px] text-muted-foreground/50 border border-border/40 px-1.5 py-0.5 uppercase tracking-wider">
+                        INTERNAL
+                      </span>
+                    )}
+                    <h3 className="text-xl font-display font-medium text-foreground mt-1">
+                      {project.title}
+                    </h3>
+                  </div>
+                </div>
+
+                {/* Architecture Schematic */}
+                {project.schematic && (
+                  <div className="w-full mb-6 border border-border p-4 bg-background/60 font-mono text-[9px] sm:text-[10px] text-muted-foreground/80 overflow-x-auto leading-relaxed whitespace-pre select-none">
+                    <div className="text-[9px] uppercase tracking-wider text-accent border-b border-border/30 pb-1 mb-2 font-bold">
+                      // ARCHITECTURE_SCHEMATIC
                     </div>
-                  
-                    <div className="p-5 flex flex-col flex-grow justify-between">
-                      <div>
-                        <h3 className="text-xl font-heading font-bold mb-2 text-gray-900 dark:text-gray-100">{project.title}</h3>
-                        <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-400 line-clamp-4 mb-4">{project.description}</p>
-                        
-                        {project.metrics && (
-                          <div className="grid grid-cols-3 gap-2 mb-4">
-                            {project.metrics.map((metric) => (
-                              <div 
-                                key={metric.label}
-                                className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg p-2 border border-blue-200 dark:border-blue-700/30"
-                              >
-                                <div className="text-xs text-gray-500 dark:text-gray-400 font-medium">{metric.label}</div>
-                                <div className="text-sm font-bold text-blue-600 dark:text-blue-400">{metric.value}</div>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                        
-                        <div className="flex flex-wrap gap-2 mb-4">
-                        {project.tags.slice(0, 3).map((tag) => (
-                          <Badge 
-                            key={tag}
-                            variant="outline" 
-                            className={`${getTagStyle(tag)} text-[10px] font-medium py-0.5 px-2 rounded-full border flex items-center gap-1`}
-                          >
-                            {getTagIcon(tag)}
-                            {tag}
-                          </Badge>
-                        ))}
-                        {project.tags.length > 3 && (
-                          <Badge variant="outline" className="text-[10px] font-medium py-0.5 px-2 rounded-full border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300">
-                            +{project.tags.length - 3}
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
-                    
-                    <div className="flex justify-between items-center pt-3 mt-auto border-t border-gray-200 dark:border-gray-700">
-                      <div className="flex items-center gap-3">
-                        <a 
-                          href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
-                          title="View on GitHub"
-                        >
-                          <FiGithub className="h-5 w-5" />
-                        </a>
-                        {project.blog && (
-                          <a
-                            href={project.blog}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-gray-500 hover:text-green-600 dark:text-gray-400 dark:hover:text-green-400 transition-colors"
-                            title="Read Blog Post"
-                          >
-                            <FiBookOpen className="h-5 w-5" />
-                          </a>
-                        )}
-                      </div>
-                      
-                      {project.demo ? (
-                        <a 
-                          href={project.demo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline"
-                        >
-                          View Live
-                          <FiExternalLink className="ml-1.5 h-4 w-4" />
-                        </a>
-                      ) : (
+                    {project.schematic.join("\n")}
+                  </div>
+                )}
+
+                {/* Problem */}
+                <div className="mb-5">
+                  <h4 className="font-mono text-[10px] uppercase text-muted-foreground/60 tracking-wider mb-1.5">
+                    // PROBLEM
+                  </h4>
+                  <p className="text-sm leading-relaxed text-muted-foreground font-sans">
+                    {project.problem}
+                  </p>
+                </div>
+
+                {/* Build */}
+                <div className="mb-6">
+                  <h4 className="font-mono text-[10px] uppercase text-muted-foreground/60 tracking-wider mb-1.5">
+                    // BUILD
+                  </h4>
+                  <p className="text-sm leading-relaxed text-muted-foreground font-sans">
+                    {project.build}
+                  </p>
+                </div>
+              </div>
+
+              {/* Metrics Block — GSAP count-up */}
+              <div>
+                <div className="grid grid-cols-3 gap-3 border-t border-b border-border/40 py-4 mb-5">
+                  {project.metrics.map((metric, mIdx) => (
+                    <MetricCell
+                      key={mIdx}
+                      metric={metric}
+                      cardIdx={idx}
+                      metricIdx={mIdx}
+                    />
+                  ))}
+                </div>
+
+                {/* Tags and Links */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.tags.slice(0, 4).map((tag, tIdx) => (
+                      <span
+                        key={tIdx}
+                        className="font-mono text-[9px] text-muted-foreground border border-border/60 px-1.5 py-0.5"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                    {project.tags.length > 4 && (
+                      <span className="font-mono text-[9px] text-muted-foreground/60 px-1 py-0.5">
+                        +{project.tags.length - 4}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="flex items-center gap-4 text-xs font-mono">
+                    {project.isInternal ? (
+                      <span className="text-muted-foreground/40 flex items-center gap-1.5 text-[10px]">
+                        <FiLock className="h-3 w-3" />
+                        Internal
+                      </span>
+                    ) : (
+                      project.github && (
                         <a
                           href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                          className="text-muted-foreground hover:text-accent flex items-center gap-1.5"
                         >
-                          View Code
-                          <FiExternalLink className="ml-1.5 h-4 w-4" />
+                          <FiGithub className="h-4 w-4" />
+                          <span className="hover-mechanical-link">Code</span>
                         </a>
-                      )}
-                      </div>
-                    </div>
+                      )
+                    )}
+
+                    {project.demo && (
+                      <a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-muted-foreground hover:text-accent flex items-center gap-1.5"
+                      >
+                        <FiExternalLink className="h-4 w-4" />
+                        <span className="hover-mechanical-link">Live</span>
+                      </a>
+                    )}
+
+                    {project.blog && (
+                      <a
+                        href={project.blog}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-muted-foreground hover:text-accent flex items-center gap-1.5"
+                      >
+                        <FiBookOpen className="h-4 w-4" />
+                        <span className="hover-mechanical-link">Analysis</span>
+                      </a>
+                    )}
                   </div>
                 </div>
-              </PinContainer>
+              </div>
             </motion.div>
           ))}
         </div>
-        
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-12 text-center"
-        >
-          <Button 
-            variant="outline"
-            size="lg"
-            className="gap-2"
-            asChild
-          >
-            <a 
-              href="https://github.com/noviciusss" 
-              target="_blank" 
-              rel="noopener noreferrer"
-            >
-              <FiGithub className="h-4 w-4" /> View All Projects on GitHub
-            </a>
-          </Button>
-        </motion.div>
       </div>
     </section>
   );

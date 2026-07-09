@@ -1,144 +1,210 @@
 "use client";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import unnamed from "../../public/unnamed.jpg";
+import { FiDownload } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import unnamed from "../../public/unnamed.jpg";
 
+gsap.registerPlugin();
 
+const INTRO_TEXT =
+  "I build retrieval and agent systems that are measured, not vibes — hybrid search with RRF fusion, supervisor multi-agent graphs, dual-memory architectures — and I evaluate every one of them with LLM-as-judge harnesses before I call it done.";
 
 export default function Hero() {
+  const terminalTextRef = useRef<HTMLSpanElement>(null);
+  const cursorRef = useRef<HTMLSpanElement>(null);
+
+  useGSAP(() => {
+    const cursor = cursorRef.current;
+    const target = terminalTextRef.current;
+    if (!target || !cursor) return;
+
+    // Blink cursor
+    const blinkTl = gsap.timeline({ repeat: -1, yoyo: true });
+    blinkTl.to(cursor, { opacity: 0, duration: 0.5, ease: "none" });
+
+    // Type intro text after a short delay
+    const counter = { val: 0 };
+    const typingTl = gsap.timeline({ delay: 0.6 });
+    typingTl.to(counter, {
+      val: INTRO_TEXT.length,
+      duration: INTRO_TEXT.length * 0.025,
+      ease: "none",
+      onUpdate() {
+        const idx = Math.round(counter.val);
+        target.textContent = INTRO_TEXT.slice(0, idx);
+      },
+    });
+  }, []);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.08 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  };
+
   return (
-    <section className="relative flex items-center justify-center min-h-screen pt-28 pb-16 px-4 overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden z-0">
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-200 dark:bg-blue-900/20 rounded-full filter blur-3xl opacity-30"></div>
-        <div className="absolute top-1/2 -left-24 w-80 h-80 bg-purple-200 dark:bg-purple-900/20 rounded-full filter blur-3xl opacity-30"></div>
-      </div>
+    <section className="relative flex items-center justify-center min-h-screen pt-28 pb-16 px-4 md:px-8">
+      <div className="container max-w-6xl mx-auto z-10">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center"
+        >
+          {/* Left Column */}
+          <div className="lg:col-span-7 flex flex-col items-start text-left">
+            {/* Role Tag */}
+            <motion.div variants={itemVariants} className="mb-4">
+              <span className="font-mono text-xs tracking-widest text-accent uppercase border border-accent/30 bg-accent/5 px-3 py-1 font-medium">
+                AI/ML Engineer · Agentic Pipelines · RAG · 2027
+              </span>
+            </motion.div>
 
-      <div className="container mx-auto z-10">
-        <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8">
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="md:w-3/5"
-          >
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="inline-block px-3 py-1 mb-4 text-sm font-medium bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 rounded-full"
-            >
-              BTech CSE | GenAI & RAG Engineer
-            </motion.span>
-            
+            {/* Name */}
             <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-5xl sm:text-6xl md:text-7xl font-bold mb-6 leading-tight"
+              variants={itemVariants}
+              className="text-5xl sm:text-6xl md:text-7xl font-display font-medium tracking-tight mb-6 text-foreground leading-[1.05]"
             >
-              Hi, I'm <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Samarth Singh</span>
+              Samarth <br />
+              Pratap Singh
             </motion.h1>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-              className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-lg"
-            >
-              Building production-ready GenAI systems with RAG and LLMOps. Specialized in semantic search, fine-tuning transformers, and deploying intelligent LLM applications with retrieval architectures.
-            </motion.p>
-            
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.9, duration: 0.8 }}
-              className="flex flex-wrap gap-4"
-            >
-              
-            <Button 
-              asChild
-              size="lg" 
-              className="bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-blue-500/20 transform hover:-translate-y-1"
-            >
-              <a href="#projects">View My Work</a>
-            </Button>
-            
-            <Button 
-              asChild
-              variant="outline" 
-              size="lg"
-              className="bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transform hover:-translate-y-1"
-            >
-              <a href="#contact">Contact Me</a>
-            </Button>
 
+            {/* Terminal Window for Positioning Statement */}
+            <motion.div variants={itemVariants} className="w-full max-w-xl mb-8">
+              {/* Chrome Bar */}
+              <div className="flex items-center gap-2 px-3 py-2 border border-border/80 border-b-0 bg-secondary/40">
+                <div className="w-2 h-2 rounded-full bg-destructive/60" />
+                <div className="w-2 h-2 rounded-full bg-yellow-500/40" />
+                <div className="w-2 h-2 rounded-full bg-accent/40" />
+                <span className="ml-2 font-mono text-[9px] text-muted-foreground/50 tracking-wider uppercase">
+                  zsh — samarth@portfolio
+                </span>
+              </div>
+              {/* Terminal Body */}
+              <div className="border border-border/80 bg-card/15 px-4 py-4 font-mono text-sm text-muted-foreground leading-relaxed min-h-[80px]">
+                <span className="text-accent">$</span>
+                <span className="text-muted-foreground/50 ml-1.5 text-xs">whoami</span>
+                <br />
+                <span ref={terminalTextRef} />
+                <span ref={cursorRef} className="inline-block w-[7px] h-[14px] bg-accent/90 align-middle ml-0.5" />
+              </div>
             </motion.div>
-            
+
+            {/* CTAs */}
+            <motion.div variants={itemVariants} className="flex flex-wrap gap-3 mb-8">
+              <Button
+                asChild
+                size="lg"
+                className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-none px-6 font-mono text-sm tracking-wider uppercase border border-accent/20 transition-all duration-200"
+              >
+                <a href="#projects">View Projects</a>
+              </Button>
+
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="bg-transparent hover:bg-secondary hover:text-foreground text-muted-foreground rounded-none px-6 font-mono text-sm tracking-wider uppercase border border-border/80 transition-all duration-200 gap-2"
+              >
+                <a href="/Resume.pdf" download="Samarth_Resume">
+                  <FiDownload className="h-4 w-4" /> Resume
+                </a>
+              </Button>
+
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="bg-transparent hover:bg-secondary hover:text-foreground text-muted-foreground rounded-none px-6 font-mono text-sm tracking-wider uppercase border border-border/80 transition-all duration-200"
+              >
+                <a href="#contact">Contact</a>
+              </Button>
+            </motion.div>
+
+            {/* Socials */}
+            <motion.div variants={itemVariants} className="flex items-center gap-6">
+              <a
+                href="https://github.com/noviciusss"
+                target="_blank"
+                rel="noreferrer"
+                className="text-muted-foreground hover:text-accent transition-colors flex items-center gap-2 font-mono text-xs"
+              >
+                <FaGithub size={18} />
+                <span className="hover-mechanical-link">github.com/noviciusss</span>
+              </a>
+              <a
+                href="https://www.linkedin.com/in/spsamar/"
+                target="_blank"
+                rel="noreferrer"
+                className="text-muted-foreground hover:text-accent transition-colors flex items-center gap-2 font-mono text-xs"
+              >
+                <FaLinkedin size={18} />
+                <span className="hover-mechanical-link">linkedin.com/in/spsamar</span>
+              </a>
+            </motion.div>
+          </div>
+
+          {/* Right Column — Photo + Readout Panel */}
+          <div className="lg:col-span-5 flex flex-col gap-8 w-full">
+            {/* Profile Photo */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2, duration: 0.8 }}
-              className="flex items-center gap-4 mt-8"
+              variants={itemVariants}
+              className="relative w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 mx-auto lg:mx-0 border border-border p-2 bg-card schematic-bracket-card"
             >
-              
-                <HoverCard>
-                  <HoverCardTrigger asChild>
-                    <a href="https://github.com/noviciusss" target="_blank" rel="noreferrer" 
-                      className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                      <FaGithub size={24} />
-                    </a>
-                  </HoverCardTrigger>
-                  <HoverCardContent className="w-48">
-                    <div className="flex flex-col gap-2">
-                      <span className="text-sm font-semibold">GitHub</span>
-                      <span className="text-xs text-gray-500">Check out my code and projects</span>
-                    </div>
-                  </HoverCardContent>
-                </HoverCard>
-                {/* For linkedin */}
-                <HoverCard>
-                  <HoverCardTrigger asChild>
-                    <a href="https://www.linkedin.com/in/spsamar/" target="_blank" rel="noreferrer" 
-                      className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                      <FaLinkedin size={24} />
-                    </a>
-                  </HoverCardTrigger>
-                  <HoverCardContent className="w-48">
-                    <div className="flex flex-col gap-2">
-                      <span className="text-sm font-semibold">LinkedIn</span>
-                      <span className="text-xs text-gray-500">View my professional network</span>
-                    </div>
-                  </HoverCardContent>
-                </HoverCard>
-              
+              <div className="relative w-full h-full border border-border overflow-hidden grayscale contrast-[1.05] hover:grayscale-0 transition-all duration-300">
+                <Image
+                  src={unnamed}
+                  alt="Samarth Pratap Singh profile"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 256px, 320px"
+                  priority
+                />
+              </div>
             </motion.div>
-          </motion.div>
-          
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            className="md:w-2/5 flex justify-center"
-          >
-           <Card className="relative w-72 h-72 md:w-80 md:h-80 rounded-full overflow-hidden border-8 border-white dark:border-gray-800 shadow-2xl">
-  <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full blur-2xl opacity-20"></div>
-  <CardContent className="p-0 h-full">
-    <Image 
-      src={unnamed} 
-      alt="Profile Image"
-      fill
-      className="object-cover"
-      priority
-    />
-  </CardContent>
-</Card>
-          </motion.div>
-        </div>
+
+            {/* Readout Panel */}
+            <motion.div
+              variants={itemVariants}
+              className="border border-border/80 p-5 bg-card/45 backdrop-blur-sm relative font-mono text-xs text-muted-foreground w-full max-w-sm mx-auto lg:mx-0"
+            >
+              <div className="absolute top-0 right-4 transform -translate-y-1/2 bg-background px-2 text-[10px] uppercase text-accent tracking-widest font-bold">
+                SYSTEMS_LOG // 01
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex justify-between border-b border-border/40 pb-2">
+                  <span className="text-[10px] uppercase text-muted-foreground/60">// STAT_CGPA</span>
+                  <span className="text-foreground font-bold font-mono">8.57 / 10</span>
+                </div>
+                <div className="flex justify-between border-b border-border/40 pb-2">
+                  <span className="text-[10px] uppercase text-muted-foreground/60">// INTERN</span>
+                  <span className="text-foreground font-bold font-mono text-right">AmberFlux EdgeAI</span>
+                </div>
+                <div className="flex justify-between border-b border-border/40 pb-2">
+                  <span className="text-[10px] uppercase text-muted-foreground/60">// CORE_FOCUS</span>
+                  <span className="text-foreground font-bold font-mono text-right">RAG & Agent Graphs</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[10px] uppercase text-muted-foreground/60">// RUNTIME_ENV</span>
+                  <span className="text-accent font-bold font-mono">PYTHON · TS · LINUX</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,27 +1,33 @@
-import type { Metadata } from "next";
-import { Inter, Raleway } from 'next/font/google';
+import type { Metadata, Viewport } from "next";
+import { Inter, Fraunces, JetBrains_Mono } from 'next/font/google';
 import "./globals.css";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import ModernBackground from "./components/BackgroundMesh";
 import Script from "next/script";
 
-const raleway = Raleway({
+const fraunces = Fraunces({
   subsets: ['latin'],
-  variable: '--font-raleway',
+  variable: '--font-display',
+  display: 'swap',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
   display: 'swap',
 });
 
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-sans',
   display: 'swap',
 });
 
 // Enhanced metadata for maximum SEO - optimized for "Samarth Pratap Singh" searches
 export const metadata: Metadata = {
-  title: "Samarth Pratap Singh | GenAI & RAG Engineer | BTech CSE VIT Bhopal",
-  description: "Samarth Pratap Singh - BTech CSE student (CGPA 8.45) at VIT Bhopal specializing in GenAI, RAG systems, and LLMOps. Building production LLM applications with hybrid search, LoRA fine-tuning, and semantic retrieval. Published models on Hugging Face. Portfolio: https://portfolio-noviciusss.vercel.app | GitHub: github.com/noviciusss | LinkedIn: linkedin.com/in/spsamar",
-  keywords: "Samarth Pratap Singh, Samarth Singh, GenAI Engineer, RAG Engineer, Retrieval Augmented Generation, LLMOps, VIT Bhopal CSE, LangChain, Qdrant, FAISS, Vector Database, PEFT, LoRA, Transformers, FLAN-T5, RoBERTa, Hugging Face, FastAPI, PyTorch, Semantic Search, AI Engineer Intern, Machine Learning Intern, spsamar, noviciusss",
+  title: "Samarth Pratap Singh | AI/ML Engineer | BTech CSE VIT Bhopal",
+  description: "Samarth Pratap Singh - BTech CSE student (CGPA 8.57) at VIT Bhopal specializing in AI/ML, RAG systems, and LLMOps. Building production LLM applications with hybrid search, LoRA fine-tuning, and semantic retrieval. Published models on Hugging Face. Portfolio: https://portfolio-noviciusss.vercel.app | GitHub: github.com/noviciusss | LinkedIn: linkedin.com/in/spsamar",
+  keywords: "Samarth Pratap Singh, Samarth Singh, GenAI Engineer, RAG Engineer, AI/ML Engineer, Retrieval Augmented Generation, LLMOps, VIT Bhopal CSE, LangChain, Qdrant, FAISS, Vector Database, PEFT, LoRA, Transformers, FLAN-T5, RoBERTa, Hugging Face, FastAPI, PyTorch, Semantic Search, AI Engineer Intern, Machine Learning Intern, spsamar, noviciusss",
   authors: [{ name: "Samarth Pratap Singh", url: "https://github.com/noviciusss" }],
   creator: "Samarth Pratap Singh",
   publisher: "Samarth Pratap Singh",
@@ -29,8 +35,8 @@ export const metadata: Metadata = {
     canonical: "https://portfolio-noviciusss.vercel.app/",
   },
   openGraph: {
-    title: "Samarth Pratap Singh | GenAI & RAG Engineer | Portfolio",
-    description: "Samarth Pratap Singh - Building production RAG systems and fine-tuning LLMs. 8.45 CGPA BTech CSE student at VIT Bhopal seeking GenAI internships.",
+    title: "Samarth Pratap Singh | AI/ML Engineer | Portfolio",
+    description: "Samarth Pratap Singh - Building production RAG systems and fine-tuning LLMs. 8.57 CGPA BTech CSE student at VIT Bhopal seeking AI/ML engineering roles.",
     url: "https://portfolio-noviciusss.vercel.app/",
     siteName: "Samarth Pratap Singh Portfolio",
     locale: "en_US",
@@ -40,18 +46,17 @@ export const metadata: Metadata = {
         url: "https://portfolio-noviciusss.vercel.app/logo.png",
         width: 1200,
         height: 630,
-        alt: "Samarth Pratap Singh - GenAI & RAG Engineer Portfolio",
+        alt: "Samarth Pratap Singh - AI/ML Engineer Portfolio",
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Samarth Pratap Singh | GenAI & RAG Engineer",
+    title: "Samarth Pratap Singh | AI/ML Engineer",
     description: "Samarth Pratap Singh - Specialist in RAG, LLMOps, and production LLM systems",
     creator: "@samarthsingh",
   },
   applicationName: "Samarth Pratap Singh Portfolio",
-  viewport: "width=device-width, initial-scale=1",
   formatDetection: {
     telephone: true,
     date: false,
@@ -74,13 +79,18 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${raleway.variable} ${inter.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${fraunces.variable} ${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       <head>
         {/* Preconnect to important domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -95,7 +105,7 @@ export default function RootLayout({
             "alternateName": ["Samarth Singh", "spsamar", "noviciusss"],
             "url": "https://portfolio-noviciusss.vercel.app",
             "image": "https://portfolio-noviciusss.vercel.app/logo.png",
-            "jobTitle": "GenAI & RAG Engineer | BTech CSE Student",
+            "jobTitle": "AI/ML Engineer | BTech CSE Student",
             "worksFor": {
               "@type": "EducationalOrganization",
               "name": "VIT Bhopal University"
@@ -153,7 +163,7 @@ export default function RootLayout({
                 }
               }
             ],
-            "description": "BTech CSE student (CGPA 8.45) at VIT Bhopal specializing in Generative AI, RAG systems, and LLMOps. Building production LLM applications with hybrid search, LoRA fine-tuning, and semantic retrieval.",
+            "description": "BTech CSE student (CGPA 8.57) at VIT Bhopal specializing in Artificial Intelligence, Machine Learning, RAG systems, and LLMOps. Building production LLM applications with hybrid search, LoRA fine-tuning, and semantic retrieval.",
             "email": "samarthsin2006@gmail.com"
           })}
         </Script>
@@ -170,7 +180,7 @@ export default function RootLayout({
               "@type": "Person",
               "name": "Samarth Pratap Singh"
             },
-            "description": "Official portfolio website of Samarth Pratap Singh - GenAI & RAG Engineer, showcasing projects, skills, and achievements in AI/ML",
+            "description": "Official portfolio website of Samarth Pratap Singh - AI/ML Engineer, showcasing projects, skills, and achievements in AI/ML",
             "potentialAction": {
               "@type": "SearchAction",
               "target": "https://portfolio-noviciusss.vercel.app/?s={search_term_string}",

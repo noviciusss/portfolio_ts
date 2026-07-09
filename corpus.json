@@ -1,0 +1,42 @@
+[
+  {
+    "text": "Samarth Pratap Singh is an AI/ML Engineer currently pursuing B.Tech in Computer Science Engineering at VIT Bhopal University (2023–2027) with a CGPA of 8.57. He specializes in Generative AI, RAG systems, multi-agent architectures, and LLMOps. He is actively seeking AI/ML and LLMOps roles.",
+    "source": "bio"
+  },
+  {
+    "text": "Samarth's technical skills: Languages: Python, C++, TypeScript, SQL. ML/DL: PyTorch, TensorFlow, Transformers, PEFT/LoRA, Scikit-learn. LLM and Agents: LangGraph, LangChain, RAG, Tool-Calling. Retrieval: Qdrant, FAISS, Hybrid Search (BM25+Dense), Reranking. Backend and Infra: FastAPI, Docker, PostgreSQL, Next.js, Linux. Eval and Observability: LLM-as-Judge, Ragas, LangSmith, MLflow.",
+    "source": "skills"
+  },
+  {
+    "text": "Samarth is currently building AgentGuard: an AST-based static analysis and observability CLI and GitHub Action for agentic AI codebases (LangGraph, CrewAI, AutoGen, MCP). It is currently in Phase 1 with three working detection rules and a full pytest suite. The public repo is coming soon.",
+    "source": "currently-building"
+  },
+  {
+    "text": "Experience: AI/ML Engineer Intern at AmberFlux EdgeAI, May 2026 to Present, Remote. Architected a vision extraction pipeline for multi-page architectural PDFs using GPT-5 — cut latency from ~7 minutes to ~90 seconds on 20-page documents via concurrent batch dispatch (ThreadPoolExecutor + asyncio), with structured output enforcement and retry handling. Built a cover/dimension intake pipeline combining non-AI heuristic extraction (regex/Docling) with conditional GPT-5 fallback — vision invoked only for missing fields — achieving greater than 0.85 confidence and near-complete field extraction on real architectural lead sheets. Designed a job aggregation layer consolidating multi-source document outputs into structured JSON for documents up to 400 pages, with page-level validation guardrails and LangGraph-based routing.",
+    "source": "experience-amberflux"
+  },
+  {
+    "text": "Project: DoCopilot — RAG Document Q&A (December 2025). Stack: Next.js, FastAPI, Qdrant, Hybrid Search, Cross-Encoder Reranking. Built a full-stack RAG system for PDF and TXT document question answering. Features: hybrid search (BM25 plus dense vectors) with RRF fusion, cross-encoder reranking via ms-marco-MiniLM-L-6-v2, source-grounding citation filters, PII redaction, and prompt-injection detection guardrails. Measured result from a 40-query LLM-as-Judge ablation: correctness improved from 57.7% to 89.2% (+31 points over keyword baseline), 90.5% relevance, 100% source citation rate, 2.86 seconds average latency. Live at do-copilot.vercel.app. GitHub: github.com/noviciusss/DoCopilot.",
+    "source": "project-docopilot"
+  },
+  {
+    "text": "Project: Argus — Multi-Agent Research Engine (February 2026). Stack: FastAPI, LangGraph, Docker, LangSmith. Built an autonomous research supervisor graph using LangGraph with 5 specialist agents: planner, researcher, critic, writer, and supervisor. Features: LLM-driven Command(goto) routing, async submit-poll-fetch job flow, SQLite persistence (Postgres-swappable), LangGraph checkpointing for failure recovery, end-to-end tracing in LangSmith. The critic agent rejects low-quality drafts and re-routes before writing — quality enforcement without manual review. Measured result: manual research time reduced from hours to 30 to 90 seconds. GitHub: github.com/noviciusss/argus. Live demo: argus-h0uw.onrender.com.",
+    "source": "project-argus"
+  },
+  {
+    "text": "Project: ContextCore — Stateful Memory Agent (June 2026). Stack: LangGraph, PostgreSQL, Qdrant, MongoDB, MCP. Built a FastMCP server exposing task and note management as callable tools with JSON-RPC binding into a LangGraph agent executor. Dual-memory architecture: Postgres checkpointing for execution states, Qdrant semantic recall for vector search, MongoDB for user profile states. Intent router directs queries via conditional LangGraph edges based on semantic similarity. Includes an LLM-as-Judge harness measuring memory recall accuracy and hallucination rate across multi-session conversations. GitHub: github.com/noviciusss/ContextCore-CLI.",
+    "source": "project-contextcore"
+  },
+  {
+    "text": "Project: GFS-AI — Document Intelligence Pipeline (AmberFlux EdgeAI internship, 2026). Stack: GPT-5 Vision, ThreadPoolExecutor, asyncio, Docling, Python. Built during the internship at AmberFlux EdgeAI. Architected a vision extraction pipeline combining non-AI heuristic regex/Docling checks with GPT-5 fallback. Concurrent batch dispatch cut latency from approximately 7 minutes to 90 seconds on 20-page documents. Fixed canvas resizing and timeout bugs that improved dimension recall from approximately 10 entries to 75+ entries. Handles documents up to 400 pages with page-level validation guardrails. This is an internal project at AmberFlux and not publicly available.",
+    "source": "project-gfsai"
+  },
+  {
+    "text": "Archive — Earlier Work: FLAN-T5 Dialogue Summarizer: LoRA fine-tuned FLAN-T5-base on SAMSum (14,700 dialogues), updating only 2% of parameters. Achieved 49.01 ROUGE-1, 72.25 BERTScore F1, 42.51 METEOR — matching full fine-tuning at a fraction of compute cost. Deployed as a Gradio app on Hugging Face Spaces. RoBERTa Banking77 Classifier: PyTorch/Transformers/CUDA, hosted as a model on Hugging Face. Project Loom: Next.js, Sanity.io, NextAuth.js, PostgreSQL full-stack CMS-backed app, live at projectloom.vercel.app. Dexplorer: React/JS Pokemon API explorer, live at dexplorer-pokemon.vercel.app.",
+    "source": "archive"
+  },
+  {
+    "text": "Contact and social links: GitHub: github.com/noviciusss. LinkedIn: linkedin.com/in/spsamar. Email: samarthsin2006@gmail.com. Contact form available on the portfolio website.",
+    "source": "contact"
+  }
+]

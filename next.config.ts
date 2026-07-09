@@ -31,6 +31,14 @@ const nextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/ask',
+        destination: 'http://127.0.0.1:8000/api/ask',
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

@@ -1,43 +1,62 @@
 import Hero from './components/Hero';
+import AskAboutMe from './components/AskAboutMe';
 import About from './components/About';
+import Experience from './components/Experience';
 import Skills from './components/Skills';
+import Education from './components/Education';
+import CodingStats from './components/CodingStats';
 import Projects from './components/Projects';
-import Blog from './components/Blog';
+import Archive from './components/Archive';
+import CurrentlyBuilding from './components/CurrentlyBuilding';
 import Achievements from './components/Achievements';
 import Contact from './components/Contact';
 import Navbar from './components/Navbar';
-import Education from './components/Education';
-import CodingStats from './components/CodingStats';
-import Approach from './components/Approach';
-import FutureEnhancements from './components/FutureEnhancements';
 import FloatingResumeButton from './components/FloatingResumeButton';
 import Footer from './components/Footer';
 
 export default function Home() {
   return (
     <>
-      {/* ModernBackground is in layout.tsx, so it's already active */}
       <Navbar />
-      {/* Ensure 'main' does not have an opaque background class */}
-      <main className="overflow-hidden relative z-[1]"> {/* Added relative z-[1] to ensure content is above background */}
-        <section id="hero"><Hero /></section>
-        <section id="about"><About /></section>
-        <section id="skills"><Skills /></section>
-        <section id="education"><Education /></section>
-        <section id="coding-stats"><CodingStats /></section>
-        <section id="projects"><Projects /></section>
-        <section id="blog"><Blog /></section>
-        <section id="achievements"><Achievements /></section>
-        <section id="approach"><Approach /></section>
-        <section id="future"><FutureEnhancements /></section>
-        {/* Contact section can be added here */}
-        <section id="contact"><Contact /></section>
-        
-        {/* Footer can have its own semi-transparent background with backdrop-blur */}
+      <main className="overflow-hidden relative z-[1]">
+        <section id="hero">
+          <Hero />
+        </section>
+        <section id="ask">
+          <AskAboutMe />
+        </section>
+        <section id="about">
+          <About />
+        </section>
+        <section id="experience">
+          <Experience />
+        </section>
+        <section id="skills">
+          <Skills />
+        </section>
+        <section id="education">
+          <Education />
+        </section>
+        <section id="coding-stats">
+          <CodingStats />
+        </section>
+        <section id="projects">
+          <Projects />
+        </section>
+        <section id="archive">
+          <Archive />
+        </section>
+        <section id="building">
+          <CurrentlyBuilding />
+        </section>
+        <section id="achievements">
+          <Achievements />
+        </section>
+        <section id="contact">
+          <Contact />
+        </section>
         <Footer />
       </main>
-      
-      {/* Floating Resume Download Button */}
       <FloatingResumeButton />
     </>
   );
