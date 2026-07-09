@@ -42,12 +42,10 @@ export default function Achievements() {
   if (achievements.length === 0) return null;
 
   return (
-    <section className="py-24 px-4 border-t border-border/40" id="achievements">
+    <section className="py-24 px-4 border-t-[3px] border-border bg-background" id="achievements">
       <div className="max-w-4xl mx-auto">
-        {/* Monospace Log Header */}
-        <div className="log-header">
-          <span>// 09 — RECOGNITION & CREDENTIALS</span>
-        </div>
+        <span className="nb-section-label">SECTION 10</span>
+        <h2 className="nb-section-heading">Receipts</h2>
 
         <div className="mb-12 max-w-xl text-sm text-muted-foreground">
           <p>
@@ -64,19 +62,16 @@ export default function Achievements() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.05, duration: 0.4 }}
-              className="border border-border/80 p-5 bg-card/20 relative flex flex-col justify-between schematic-bracket-card"
+              className="nb-card p-5 bg-card relative flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-start justify-between gap-4 mb-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 border border-border flex items-center justify-center text-accent/80 bg-background/50">
-                      {achievement.icon}
-                    </div>
                     <div>
-                      <span className="font-mono text-[9px] text-accent border border-accent/20 px-1.5 py-0.5 uppercase tracking-wider font-semibold">
+                      <span className="font-mono text-[9px] text-foreground bg-accent border-2 border-border px-1.5 py-0.5 uppercase tracking-wider font-extrabold shadow-[1.5px_1.5px_0_0_var(--border)]">
                         {achievement.category}
                       </span>
-                      <h3 className="text-base font-display font-medium text-foreground mt-2">
+                      <h3 className="text-lg font-display font-black text-foreground mt-3 uppercase leading-tight">
                         {achievement.title}
                       </h3>
                     </div>
@@ -87,24 +82,24 @@ export default function Achievements() {
                       href={achievement.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-accent transition-colors pt-1"
+                      className="nb-btn text-[10px] py-1 px-2.5 bg-background border-2 shadow-[2px_2px_0_0_var(--border)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0_0_var(--border)] shrink-0"
                       aria-label="View credential"
                     >
-                      <FiExternalLink className="h-4 w-4" />
+                      <FiExternalLink className="h-3.5 w-3.5" />
                     </a>
                   )}
                 </div>
 
-                <div className="font-mono text-[10px] text-accent/80 font-bold mb-2">
-                  // {achievement.organization.toUpperCase()}
+                <div className="font-mono text-[10px] text-foreground bg-amber/25 border-2 border-border px-2 py-0.5 uppercase tracking-wider font-extrabold shadow-[1.5px_1.5px_0_0_var(--border)] inline-block mb-3">
+                  // ORG: {achievement.organization.toUpperCase()}
                 </div>
                 <p className="text-xs text-muted-foreground font-sans leading-relaxed">
                   {achievement.description}
                 </p>
               </div>
 
-              <div className="font-mono text-[9px] text-muted-foreground/60 border-t border-border/30 pt-3 mt-4">
-                TIMESTAMP: {achievement.date}
+              <div className="font-mono text-[9px] text-muted-foreground border-t-2 border-border/20 pt-3 mt-4 font-bold">
+                TIMESTAMP: {achievement.date.toUpperCase()}
               </div>
             </motion.div>
           ))}

@@ -94,12 +94,10 @@ export default function Contact() {
   ];
 
   return (
-    <section className="py-24 px-4 border-t border-border/40">
+    <section className="py-24 px-4 border-t-[3px] border-border bg-background">
       <div className="max-w-5xl mx-auto">
-        {/* Monospace Log Header */}
-        <div className="log-header">
-          <span>// 08 — CONTACT INTERACTION</span>
-        </div>
+        <span className="nb-section-label">SECTION 11</span>
+        <h2 className="nb-section-heading">Get in touch</h2>
 
         <div className="mb-12 max-w-xl text-sm text-muted-foreground">
           <p>
@@ -117,27 +115,23 @@ export default function Contact() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.05 }}
-                className="border border-border/80 p-4 bg-card/20 relative schematic-bracket-card"
+                className="nb-card p-4 bg-card"
               >
-                <div className="absolute top-0 right-4 transform -translate-y-1/2 bg-background px-1.5 text-[8px] font-mono uppercase tracking-widest text-accent font-bold">
-                  // {info.label}
-                </div>
-
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 border border-border flex items-center justify-center text-accent/80 bg-background/50">
+                  <div className="w-8 h-8 border-2 border-border bg-accent flex items-center justify-center text-accent-foreground shadow-[2px_2px_0_0_var(--border)]">
                     {info.icon}
                   </div>
                   <div>
-                    <div className="font-mono text-[9px] text-muted-foreground/60 uppercase tracking-wider">{info.title}</div>
+                    <div className="font-mono text-[9px] text-muted-foreground/60 uppercase tracking-wider font-bold">{info.title}</div>
                     {info.link ? (
                       <a
                         href={info.link}
-                        className="text-foreground hover:text-accent font-mono text-xs hover-mechanical-link inline-block mt-0.5"
+                        className="text-foreground font-mono text-xs hover:text-accent font-bold inline-block mt-0.5 border-b border-border/25"
                       >
                         {info.value}
                       </a>
                     ) : (
-                      <span className="text-foreground font-mono text-xs inline-block mt-0.5">{info.value}</span>
+                      <span className="text-foreground font-mono text-xs font-bold inline-block mt-0.5">{info.value}</span>
                     )}
                   </div>
                 </div>
@@ -153,11 +147,7 @@ export default function Contact() {
             transition={{ duration: 0.5 }}
             className="lg:col-span-8"
           >
-            <div className="border border-border/80 p-6 md:p-8 bg-card/15 relative schematic-bracket-card w-full">
-              <div className="absolute top-0 right-6 transform -translate-y-1/2 bg-background px-2 text-[9px] font-mono uppercase tracking-widest text-accent font-bold">
-                DISPATCH_FORM // 08
-              </div>
-
+            <div className="nb-card p-6 md:p-8 bg-card w-full">
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -166,14 +156,14 @@ export default function Contact() {
                       name="name"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="font-mono text-[10px] uppercase text-muted-foreground/70 tracking-wider">
-                            // SENDER_NAME
+                          <FormLabel className="font-sans text-xs uppercase tracking-wider font-extrabold text-foreground">
+                            Sender Name
                           </FormLabel>
                           <FormControl>
                             <Input
                               placeholder="Your full name"
                               {...field}
-                              className="bg-background border-border/60 hover:border-accent/40 focus:border-accent rounded-none font-mono text-xs transition-all p-3"
+                              className="bg-background border-[3px] border-border rounded-none font-sans text-xs transition-all p-3 focus:shadow-[3px_3px_0_0_var(--accent)]"
                             />
                           </FormControl>
                           <FormMessage className="font-mono text-[9px]" />
@@ -185,15 +175,15 @@ export default function Contact() {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="font-mono text-[10px] uppercase text-muted-foreground/70 tracking-wider">
-                            // CONTACT_EMAIL
+                          <FormLabel className="font-sans text-xs uppercase tracking-wider font-extrabold text-foreground">
+                            Contact Email
                           </FormLabel>
                           <FormControl>
                             <Input
                               type="email"
                               placeholder="your@email.com"
                               {...field}
-                              className="bg-background border-border/60 hover:border-accent/40 focus:border-accent rounded-none font-mono text-xs transition-all p-3"
+                              className="bg-background border-[3px] border-border rounded-none font-sans text-xs transition-all p-3 focus:shadow-[3px_3px_0_0_var(--accent)]"
                             />
                           </FormControl>
                           <FormMessage className="font-mono text-[9px]" />
@@ -207,14 +197,14 @@ export default function Contact() {
                     name="subject"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="font-mono text-[10px] uppercase text-muted-foreground/70 tracking-wider">
-                          // TRANSMISSION_SUBJECT
+                        <FormLabel className="font-sans text-xs uppercase tracking-wider font-extrabold text-foreground">
+                          Transmission Subject
                         </FormLabel>
                         <FormControl>
                           <Input
                             placeholder="Message subject line"
                             {...field}
-                            className="bg-background border-border/60 hover:border-accent/40 focus:border-accent rounded-none font-mono text-xs transition-all p-3"
+                            className="bg-background border-[3px] border-border rounded-none font-sans text-xs transition-all p-3 focus:shadow-[3px_3px_0_0_var(--accent)]"
                           />
                         </FormControl>
                         <FormMessage className="font-mono text-[9px]" />
@@ -227,15 +217,15 @@ export default function Contact() {
                     name="message"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="font-mono text-[10px] uppercase text-muted-foreground/70 tracking-wider">
-                          // MESSAGE_PAYLOAD
+                        <FormLabel className="font-sans text-xs uppercase tracking-wider font-extrabold text-foreground">
+                          Message Payload
                         </FormLabel>
                         <FormControl>
                           <Textarea
                             placeholder="Enter transaction logs / notes payload..."
                             {...field}
                             rows={5}
-                            className="resize-none bg-background border-border/60 hover:border-accent/40 focus:border-accent rounded-none font-mono text-xs transition-all p-3"
+                            className="resize-none bg-background border-[3px] border-border rounded-none font-sans text-xs transition-all p-3 focus:shadow-[3px_3px_0_0_var(--accent)]"
                           />
                         </FormControl>
                         <FormMessage className="font-mono text-[9px]" />
@@ -246,7 +236,7 @@ export default function Contact() {
                   <div>
                     {isSuccess && (
                       <div 
-                        className="flex p-4 mb-4 text-xs font-mono bg-accent/5 text-accent border border-accent/20" 
+                        className="flex p-4 mb-4 text-xs font-mono bg-accent/10 text-accent-foreground border-[3px] border-border shadow-[3px_3px_0_0_var(--border)] font-bold" 
                         role="alert"
                       >
                         <span>[OK] Message dispatched successfully. Verification received.</span>
@@ -254,7 +244,7 @@ export default function Contact() {
                     )}
                     {submitError && (
                       <div 
-                        className="flex p-4 mb-4 text-xs font-mono bg-destructive/5 text-destructive border border-destructive/20" 
+                        className="flex p-4 mb-4 text-xs font-mono bg-destructive/10 text-destructive border-[3px] border-destructive shadow-[3px_3px_0_0_var(--border)] font-bold" 
                         role="alert"
                       >
                         <span>[ERR] Submission failed: {submitError}</span>
@@ -264,12 +254,11 @@ export default function Contact() {
                     <div className="flex justify-end pt-2">
                       <Button
                         type="submit"
-                        size="lg"
-                        className="w-full sm:w-auto bg-accent hover:bg-accent/90 text-accent-foreground rounded-none px-6 font-mono text-sm tracking-wider uppercase border border-accent/20 transition-all duration-200"
                         disabled={isSubmitting}
+                        className="nb-btn nb-btn-primary w-full sm:w-auto"
                       >
                         <FiSend className="h-4 w-4 mr-2" />
-                        {isSubmitting ? "TRANSMITTING..." : "DISPATCH_MESSAGE"}
+                        {isSubmitting ? "TRANSMITTING..." : "SEND IT →"}
                       </Button>
                     </div>
                   </div>

@@ -35,12 +35,10 @@ const archiveProjects = [
 
 export default function Archive() {
   return (
-    <section className="py-24 px-4 border-t border-border/40">
+    <section className="py-24 px-4 border-t-[3px] border-border bg-background">
       <div className="max-w-4xl mx-auto">
-        {/* Monospace Log Header */}
-        <div className="log-header">
-          <span>// 04 — HISTORICAL ARCHIVE</span>
-        </div>
+        <span className="nb-section-label">SECTION 08</span>
+        <h2 className="nb-section-heading">Historical Archive</h2>
 
         <div className="mb-10 max-w-xl text-sm text-muted-foreground">
           <p>
@@ -53,39 +51,38 @@ export default function Archive() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="space-y-4"
+          className="space-y-6"
         >
           {archiveProjects.map((proj, idx) => (
             <div 
               key={idx}
-              className="border border-border/60 hover:border-accent/40 bg-card/15 p-5 transition-colors relative flex flex-col md:flex-row md:items-center justify-between gap-6"
+              className="border-[3px] border-border bg-card p-5 shadow-[4px_4px_0_0_var(--border)] relative flex flex-col md:flex-row md:items-center justify-between gap-6"
             >
               <div className="space-y-2 max-w-2xl">
                 <div className="flex items-center gap-3">
-                  <h4 className="text-base font-display font-medium text-foreground">
+                  <h4 className="text-base font-display font-extrabold text-foreground uppercase tracking-tight">
                     {proj.title}
                   </h4>
-                  <span className="font-mono text-[9px] text-muted-foreground/60 border border-border/40 px-1.5 py-0.5">
+                  <span className="font-mono text-[9px] text-foreground bg-amber border-2 border-border px-1.5 py-0.5 uppercase tracking-wider font-bold">
                     ARCHIVED
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground font-sans leading-relaxed">
                   {proj.desc}
                 </p>
-                <div className="font-mono text-[9px] text-accent/80 tracking-wide">
-                  {proj.stack}
+                <div className="font-mono text-[9px] text-accent font-bold tracking-wide">
+                  // STACK: {proj.stack.toUpperCase()}
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 text-xs font-mono self-end md:self-center">
+              <div className="flex items-center gap-3 text-xs font-mono self-end md:self-center">
                 <a
                   href={proj.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-accent flex items-center gap-1.5"
+                  className="nb-btn text-[10px] py-1 px-3 bg-background border-2 shadow-[2px_2px_0_0_var(--border)] hover:shadow-[1px_1px_0_0_var(--border)] hover:translate-x-[1px] hover:translate-y-[1px]"
                 >
-                  <FiGithub className="h-4 w-4" />
-                  <span className="hover-mechanical-link">Code</span>
+                  <FiGithub className="h-3.5 w-3.5" /> Code
                 </a>
                 
                 {proj.demo && (
@@ -93,10 +90,9 @@ export default function Archive() {
                     href={proj.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-accent flex items-center gap-1.5"
+                    className="nb-btn text-[10px] py-1 px-3 bg-background border-2 shadow-[2px_2px_0_0_var(--border)] hover:shadow-[1px_1px_0_0_var(--border)] hover:translate-x-[1px] hover:translate-y-[1px]"
                   >
-                    <FiExternalLink className="h-4 w-4" />
-                    <span className="hover-mechanical-link">Live</span>
+                    <FiExternalLink className="h-3.5 w-3.5" /> Live
                   </a>
                 )}
               </div>

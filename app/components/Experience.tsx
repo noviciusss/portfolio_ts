@@ -24,12 +24,10 @@ const experiences = [
 
 export default function Experience() {
   return (
-    <section className="py-24 px-4 border-t border-border/40">
+    <section className="py-24 px-4 border-t-[3px] border-border bg-background">
       <div className="max-w-4xl mx-auto">
-        {/* Monospace Log Header */}
-        <div className="log-header">
-          <span>// 02 — EXPERIENCE</span>
-        </div>
+        <span className="nb-section-label">SECTION 03</span>
+        <h2 className="nb-section-heading">Experience</h2>
 
         <motion.div
           initial={{ opacity: 0, y: 15 }}
@@ -41,17 +39,17 @@ export default function Experience() {
           {experiences.map((exp, idx) => (
             <div 
               key={idx} 
-              className="border border-border/80 p-6 md:p-8 bg-card/30 relative schematic-bracket-card"
+              className="nb-card p-6 md:p-8 bg-card"
             >
               {/* Header section */}
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-border/40 pb-6 mb-6">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-[3px] border-border pb-6 mb-6">
                 <div>
-                  <h3 className="text-2xl font-display font-medium text-foreground mb-1">
+                  <h3 className="text-2xl font-display font-extrabold text-foreground mb-1">
                     {exp.role}
                   </h3>
                   <div className="flex items-center gap-2 text-accent font-mono text-sm font-semibold">
-                    <FiBriefcase className="h-4 w-4" />
-                    <span>{exp.company}</span>
+                    <FiBriefcase className="h-4 w-4 text-foreground" />
+                    <span className="text-foreground">{exp.company}</span>
                   </div>
                 </div>
                 
@@ -73,12 +71,12 @@ export default function Experience() {
                 {exp.metrics.map((metric, midx) => (
                   <div 
                     key={midx}
-                    className="border border-border/40 bg-background/50 p-4 font-mono flex flex-col justify-between"
+                    className="border-[3px] border-border bg-amber p-4 font-mono flex flex-col justify-between shadow-[3px_3px_0_0_var(--border)]"
                   >
-                    <span className="text-[10px] uppercase text-muted-foreground/60 tracking-wider">
+                    <span className="text-[10px] uppercase text-foreground/70 tracking-wider font-bold">
                       // {metric.key}
                     </span>
-                    <span className="text-lg font-bold text-accent mt-1">
+                    <span className="text-lg font-black text-foreground mt-1">
                       {metric.value}
                     </span>
                   </div>
@@ -89,22 +87,22 @@ export default function Experience() {
               <div className="space-y-4 text-sm leading-relaxed text-muted-foreground mb-8">
                 {exp.bullets.map((bullet, bidx) => (
                   <p key={bidx} className="relative pl-5 font-sans">
-                    <span className="absolute left-0 top-1 text-accent font-mono">•</span>
+                    <span className="absolute left-0 top-1 text-accent font-mono font-black">•</span>
                     {bullet}
                   </p>
                 ))}
               </div>
 
               {/* Tech stack row */}
-              <div className="flex flex-wrap gap-2 pt-4 border-t border-border/30">
-                <span className="font-mono text-xs text-muted-foreground/60 mr-2 flex items-center gap-1">
-                  <FiCpu className="h-3.5 w-3.5" />
+              <div className="flex flex-wrap gap-2 pt-4 border-t-[3px] border-border/20">
+                <span className="font-mono text-xs text-muted-foreground mr-2 flex items-center gap-1 font-bold">
+                  <FiCpu className="h-3.5 w-3.5 text-foreground" />
                   TECH:
                 </span>
                 {exp.tech.map((t, tidx) => (
                   <span 
                     key={tidx}
-                    className="font-mono text-[10px] text-muted-foreground border border-border/60 px-2 py-0.5"
+                    className={`font-mono text-xs text-foreground border-2 border-border bg-card px-2.5 py-0.5 shadow-[1.5px_1.5px_0_0_var(--border)] tag-tilt-${tidx % 3}`}
                   >
                     {t}
                   </span>

@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import { SiLeetcode } from "react-icons/si";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -72,12 +72,10 @@ export default function CodingStats() {
   const leetcodeRatingPercentage = (leetcodeStats.contestRating / 3000) * 100;
   
   return (
-    <section className="py-24 px-4 border-t border-border/40" id="coding-stats">
+    <section className="py-24 px-4 border-t-[3px] border-border bg-background" id="coding-stats">
       <div className="max-w-4xl mx-auto">
-        {/* Monospace Log Header */}
-        <div className="log-header">
-          <span>// 05 — DEVELOPMENT METRICS & ALGORITHMIC EFFICACY</span>
-        </div>
+        <span className="nb-section-label">SECTION 06</span>
+        <h2 className="nb-section-heading">Activity Log</h2>
 
         <div className="mb-12 max-w-xl text-sm text-muted-foreground">
           <p>
@@ -93,29 +91,29 @@ export default function CodingStats() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <Card className="border border-border/80 bg-card/15 rounded-none h-full schematic-bracket-card">
-              <CardHeader className="border-b border-border/40 pb-4 mb-4 flex flex-row items-center justify-between gap-4">
+            <Card className="border-[3px] border-border bg-card rounded-none h-full shadow-[6px_6px_0_0_var(--amber)]">
+              <CardHeader className="border-b-[3px] border-border pb-4 mb-4 flex flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <FaGithub size={24} className="text-accent" />
-                  <CardTitle className="text-lg font-display font-medium text-foreground">GitHub Engine</CardTitle>
+                  <FaGithub size={24} className="text-foreground" />
+                  <CardTitle className="text-lg font-display font-black text-foreground uppercase">GitHub Engine</CardTitle>
                 </div>
                 <a 
                   href={`https://github.com/${GITHUB_USERNAME}`}
                   target="_blank"
                   rel="noopener noreferrer" 
-                  className="font-mono text-xs text-muted-foreground hover:text-accent transition-colors flex items-center gap-2"
+                  className="font-mono text-xs text-muted-foreground hover:text-accent transition-colors flex items-center gap-2 font-bold"
                 >
                   {githubUserLoading ? (
                     <Skeleton className="h-6 w-20 bg-muted" />
                   ) : (
                     <>
                       {mounted && githubUserData?.avatar_url && (
-                        <Avatar className="h-5 w-5 border border-border">
+                        <Avatar className="h-5 w-5 border-2 border-border rounded-none">
                           <AvatarImage src={githubUserData.avatar_url} alt="GitHub Avatar" />
                           <AvatarFallback className="bg-muted text-[10px]">GH</AvatarFallback>
                         </Avatar>
                       )}
-                      <span className="hover-mechanical-link">@{GITHUB_USERNAME}</span>
+                      <span className="border-b-2 border-border/40">@{GITHUB_USERNAME}</span>
                     </>
                   )}
                 </a>
@@ -123,7 +121,7 @@ export default function CodingStats() {
               
               <CardContent className="space-y-6">
                 {/* Stats Readout Image */}
-                <div className="border border-border/60 bg-black/40 rounded-none overflow-hidden flex items-center justify-center p-2">
+                <div className="border-[3px] border-border bg-black/45 rounded-none overflow-hidden flex items-center justify-center p-2 shadow-[3px_3px_0_0_var(--border)]">
                   {mounted && (
                     <Image
                       src={githubStatsUrl}
@@ -136,13 +134,13 @@ export default function CodingStats() {
                   )}
                 </div>
                 
-                {/* Custom system info */}
-                <div className="border-t border-border/30 pt-4 space-y-2 font-mono text-[10px] text-muted-foreground">
-                  <div className="flex justify-between">
+                {/* Custom info */}
+                <div className="border-t-[3px] border-border/20 pt-4 space-y-2.5 font-mono text-[10px] text-muted-foreground font-bold">
+                  <div className="flex justify-between border-b border-border/10 pb-1">
                     <span>// RUNTIME_LOCATION</span>
                     <span className="text-foreground">{githubUserData?.location || "India"}</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-between border-b border-border/10 pb-1">
                     <span>// ACCOUNT_CREATED</span>
                     <span className="text-foreground">
                       {githubUserData ? new Date(githubUserData.created_at).toLocaleDateString() : "2023"}
@@ -150,7 +148,7 @@ export default function CodingStats() {
                   </div>
                   <div className="flex justify-between">
                     <span>// TOTAL_REPOS</span>
-                    <span className="text-accent font-bold">{githubUserData?.public_repos || 0}</span>
+                    <span className="text-accent font-black">{githubUserData?.public_repos || 0}</span>
                   </div>
                 </div>
               </CardContent>
@@ -164,19 +162,19 @@ export default function CodingStats() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.05 }}
           >
-            <Card className="border border-border/80 bg-card/15 rounded-none h-full schematic-bracket-card">
-              <CardHeader className="border-b border-border/40 pb-4 mb-4 flex flex-row items-center justify-between gap-4">
+            <Card className="border-[3px] border-border bg-card rounded-none h-full shadow-[6px_6px_0_0_var(--accent)]">
+              <CardHeader className="border-b-[3px] border-border pb-4 mb-4 flex flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <SiLeetcode size={24} className="text-accent" />
-                  <CardTitle className="text-lg font-display font-medium text-foreground">Algorithmic Engine</CardTitle>
+                  <SiLeetcode size={24} className="text-foreground" />
+                  <CardTitle className="text-lg font-display font-black text-foreground uppercase">Algorithmic Engine</CardTitle>
                 </div>
                 <a 
                   href={`https://leetcode.com/${LEETCODE_USERNAME}`}
                   target="_blank"
                   rel="noopener noreferrer" 
-                  className="font-mono text-xs text-muted-foreground hover:text-accent transition-colors"
+                  className="font-mono text-xs text-muted-foreground hover:text-accent transition-colors font-bold border-b-2 border-border/40"
                 >
-                  <span className="hover-mechanical-link">@{LEETCODE_USERNAME}</span>
+                  <span>@{LEETCODE_USERNAME}</span>
                 </a>
               </CardHeader>
               
@@ -190,22 +188,22 @@ export default function CodingStats() {
                   <>
                     {/* Problems Stats grid */}
                     <div className="grid grid-cols-3 gap-3">
-                      <div className="border border-border/40 bg-background/50 p-3 font-mono">
-                        <span className="text-[9px] text-muted-foreground/60 uppercase tracking-wider">// SOLVED</span>
-                        <div className="text-base font-bold text-accent mt-1">{leetcodeStats.problemsSolved}</div>
+                      <div className="border-2 border-border bg-background p-3 font-mono shadow-[2.5px_2.5px_0_0_var(--border)]">
+                        <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider">// SOLVED</span>
+                        <div className="text-base font-black text-accent mt-1">{leetcodeStats.problemsSolved}</div>
                       </div>
-                      <div className="border border-border/40 bg-background/50 p-3 font-mono">
-                        <span className="text-[9px] text-muted-foreground/60 uppercase tracking-wider">// RATING</span>
-                        <div className="text-base font-bold text-foreground mt-1">{leetcodeStats.contestRating}</div>
+                      <div className="border-2 border-border bg-background p-3 font-mono shadow-[2.5px_2.5px_0_0_var(--border)]">
+                        <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider">// RATING</span>
+                        <div className="text-base font-black text-foreground mt-1">{leetcodeStats.contestRating}</div>
                       </div>
-                      <div className="border border-border/40 bg-background/50 p-3 font-mono">
-                        <span className="text-[9px] text-muted-foreground/60 uppercase tracking-wider">// RANKING</span>
-                        <div className="text-base font-bold text-foreground mt-1">#{leetcodeStats.ranking}</div>
+                      <div className="border-2 border-border bg-background p-3 font-mono shadow-[2.5px_2.5px_0_0_var(--border)]">
+                        <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-wider">// RANKING</span>
+                        <div className="text-base font-black text-foreground mt-1">#{leetcodeStats.ranking}</div>
                       </div>
                     </div>
 
                     {/* Progress tracking */}
-                    <div className="space-y-3 font-mono text-[10px] text-muted-foreground">
+                    <div className="space-y-3 font-mono text-[10px] text-muted-foreground font-bold">
                       <div className="space-y-1">
                         <div className="flex justify-between">
                           <span>// RESOLUTION_DISTRIBUTION</span>
@@ -215,26 +213,26 @@ export default function CodingStats() {
                         </div>
                       </div>
 
-                      <div className="space-y-1 pt-2 border-t border-border/20">
+                      <div className="space-y-1.5 pt-2 border-t-[2px] border-border/20">
                         <div className="flex justify-between">
                           <span>// RATING_PERCENTILE</span>
-                          <span>{leetcodeStats.contestRating} / 3000</span>
+                          <span className="text-foreground">{leetcodeStats.contestRating} / 3000</span>
                         </div>
                         <Progress 
                           value={leetcodeRatingPercentage}
-                          className="h-2 bg-background border border-border/60"
+                          className="h-3 bg-background border-2 border-border shadow-[1.5px_1.5px_0_0_var(--border)] rounded-none"
                         />
                       </div>
                       
                       {leetcodeData?.acceptanceRate && (
-                        <div className="space-y-1 pt-2">
+                        <div className="space-y-1.5 pt-2">
                           <div className="flex justify-between">
                             <span>// SUBMISSION_ACCEPTANCE</span>
-                            <span>{leetcodeData.acceptanceRate}%</span>
+                            <span className="text-foreground">{leetcodeData.acceptanceRate}%</span>
                           </div>
                           <Progress 
                             value={parseFloat(leetcodeData.acceptanceRate)}
-                            className="h-2 bg-background border border-border/60"
+                            className="h-3 bg-background border-2 border-border shadow-[1.5px_1.5px_0_0_var(--border)] rounded-none"
                           />
                         </div>
                       )}

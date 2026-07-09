@@ -64,37 +64,37 @@ export default function Navbar() {
       transition={{ duration: 0.4, ease: "easeOut" }}
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         scrolled 
-          ? 'bg-background/80 backdrop-blur-md border-b border-border/80' 
+          ? 'bg-background/90 backdrop-blur-sm border-b-[3px] border-border' 
           : 'bg-transparent'
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <a href="#" className="font-mono text-sm tracking-wider uppercase font-bold text-foreground">
-            SYS_LOG//<span className="text-accent">SAMARTH</span>
+          <a href="#" className="font-display text-sm uppercase tracking-wider font-extrabold text-foreground">
+            SAMARTH <span className="text-accent">→</span>
           </a>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4">
               {navItems.map((item) => {
                 const isLinkActive = activeSection === item.href.substring(1);
                 return (
                   <a
                     key={item.href}
                     href={item.href}
-                    className={`font-mono text-xs uppercase tracking-widest relative py-1.5 transition-colors ${
+                    className={`font-sans text-[11px] uppercase tracking-wider relative px-3.5 py-1.5 transition-colors font-bold ${
                       isLinkActive 
-                        ? 'text-accent font-bold' 
+                        ? 'text-foreground' 
                         : 'text-muted-foreground hover:text-foreground'
                     }`}
                   >
-                    {item.label}
+                    <span className="relative z-10">{item.label}</span>
                     {isLinkActive && (
                       <motion.span
-                        className="absolute bottom-0 left-0 w-full h-[1px] bg-accent"
-                        layoutId="navUnderline"
+                        className="absolute inset-0 bg-accent border-[2px] border-border"
+                        layoutId="navActiveBlock"
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -109,7 +109,7 @@ export default function Navbar() {
                 variant="ghost"
                 size="icon"
                 onClick={toggleTheme}
-                className="rounded-none hover:bg-secondary w-8 h-8 flex items-center justify-center border border-border/50 text-muted-foreground hover:text-foreground transition-colors"
+                className="rounded-none hover:bg-secondary w-8 h-8 flex items-center justify-center border-[3px] border-border text-foreground transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_var(--amber)] shadow-[4px_4px_0_0_var(--amber)]"
                 aria-label="Toggle theme"
               >
                 <AnimatePresence mode="wait" initial={false}>
@@ -134,7 +134,7 @@ export default function Navbar() {
                 variant="ghost"
                 size="icon"
                 onClick={toggleTheme}
-                className="rounded-none hover:bg-secondary w-8 h-8 flex items-center justify-center border border-border/50 text-muted-foreground hover:text-foreground transition-colors"
+                className="rounded-none w-8 h-8 flex items-center justify-center border-[3px] border-border text-foreground shadow-[3px_3px_0_0_var(--amber)]"
                 aria-label="Toggle theme"
               >
                 {theme === "dark" ? <FiSun className="h-4 w-4" /> : <FiMoon className="h-4 w-4" />}
@@ -146,15 +146,15 @@ export default function Navbar() {
                 <Button 
                   variant="ghost" 
                   size="icon"
-                  className="rounded-none hover:bg-secondary w-8 h-8 flex items-center justify-center border border-border/50 text-muted-foreground hover:text-foreground transition-colors"
+                  className="rounded-none w-8 h-8 flex items-center justify-center border-[3px] border-border text-foreground shadow-[3px_3px_0_0_var(--accent)]"
                 >
                   <FiMenu className="h-4 w-4" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[280px] bg-background border-l border-border px-6 py-12 flex flex-col justify-between">
+              <SheetContent side="right" className="w-[280px] bg-background border-l-[3px] border-border px-6 py-12 flex flex-col justify-between">
                 <div>
-                  <div className="font-mono text-sm tracking-wider uppercase font-bold text-foreground border-b border-border/40 pb-4 mb-8">
-                    SYS_LOG//<span className="text-accent">SAMARTH</span>
+                  <div className="font-display text-sm tracking-wider uppercase font-bold text-foreground border-b-[3px] border-border pb-4 mb-8">
+                    SAMARTH <span className="text-accent">→</span>
                   </div>
                   <nav className="flex flex-col gap-6">
                     {navItems.map((item) => {
@@ -164,7 +164,7 @@ export default function Navbar() {
                           key={item.href}
                           href={item.href}
                           onClick={() => setIsSheetOpen(false)}
-                          className={`font-mono text-sm uppercase tracking-widest py-1 border-b border-border/20 ${
+                          className={`font-sans text-xs uppercase tracking-widest py-2 border-b-2 border-border/20 ${
                             isLinkActive 
                               ? 'text-accent font-bold' 
                               : 'text-muted-foreground hover:text-foreground'
@@ -176,7 +176,7 @@ export default function Navbar() {
                     })}
                   </nav>
                 </div>
-                <div className="text-center font-mono text-[10px] text-muted-foreground/60 border-t border-border/40 pt-4">
+                <div className="text-center font-mono text-[9px] text-muted-foreground/60 border-t-2 border-border/20 pt-4">
                   &copy; {new Date().getFullYear()} SAMARTH PRATAP SINGH
                 </div>
               </SheetContent>

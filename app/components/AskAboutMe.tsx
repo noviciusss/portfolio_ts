@@ -25,6 +25,7 @@ export default function AskAboutMe() {
   const [loading, setLoading] = useState(false);
   const [typedResponse, setTypedResponse] = useState("");
   const [placeholderIdx, setPlaceholderIdx] = useState(0);
+  const [spinnerChar, setSpinnerChar] = useState("|");
   const terminalBodyRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const cursorRef = useRef<HTMLSpanElement>(null);
@@ -37,6 +38,18 @@ export default function AskAboutMe() {
     }, 3000);
     return () => clearInterval(interval);
   }, []);
+
+  // Cycling character spinner for loading state
+  useEffect(() => {
+    if (!loading) return;
+    const chars = ["|", "/", "-", "\\"];
+    let idx = 0;
+    const interval = setInterval(() => {
+      setSpinnerChar(chars[idx]);
+      idx = (idx + 1) % chars.length;
+    }, 100);
+    return () => clearInterval(interval);
+  }, [loading]);
 
   // Blink cursor
   useGSAP(() => {
@@ -69,7 +82,7 @@ export default function AskAboutMe() {
     const counter = { val: 0 };
     tl.to(counter, {
       val: text.length,
-      duration: Math.min(text.length * 0.022, 6), // cap at 6s for very long answers
+      duration: Math.min(text.length * 0.022, 6),
       ease: "none",
       onUpdate() {
         const idx = Math.round(counter.val);
@@ -120,29 +133,27 @@ export default function AskAboutMe() {
   };
 
   return (
-    <section className="py-24 px-4 border-t border-border/40" id="ask">
+    <section className="py-24 px-4 border-t-[3px] border-border bg-background" id="ask">
       <div className="max-w-5xl mx-auto">
-        {/* Section Header */}
-        <div className="log-header mb-8">
-          <span>// 00 — ASK ABOUT ME</span>
-        </div>
+        <span className="nb-section-label">SECTION 01</span>
+        <h2 className="nb-section-heading">Ask me anything</h2>
 
         <div className="mb-10 max-w-xl">
           <p className="text-sm text-muted-foreground font-sans leading-relaxed">
             A live RAG query interface grounded in resume text, project write-ups, and case studies.
             Same retrieval + guardrail pattern as DoCopilot — BM25 over a static corpus, Groq LLM for generation.
-            <span className="font-mono text-accent text-[10px] ml-2 uppercase tracking-wider">// powered by rank-bm25 + groq</span>
+            <span className="font-mono text-accent text-[10px] ml-2 uppercase tracking-wider font-bold">// powered by rank-bm25 + groq</span>
           </p>
         </div>
 
         {/* Terminal Window */}
-        <div className="border border-border/80 bg-card/20 max-w-2xl schematic-bracket-card">
+        <div className="border-[3px] border-border bg-card max-w-2xl shadow-[6px_6px_0_0_var(--accent)]">
           {/* Chrome Bar */}
-          <div className="flex items-center gap-2 px-4 py-3 border-b border-border/60 bg-secondary/30">
-            <div className="w-2.5 h-2.5 rounded-full bg-destructive/70" />
-            <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
-            <div className="w-2.5 h-2.5 rounded-full bg-accent/50" />
-            <span className="ml-3 font-mono text-[10px] text-muted-foreground/60 tracking-wider uppercase">
+          <div className="flex items-center gap-2 px-4 py-3 border-b-[3px] border-border bg-foreground text-background">
+            <div className="w-2.5 h-2.5 rounded-full bg-[#E5484D] border border-border" />
+            <div className="w-2.5 h-2.5 rounded-full bg-[#FFC53D] border border-border" />
+            <div className="w-2.5 h-2.5 rounded-full bg-[#7FE08A] border border-border" />
+            <span className="ml-3 font-mono text-[10px] text-background/80 tracking-wider uppercase font-bold">
               zsh — ask-about-samarth
             </span>
           </div>
@@ -150,11 +161,11 @@ export default function AskAboutMe() {
           {/* Terminal Body */}
           <div
             ref={terminalBodyRef}
-            className="font-mono text-xs p-5 min-h-[240px] max-h-[420px] overflow-y-auto space-y-4 text-foreground"
+            className="font-mono text-xs p-5 min-h-[240px] max-h-[420px] overflow-y-auto space-y-4 text-foreground bg-background/45"
           >
             {/* Greeting line */}
-            <div className="text-muted-foreground/70">
-              <span className="text-accent">$</span> ask --about samarth
+            <div className="text-muted-foreground/75 font-bold">
+              <span className="text-accent">❯</span> ask --about samarth
               <br />
               <span className="text-muted-foreground/50 text-[10px]">
                 # Corpus: resume · 4 projects · experience · skills · contact
@@ -166,18 +177,18 @@ export default function AskAboutMe() {
               <div key={idx}>
                 {msg.role === "user" ? (
                   <div>
-                    <span className="text-accent">❯ </span>
-                    <span className="text-foreground">{msg.text}</span>
+                    <span className="text-accent font-bold">❯ </span>
+                    <span className="text-foreground font-bold">{msg.text}</span>
                   </div>
                 ) : (
-                  <div className="pl-3 border-l border-accent/30 space-y-1">
+                  <div className="pl-3 border-l-[3px] border-accent/40 space-y-2">
                     <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">{msg.text}</p>
                     {msg.sources && msg.sources.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 pt-1">
+                      <div className="flex flex-wrap gap-2 pt-1">
                         {msg.sources.map((src, sIdx) => (
                           <span
                             key={sIdx}
-                            className="text-[9px] uppercase tracking-wider text-accent/70 border border-accent/20 px-1.5 py-0.5"
+                            className="text-[9px] uppercase tracking-wider text-foreground bg-accent/20 border-2 border-border px-1.5 py-0.5 font-bold"
                           >
                             [{src}]
                           </span>
@@ -191,18 +202,18 @@ export default function AskAboutMe() {
 
             {/* In-progress typed response */}
             {loading && typedResponse && (
-              <div className="pl-3 border-l border-accent/30">
+              <div className="pl-3 border-l-[3px] border-accent/40">
                 <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">
                   {typedResponse}
-                  <span ref={cursorRef} className="inline-block w-[7px] h-[13px] bg-accent/80 align-middle ml-0.5" />
+                  <span ref={cursorRef} className="inline-block w-[7px] h-[13px] bg-accent align-middle ml-0.5" />
                 </p>
               </div>
             )}
 
             {/* Loading dots before typing starts */}
             {loading && !typedResponse && (
-              <div className="pl-3 border-l border-accent/30 text-muted-foreground/60 text-[10px] tracking-widest">
-                RETRIEVING...
+              <div className="pl-3 border-l-[3px] border-accent/40 text-muted-foreground/60 text-[10px] tracking-widest uppercase font-bold">
+                RETRIEVING... [{spinnerChar}]
               </div>
             )}
           </div>
@@ -210,9 +221,9 @@ export default function AskAboutMe() {
           {/* Input Area */}
           <form
             onSubmit={handleSubmit}
-            className="border-t border-border/60 flex items-center px-4 py-3 gap-3"
+            className="border-t-[3px] border-border flex items-center px-4 py-3 gap-3 bg-background"
           >
-            <span className="text-accent font-mono text-xs shrink-0">❯</span>
+            <span className="text-accent font-mono text-xs shrink-0 font-bold">❯</span>
             <input
               ref={inputRef}
               type="text"
@@ -220,19 +231,19 @@ export default function AskAboutMe() {
               onChange={(e) => setInput(e.target.value)}
               disabled={loading}
               placeholder={PLACEHOLDER_QUESTIONS[placeholderIdx]}
-              className="flex-1 bg-transparent font-mono text-xs text-foreground placeholder:text-muted-foreground/40 outline-none disabled:opacity-50"
+              className="flex-1 bg-transparent font-mono text-xs text-foreground placeholder:text-muted-foreground/40 outline-none disabled:opacity-50 font-bold"
             />
             <button
               type="submit"
               disabled={loading || !input.trim()}
-              className="font-mono text-[10px] uppercase tracking-wider text-accent border border-accent/30 px-3 py-1 hover:bg-accent/10 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              className="nb-btn text-[10px] py-1.5 px-3 bg-accent text-accent-foreground border-2 shadow-[2px_2px_0_0_var(--border)] hover:shadow-[1px_1px_0_0_var(--border)] hover:translate-x-[1px] hover:translate-y-[1px] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
             >
               Send
             </button>
           </form>
         </div>
 
-        <p className="mt-4 font-mono text-[10px] text-muted-foreground/40 max-w-2xl">
+        <p className="mt-4 font-mono text-[10px] text-muted-foreground/50 max-w-2xl font-bold">
           // Answers are grounded in the corpus above. Off-topic questions are redirected. Source tags indicate which document each answer draws from.
         </p>
       </div>

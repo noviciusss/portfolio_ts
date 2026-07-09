@@ -11,7 +11,6 @@ gsap.registerPlugin(ScrollTrigger);
 type ProjectMetric = {
   label: string;
   value: string;
-  // For animated numbers: provide start and end numeric values + a format fn
   countFrom?: number;
   countTo?: number;
   format?: (n: number) => string;
@@ -148,8 +147,6 @@ const featuredProjects: Project[] = [
 
 function MetricCell({
   metric,
-  cardIdx,
-  metricIdx,
 }: {
   metric: ProjectMetric;
   cardIdx: number;
@@ -179,13 +176,13 @@ function MetricCell({
   }, []);
 
   return (
-    <div className="font-mono flex flex-col justify-between">
-      <span className="text-[9px] text-muted-foreground/60 uppercase tracking-tight">
+    <div className="border-2 border-border bg-accent/15 p-3 shadow-[2px_2px_0_0_var(--border)] font-mono flex flex-col justify-between">
+      <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-tight">
         {metric.label}
       </span>
       <span
         ref={valueRef}
-        className="text-sm sm:text-base font-bold text-accent mt-0.5"
+        className="text-sm sm:text-base font-black text-foreground mt-1"
       >
         {metric.countFrom !== undefined && metric.format
           ? metric.format(metric.countFrom)
@@ -197,11 +194,10 @@ function MetricCell({
 
 export default function Projects() {
   return (
-    <section className="py-24 px-4 border-t border-border/40">
+    <section className="py-24 px-4 border-t-[3px] border-border bg-background">
       <div className="max-w-6xl mx-auto">
-        <div className="log-header">
-          <span>// 03 — FEATURED PROJECTS</span>
-        </div>
+        <span className="nb-section-label">SECTION 07</span>
+        <h2 className="nb-section-heading">Featured Projects</h2>
 
         <div className="mb-12 max-w-xl text-sm text-muted-foreground">
           <p>
@@ -218,21 +214,21 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.05 }}
-              className="border border-border/80 p-6 bg-card/25 flex flex-col justify-between relative schematic-bracket-card"
+              className="nb-card p-6 bg-card flex flex-col justify-between"
             >
               <div>
                 {/* Card Header */}
-                <div className="flex items-start justify-between border-b border-border/40 pb-4 mb-5">
+                <div className="flex items-start justify-between border-b-[3px] border-border pb-4 mb-5">
                   <div>
-                    <span className="font-mono text-xs text-accent font-bold">
+                    <span className="font-mono text-xs text-accent font-bold uppercase">
                       CASE_FILE // {project.index}
                     </span>
                     {project.isInternal && (
-                      <span className="ml-2 font-mono text-[9px] text-muted-foreground/50 border border-border/40 px-1.5 py-0.5 uppercase tracking-wider">
+                      <span className="ml-2 font-mono text-[9px] text-foreground bg-amber border-2 border-border px-1.5 py-0.5 uppercase tracking-wider font-bold">
                         INTERNAL
                       </span>
                     )}
-                    <h3 className="text-xl font-display font-medium text-foreground mt-1">
+                    <h3 className="text-xl font-display font-black text-foreground mt-1 uppercase">
                       {project.title}
                     </h3>
                   </div>
@@ -240,8 +236,8 @@ export default function Projects() {
 
                 {/* Architecture Schematic */}
                 {project.schematic && (
-                  <div className="w-full mb-6 border border-border p-4 bg-background/60 font-mono text-[9px] sm:text-[10px] text-muted-foreground/80 overflow-x-auto leading-relaxed whitespace-pre select-none">
-                    <div className="text-[9px] uppercase tracking-wider text-accent border-b border-border/30 pb-1 mb-2 font-bold">
+                  <div className="w-full mb-6 border-[3px] border-border p-4 bg-amber/5 font-mono text-[9px] sm:text-[10px] text-muted-foreground overflow-x-auto leading-relaxed whitespace-pre select-none shadow-[3px_3px_0_0_var(--border)]">
+                    <div className="text-[9px] uppercase tracking-wider text-accent border-b-[2px] border-border/30 pb-1 mb-2 font-bold">
                       // ARCHITECTURE_SCHEMATIC
                     </div>
                     {project.schematic.join("\n")}
@@ -250,7 +246,7 @@ export default function Projects() {
 
                 {/* Problem */}
                 <div className="mb-5">
-                  <h4 className="font-mono text-[10px] uppercase text-muted-foreground/60 tracking-wider mb-1.5">
+                  <h4 className="font-mono text-[10px] uppercase text-muted-foreground/75 tracking-wider mb-1.5 font-bold">
                     // PROBLEM
                   </h4>
                   <p className="text-sm leading-relaxed text-muted-foreground font-sans">
@@ -260,7 +256,7 @@ export default function Projects() {
 
                 {/* Build */}
                 <div className="mb-6">
-                  <h4 className="font-mono text-[10px] uppercase text-muted-foreground/60 tracking-wider mb-1.5">
+                  <h4 className="font-mono text-[10px] uppercase text-muted-foreground/75 tracking-wider mb-1.5 font-bold">
                     // BUILD
                   </h4>
                   <p className="text-sm leading-relaxed text-muted-foreground font-sans">
@@ -269,9 +265,9 @@ export default function Projects() {
                 </div>
               </div>
 
-              {/* Metrics Block — GSAP count-up */}
+              {/* Metrics Block */}
               <div>
-                <div className="grid grid-cols-3 gap-3 border-t border-b border-border/40 py-4 mb-5">
+                <div className="grid grid-cols-3 gap-3 border-t-[3px] border-b-[3px] border-border py-4 mb-5">
                   {project.metrics.map((metric, mIdx) => (
                     <MetricCell
                       key={mIdx}
@@ -284,11 +280,11 @@ export default function Projects() {
 
                 {/* Tags and Links */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap gap-2">
                     {project.tags.slice(0, 4).map((tag, tIdx) => (
                       <span
                         key={tIdx}
-                        className="font-mono text-[9px] text-muted-foreground border border-border/60 px-1.5 py-0.5"
+                        className={`font-mono text-[10px] text-foreground border-2 border-border bg-background px-2 py-0.5 shadow-[1.5px_1.5px_0_0_var(--border)] tag-tilt-${tIdx % 3}`}
                       >
                         {tag}
                       </span>
@@ -300,9 +296,9 @@ export default function Projects() {
                     )}
                   </div>
 
-                  <div className="flex items-center gap-4 text-xs font-mono">
+                  <div className="flex items-center gap-3 text-xs font-mono">
                     {project.isInternal ? (
-                      <span className="text-muted-foreground/40 flex items-center gap-1.5 text-[10px]">
+                      <span className="text-muted-foreground/50 border-[2px] border-border px-2 py-1 flex items-center gap-1.5 text-[10px] uppercase font-bold">
                         <FiLock className="h-3 w-3" />
                         Internal
                       </span>
@@ -312,10 +308,9 @@ export default function Projects() {
                           href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-muted-foreground hover:text-accent flex items-center gap-1.5"
+                          className="nb-btn text-[10px] py-1 px-3 bg-background border-2 shadow-[2px_2px_0_0_var(--border)] hover:shadow-[1px_1px_0_0_var(--border)] hover:translate-x-[1px] hover:translate-y-[1px]"
                         >
-                          <FiGithub className="h-4 w-4" />
-                          <span className="hover-mechanical-link">Code</span>
+                          <FiGithub className="h-3 w-3" /> Code
                         </a>
                       )
                     )}
@@ -325,10 +320,9 @@ export default function Projects() {
                         href={project.demo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-muted-foreground hover:text-accent flex items-center gap-1.5"
+                        className="nb-btn text-[10px] py-1 px-3 bg-accent text-accent-foreground border-2 shadow-[2px_2px_0_0_var(--border)] hover:shadow-[1px_1px_0_0_var(--border)] hover:translate-x-[1px] hover:translate-y-[1px]"
                       >
-                        <FiExternalLink className="h-4 w-4" />
-                        <span className="hover-mechanical-link">Live</span>
+                        <FiExternalLink className="h-3 w-3" /> Live
                       </a>
                     )}
 
@@ -337,10 +331,9 @@ export default function Projects() {
                         href={project.blog}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-muted-foreground hover:text-accent flex items-center gap-1.5"
+                        className="nb-btn text-[10px] py-1 px-3 bg-background border-2 shadow-[2px_2px_0_0_var(--border)] hover:shadow-[1px_1px_0_0_var(--border)] hover:translate-x-[1px] hover:translate-y-[1px]"
                       >
-                        <FiBookOpen className="h-4 w-4" />
-                        <span className="hover-mechanical-link">Analysis</span>
+                        <FiBookOpen className="h-3 w-3" /> Analysis
                       </a>
                     )}
                   </div>

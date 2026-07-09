@@ -32,7 +32,7 @@ export default function Hero() {
     const typingTl = gsap.timeline({ delay: 0.6 });
     typingTl.to(counter, {
       val: INTRO_TEXT.length,
-      duration: INTRO_TEXT.length * 0.025,
+      duration: INTRO_TEXT.length * 0.022,
       ease: "none",
       onUpdate() {
         const idx = Math.round(counter.val);
@@ -66,68 +66,53 @@ export default function Hero() {
           {/* Left Column */}
           <div className="lg:col-span-7 flex flex-col items-start text-left">
             {/* Role Tag */}
-            <motion.div variants={itemVariants} className="mb-4">
-              <span className="font-mono text-xs tracking-widest text-accent uppercase border border-accent/30 bg-accent/5 px-3 py-1 font-medium">
-                AI/ML Engineer · Agentic Pipelines · RAG · 2027
+            <motion.div variants={itemVariants} className="mb-6">
+              <span className="font-mono text-xs font-bold uppercase tracking-wider border-[3px] border-border bg-accent text-accent-foreground px-3.5 py-1.5 shadow-[4px_4px_0_0_var(--border)]">
+                AI/ML Engineer · Agentic Pipelines · RAG
               </span>
             </motion.div>
 
-            {/* Name */}
+            {/* Name & Headline */}
             <motion.h1
               variants={itemVariants}
-              className="text-5xl sm:text-6xl md:text-7xl font-display font-medium tracking-tight mb-6 text-foreground leading-[1.05]"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black uppercase leading-[0.95] tracking-tight mb-6 text-foreground"
             >
-              Samarth <br />
-              Pratap Singh
+              I build AI agents
+              <br />
+              that <span className="bg-foreground text-background px-2 box-decoration-clone inline-block">actually work.</span>
+              <br />
+              Not vibes — numbers.
             </motion.h1>
 
-            {/* Terminal Window for Positioning Statement */}
+            {/* Position Statement / GSAP Typing */}
             <motion.div variants={itemVariants} className="w-full max-w-xl mb-8">
-              {/* Chrome Bar */}
-              <div className="flex items-center gap-2 px-3 py-2 border border-border/80 border-b-0 bg-secondary/40">
-                <div className="w-2 h-2 rounded-full bg-destructive/60" />
-                <div className="w-2 h-2 rounded-full bg-yellow-500/40" />
-                <div className="w-2 h-2 rounded-full bg-accent/40" />
-                <span className="ml-2 font-mono text-[9px] text-muted-foreground/50 tracking-wider uppercase">
-                  zsh — samarth@portfolio
-                </span>
-              </div>
-              {/* Terminal Body */}
-              <div className="border border-border/80 bg-card/15 px-4 py-4 font-mono text-sm text-muted-foreground leading-relaxed min-h-[80px]">
-                <span className="text-accent">$</span>
-                <span className="text-muted-foreground/50 ml-1.5 text-xs">whoami</span>
-                <br />
+              <p className="text-sm sm:text-base leading-relaxed text-muted-foreground font-sans border-l-[3px] border-accent pl-4 py-1.5 min-h-[90px]">
                 <span ref={terminalTextRef} />
-                <span ref={cursorRef} className="inline-block w-[7px] h-[14px] bg-accent/90 align-middle ml-0.5" />
-              </div>
+                <span ref={cursorRef} className="inline-block w-[8px] h-[15px] bg-accent align-middle ml-1" />
+              </p>
             </motion.div>
 
             {/* CTAs */}
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-3 mb-8">
+            <motion.div variants={itemVariants} className="flex flex-wrap gap-4 mb-8">
               <Button
                 asChild
-                size="lg"
-                className="bg-accent hover:bg-accent/90 text-accent-foreground rounded-none px-6 font-mono text-sm tracking-wider uppercase border border-accent/20 transition-all duration-200"
+                className="nb-btn nb-btn-primary"
               >
                 <a href="#projects">View Projects</a>
               </Button>
 
               <Button
                 asChild
-                variant="outline"
-                size="lg"
-                className="bg-transparent hover:bg-secondary hover:text-foreground text-muted-foreground rounded-none px-6 font-mono text-sm tracking-wider uppercase border border-border/80 transition-all duration-200 gap-2"
+                className="nb-btn nb-btn-secondary"
               >
                 <a href="/Resume.pdf" download="Samarth_Resume">
-                  <FiDownload className="h-4 w-4" /> Resume
+                  <FiDownload className="h-4 w-4" /> Download Resume
                 </a>
               </Button>
 
               <Button
                 asChild
-                variant="outline"
-                size="lg"
-                className="bg-transparent hover:bg-secondary hover:text-foreground text-muted-foreground rounded-none px-6 font-mono text-sm tracking-wider uppercase border border-border/80 transition-all duration-200"
+                className="nb-btn bg-background text-foreground"
               >
                 <a href="#contact">Contact</a>
               </Button>
@@ -142,7 +127,7 @@ export default function Hero() {
                 className="text-muted-foreground hover:text-accent transition-colors flex items-center gap-2 font-mono text-xs"
               >
                 <FaGithub size={18} />
-                <span className="hover-mechanical-link">github.com/noviciusss</span>
+                <span>github.com/noviciusss</span>
               </a>
               <a
                 href="https://www.linkedin.com/in/spsamar/"
@@ -151,19 +136,19 @@ export default function Hero() {
                 className="text-muted-foreground hover:text-accent transition-colors flex items-center gap-2 font-mono text-xs"
               >
                 <FaLinkedin size={18} />
-                <span className="hover-mechanical-link">linkedin.com/in/spsamar</span>
+                <span>linkedin.com/in/spsamar</span>
               </a>
             </motion.div>
           </div>
 
-          {/* Right Column — Photo + Readout Panel */}
-          <div className="lg:col-span-5 flex flex-col gap-8 w-full">
+          {/* Right Column — Photo + Neubrutalist Grid Metrics */}
+          <div className="lg:col-span-5 flex flex-col items-center lg:items-start gap-2 w-full">
             {/* Profile Photo */}
             <motion.div
               variants={itemVariants}
-              className="relative w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 mx-auto lg:mx-0 border border-border p-2 bg-card schematic-bracket-card"
+              className="relative w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 border-[3px] border-border p-2 bg-card shadow-[8px_8px_0_0_var(--accent)]"
             >
-              <div className="relative w-full h-full border border-border overflow-hidden grayscale contrast-[1.05] hover:grayscale-0 transition-all duration-300">
+              <div className="relative w-full h-full border-[2px] border-border overflow-hidden grayscale contrast-[1.05] hover:grayscale-0 transition-all duration-300">
                 <Image
                   src={unnamed}
                   alt="Samarth Pratap Singh profile"
@@ -175,33 +160,42 @@ export default function Hero() {
               </div>
             </motion.div>
 
-            {/* Readout Panel */}
+            {/* Metrics block */}
             <motion.div
               variants={itemVariants}
-              className="border border-border/80 p-5 bg-card/45 backdrop-blur-sm relative font-mono text-xs text-muted-foreground w-full max-w-sm mx-auto lg:mx-0"
+              className="grid grid-cols-2 gap-4 w-full max-w-sm mt-6"
             >
-              <div className="absolute top-0 right-4 transform -translate-y-1/2 bg-background px-2 text-[10px] uppercase text-accent tracking-widest font-bold">
-                SYSTEMS_LOG // 01
+              <div className="border-[3px] border-border p-4 bg-card shadow-[4px_4px_0_0_var(--border)]">
+                <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground/80">// CORRECTNESS</span>
+                <div className="text-xl sm:text-2xl font-display font-black text-accent mt-1">89.2%</div>
               </div>
+              <div className="border-[3px] border-border p-4 bg-card shadow-[4px_4px_0_0_var(--border)]">
+                <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground/80">// AVG_LATENCY</span>
+                <div className="text-xl sm:text-2xl font-display font-black text-foreground mt-1">2.86s</div>
+              </div>
+              <div className="border-[3px] border-border p-4 bg-card shadow-[4px_4px_0_0_var(--border)]">
+                <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground/80">// CGPA_VIT</span>
+                <div className="text-xl sm:text-2xl font-display font-black text-foreground mt-1">8.57</div>
+              </div>
+              <div className="border-[3px] border-border p-4 bg-card shadow-[4px_4px_0_0_var(--border)]">
+                <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground/80">// PIPELINE_DELTA</span>
+                <div className="text-xl sm:text-2xl font-display font-black text-accent mt-1">7m → 90s</div>
+              </div>
+            </motion.div>
 
-              <div className="space-y-3">
-                <div className="flex justify-between border-b border-border/40 pb-2">
-                  <span className="text-[10px] uppercase text-muted-foreground/60">// STAT_CGPA</span>
-                  <span className="text-foreground font-bold font-mono">8.57 / 10</span>
-                </div>
-                <div className="flex justify-between border-b border-border/40 pb-2">
-                  <span className="text-[10px] uppercase text-muted-foreground/60">// INTERN</span>
-                  <span className="text-foreground font-bold font-mono text-right">AmberFlux EdgeAI</span>
-                </div>
-                <div className="flex justify-between border-b border-border/40 pb-2">
-                  <span className="text-[10px] uppercase text-muted-foreground/60">// CORE_FOCUS</span>
-                  <span className="text-foreground font-bold font-mono text-right">RAG & Agent Graphs</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[10px] uppercase text-muted-foreground/60">// RUNTIME_ENV</span>
-                  <span className="text-accent font-bold font-mono">PYTHON · TS · LINUX</span>
-                </div>
-              </div>
+            {/* Stack Tags Row */}
+            <motion.div
+              variants={itemVariants}
+              className="mt-6 flex flex-wrap gap-2 w-full max-w-sm"
+            >
+              {["LangGraph", "Qdrant", "FastAPI", "Groq", "Next.js", "MCP"].map((tag, tIdx) => (
+                <span
+                  key={tag}
+                  className={`font-mono text-xs font-bold border-2 border-border bg-card px-2.5 py-1 shadow-[2px_2px_0_0_var(--border)] tag-tilt-${tIdx % 3}`}
+                >
+                  {tag}
+                </span>
+              ))}
             </motion.div>
           </div>
         </motion.div>

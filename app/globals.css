@@ -5,65 +5,69 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+@theme {
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
   --font-mono: var(--font-mono);
   
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
   --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
   
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+  --color-amber: var(--amber);
+  
+  --radius-sm: var(--radius);
+  --radius-md: var(--radius);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-xl: var(--radius);
 }
 
 :root {
-  --radius: 0.25rem; /* Shorter border radius for a schematic/block look */
+  --radius: 0px;
   
-  /* Light Mode Palette: Warm paper background, dark ink text, phosphor green accent */
-  --background: #F4F1E9;
+  /* Neubrutalist Signal Block Light Theme */
+  --background: #EDEBE4;
   --foreground: #14140F;
-  --card: #F4F1E9;
+  --card: #EDEBE4;
   --card-foreground: #14140F;
-  --popover: #F4F1E9;
+  --popover: #EDEBE4;
   --popover-foreground: #14140F;
   --primary: #14140F;
-  --primary-foreground: #F4F1E9;
-  --secondary: #EDEBE4;
+  --primary-foreground: #EDEBE4;
+  --secondary: #D4D2CB;
   --secondary-foreground: #14140F;
-  --muted: #EDEBE4;
-  --muted-foreground: #706E64;
-  --accent: #15803d; /* Controlled green in light mode for readability (green-700) */
-  --accent-foreground: #FFFFFF;
+  --muted: #D4D2CB;
+  --muted-foreground: #6B6960;
+  --accent: #7FE08A; /* Phosphor Green */
+  --accent-foreground: #14140F;
   --destructive: #b91c1c;
-  --border: rgba(20, 20, 15, 0.08);
-  --input: rgba(20, 20, 15, 0.12);
-  --ring: #15803d;
+  --border: #14140F;
+  --input: rgba(20, 20, 15, 0.15);
+  --ring: #14140F;
+  
+  --amber: #FFC53D;
 }
 
 .dark {
-  /* Dark Mode Palette: Near-black ink background, off-white paper text, bright phosphor green accent */
+  /* Neubrutalist Signal Block Dark Theme */
   --background: #0B0D0C;
   --foreground: #EDEBE4;
-  --card: #0B0D0C;
+  --card: #111410;
   --card-foreground: #EDEBE4;
   --popover: #0B0D0C;
   --popover-foreground: #EDEBE4;
@@ -73,12 +77,14 @@
   --secondary-foreground: #EDEBE4;
   --muted: #1B1E1C;
   --muted-foreground: #9B9990;
-  --accent: #7FE08A; /* Bright phosphor green in dark mode */
+  --accent: #7FE08A; /* Phosphor Green */
   --accent-foreground: #0B0D0C;
   --destructive: #ef4444;
-  --border: rgba(237, 235, 228, 0.1);
+  --border: #EDEBE4;
   --input: rgba(237, 235, 228, 0.15);
-  --ring: #7FE08A;
+  --ring: #EDEBE4;
+  
+  --amber: #FFC53D;
 }
 
 @layer base {
@@ -86,115 +92,74 @@
     @apply border-border outline-ring/40;
   }
   body {
-    @apply bg-background text-foreground antialiased selection:bg-accent/30 selection:text-foreground;
+    @apply bg-background text-foreground antialiased;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
   
-  /* Section Headers styled like log entries */
-  .log-header {
-    @apply font-mono text-sm tracking-wider uppercase text-accent mb-6 flex items-center gap-2;
+  html {
+    scroll-behavior: smooth;
   }
 }
 
-html {
-  scroll-behavior: smooth;
+/* Neubrutalist Core Utilities */
+.nb-card {
+  border: 3px solid var(--border);
+  box-shadow: 6px 6px 0 0 var(--border);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* Faint static graph paper grid pattern (4-6% opacity) */
-.graph-paper-bg {
-  background-image: 
-    linear-gradient(rgba(34, 197, 94, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(34, 197, 94, 0.04) 1px, transparent 1px);
-  background-size: 28px 28px;
+.nb-card-amber {
+  border: 3px solid var(--border);
+  box-shadow: 6px 6px 0 0 var(--amber);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.dark .graph-paper-bg {
-  background-image: 
-    linear-gradient(rgba(127, 224, 138, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(127, 224, 138, 0.035) 1px, transparent 1px);
-  background-size: 28px 28px;
+.nb-card-phosphor {
+  border: 3px solid var(--border);
+  box-shadow: 6px 6px 0 0 var(--accent);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* Mechanical hover links - slide-in underline */
-.hover-mechanical-link {
-  position: relative;
+.nb-btn {
+  @apply font-sans font-bold uppercase tracking-wider text-xs border-[3px] border-border px-5 py-2.5 transition-all duration-100 select-none cursor-pointer inline-flex items-center justify-center gap-2;
+  box-shadow: 6px 6px 0 0 var(--border);
 }
 
-.hover-mechanical-link::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  transform: scaleX(0);
-  height: 1px;
-  bottom: -2px;
-  left: 0;
-  background-color: currentColor;
-  transform-origin: bottom right;
-  transition: transform 0.25s ease-out;
+.nb-btn:hover {
+  transform: translate(3px, 3px);
+  box-shadow: 3px 3px 0 0 var(--border);
 }
 
-.hover-mechanical-link:hover::after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
+.nb-btn:active {
+  transform: translate(6px, 6px);
+  box-shadow: 0 0 0 0 var(--border);
 }
 
-/* Schematic connector brackets on hover */
-.schematic-bracket-card {
-  position: relative;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+/* Button variants */
+.nb-btn-primary {
+  @apply bg-accent text-accent-foreground;
 }
 
-.schematic-bracket-card::before,
-.schematic-bracket-card::after {
-  content: '';
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border: 1px solid transparent;
-  pointer-events: none;
-  transition: border-color 0.2s ease;
+.nb-btn-secondary {
+  @apply bg-background text-foreground;
+  box-shadow: 6px 6px 0 0 var(--amber);
+}
+.nb-btn-secondary:hover {
+  box-shadow: 3px 3px 0 0 var(--amber);
+}
+.nb-btn-secondary:active {
+  box-shadow: 0 0 0 0 var(--amber);
 }
 
-.schematic-bracket-card::before {
-  top: -1px;
-  left: -1px;
-  border-right: none;
-  border-bottom: none;
-}
+/* Sticker tags */
+.tag-tilt-0 { transform: rotate(-1.5deg); }
+.tag-tilt-1 { transform: rotate(2deg); }
+.tag-tilt-2 { transform: rotate(-3deg); }
 
-.schematic-bracket-card::after {
-  bottom: -1px;
-  right: -1px;
-  border-left: none;
-  border-top: none;
+/* Neubrutalist section layout labels */
+.nb-section-label {
+  @apply font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-1.5 block;
 }
-
-.schematic-bracket-card:hover {
-  @apply border-accent/40;
-}
-
-.schematic-bracket-card:hover::before {
-  border-top-color: var(--accent);
-  border-left-color: var(--accent);
-}
-
-.schematic-bracket-card:hover::after {
-  border-bottom-color: var(--accent);
-  border-right-color: var(--accent);
-}
-
-/* Section entrance animation helper */
-@keyframes sectionReveal {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-section-reveal {
-  animation: sectionReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.nb-section-heading {
+  @apply font-display font-extrabold text-3xl sm:text-4xl md:text-5xl uppercase tracking-tight mb-8 text-foreground leading-none;
 }

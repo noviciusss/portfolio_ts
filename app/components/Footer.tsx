@@ -2,8 +2,6 @@
 
 import { FaGithub, FaLinkedin, FaArrowUp } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import Link from "next/link";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -16,79 +14,67 @@ export default function Footer() {
   const socialLinks = [
     {
       name: "GitHub",
-      icon: <FaGithub className="h-5 w-5" />,
+      icon: <FaGithub className="h-4 w-4" />,
       href: "https://github.com/noviciusss",
     },
     {
       name: "LinkedIn",
-      icon: <FaLinkedin className="h-5 w-5" />,
+      icon: <FaLinkedin className="h-4 w-4" />,
       href: "https://www.linkedin.com/in/spsamar/",
     },
   ];
 
   return (
-    <footer className="bg-background/80 dark:bg-background/80 backdrop-blur-lg border-t border-border/60 relative z-10">
+    <footer className="bg-background border-t-[3px] border-border relative z-10 py-10 md:py-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="py-10 md:py-16">
-          <div className="grid md:grid-cols-3 gap-8 items-center">
-            {/* Left: Copyright */}
-            <div className="text-center md:text-left">
-              <p className="text-sm text-muted-foreground">
-                &copy; {new Date().getFullYear()} Samarth Pratap Singh.
-                <br />
-                All rights reserved.
-              </p>
-            </div>
+        <div className="grid md:grid-cols-3 gap-8 items-center">
+          {/* Left: Copyright */}
+          <div className="text-center md:text-left">
+            <p className="text-sm text-muted-foreground font-bold">
+              &copy; {new Date().getFullYear()} Samarth Pratap Singh.
+              <br />
+              All rights reserved.
+            </p>
+          </div>
 
-            {/* Center: Social Links */}
-            <div className="flex justify-center space-x-4">
-              {socialLinks.map((social) => (
-                <Button
-                  key={social.name}
-                  variant="ghost"
-                  size="icon"
-                  asChild
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <a
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={social.name}
-                  >
-                    {social.icon}
-                  </a>
-                </Button>
-              ))}
-            </div>
-
-            {/* Right: Scroll to Top */}
-            <div className="flex justify-center md:justify-end">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={scrollToTop}
-                className="border-border/70 hover:bg-accent hover:text-accent-foreground transition-colors"
-                aria-label="Scroll to top"
+          {/* Center: Social Links */}
+          <div className="flex justify-center space-x-4">
+            {socialLinks.map((social) => (
+              <a
+                key={social.name}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.name}
+                className="nb-btn bg-background text-foreground border-2 p-2.5 shadow-[3px_3px_0_0_var(--border)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0_0_var(--border)] shrink-0"
               >
-                <FaArrowUp className="h-4 w-4" />
-              </Button>
-            </div>
+                {social.icon}
+              </a>
+            ))}
           </div>
 
-          <Separator className="my-8 bg-border/50" />
-
-          <div className="text-center text-xs text-muted-foreground">
-            <p>
-              Built with{" "}
-              <Link href="https://nextjs.org" target="_blank" className="hover:text-foreground transition-colors">Next.js</Link>,{" "}
-              <Link href="https://tailwindcss.com" target="_blank" className="hover:text-foreground transition-colors">Tailwind CSS</Link>, and{" "}
-              <Link href="https://ui.shadcn.com" target="_blank" className="hover:text-foreground transition-colors">Shadcn/UI</Link>.
-            </p>
-            <p>
-              Deployed on <Link href="https://vercel.com" target="_blank" className="hover:text-foreground transition-colors">Vercel</Link>.
-            </p>
+          {/* Right: Scroll to Top */}
+          <div className="flex justify-center md:justify-end">
+            <button
+              onClick={scrollToTop}
+              className="nb-btn nb-btn-primary p-2.5 shadow-[3px_3px_0_0_var(--border)]"
+              aria-label="Scroll to top"
+            >
+              <FaArrowUp className="h-4 w-4" />
+            </button>
           </div>
+        </div>
+
+        {/* Separator line */}
+        <div className="my-8 border-t-[3px] border-border/20" />
+
+        <div className="text-center text-xs text-muted-foreground font-bold">
+          <p>
+            Built by Samarth. Measured, not vibes.
+          </p>
+          <p className="mt-1.5 text-[10px]">
+            Hosted and deployed on Vercel.
+          </p>
         </div>
       </div>
     </footer>
