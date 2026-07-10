@@ -190,7 +190,7 @@ export default function AskAboutMe() {
               <span className="text-accent">❯</span> ask --about samarth
               <br />
               <span className="text-muted-foreground/50 text-[10px]">
-                # Corpus: resume · projects · experience · skills · setup · interests · sports
+                # Corpus: resume · projects · experience · skills · setup · interests · sports · media
               </span>
             </div>
 

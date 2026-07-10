@@ -55,8 +55,8 @@ SYSTEM_PROMPT = (
 )
 
 OFF_TOPIC_KEYWORDS = [
-    "weather", "recipe", "joke", "news", "stock", "game", "movie", "music",
-    "sport", "politic", "president", "celebrity"
+    "weather", "recipe", "joke", "news", "stock",
+    "politic", "president", "celebrity"
 ]
 
 # Sliding window rate limiter state
