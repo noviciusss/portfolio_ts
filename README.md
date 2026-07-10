@@ -64,20 +64,22 @@ portfolio_ts/
 │   ├── api/send-email/route.ts   # Resend email API
 │   └── components/
 │       ├── Hero.tsx
+│       ├── AskAboutMe.tsx
 │       ├── About.tsx
+│       ├── Experience.tsx
 │       ├── Skills.tsx
+│       ├── RagBuilder.tsx
 │       ├── Education.tsx
 │       ├── CodingStats.tsx
 │       ├── Projects.tsx
-│       ├── Blog.tsx
+│       ├── Archive.tsx
+│       ├── CurrentlyBuilding.tsx
 │       ├── Achievements.tsx
-│       ├── Approach.tsx
-│       ├── FutureEnhancements.tsx
 │       ├── Contact.tsx
+│       ├── LogoIcon.tsx
 │       ├── Navbar.tsx
 │       ├── Footer.tsx
-│       ├── FloatingResumeButton.tsx
-│       └── BackgroundMesh.tsx
+│       └── FloatingResumeButton.tsx
 ├── components/ui/                 # shadcn/ui + Aceternity components
 ├── public/                        # Static assets (images, Resume.pdf)
 └── next.config.ts
@@ -106,7 +108,10 @@ npm run dev   # → http://localhost:3000
 
 ## Key Design Decisions
 
-- **`app/icon.tsx`** — dynamically generated "S" monogram favicon via `ImageResponse`; replaces the default Next.js/Vercel favicon
+- **`app/icon.tsx` & `LogoIcon.tsx`** — dynamically generated custom circuit-path "S" monogram favicon via `ImageResponse` and scalable vector logo inheriting theme context.
+- **Interactive RAG Pipeline Compiler (`RagBuilder.tsx`)** — a tactile sequencing playground allowing visitors to compile RAG layouts, demonstrating pipeline architectural concepts.
+- **Dynamic GitHub Stats Theme Swapping** — calls the stats SVG api with dynamic canvas/ink variables responding instantly to dark/light mode toggles.
+- **Hugging Face Hub Telemetry** — SWR fetches live open-source download counts dynamically from Hugging Face model registry APIs.
 - **PinContainer href fallback** — cards without a live demo fall back to the GitHub URL, preventing broken `href=""` anchors
 - **SWR data fetching** — GitHub and LeetCode stats fetched client-side with 1-hour dedupe cache and retry; graceful hardcoded fallbacks if APIs are down
 - **JSON-LD schemas** — Person, WebSite, ProfilePage in `<head>` for rich search results
