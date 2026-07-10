@@ -31,7 +31,7 @@ A production-grade personal portfolio built with Next.js 15, TypeScript, and Tai
 | Project | Stack | Link |
 |---|---|---|
 | **Argus** — Autonomous Research Engine | LangGraph, FastAPI, Groq, Docker, LangSmith | [Demo](https://argus-h0uw.onrender.com) |
-| **DoCopilot** — RAG Document Q&A | Next.js, FastAPI, Qdrant, LangChain | [GitHub](https://github.com/noviciusss/DoCopilot) |
+| **DoCopilot** — RAG Document Q&A | Next.js, FastAPI, Qdrant, LangChain | [GitHub](https://github.com/noviciusss/DoCopilot) · [Demo](https://do-copilot.vercel.app/) |
 | **FLAN-T5 Dialogue Summarizer** | PEFT, LoRA, Transformers, Gradio | [HF Space](https://huggingface.co/spaces/noviciusss/dialogue-summarizer) |
 | **RoBERTa Banking Classifier** | PyTorch, Transformers, CUDA | [HF Model](https://huggingface.co/noviciusss/RoBERTa-base_Banking77) |
 | **Project Loom** | Next.js, Sanity.io, NextAuth.js, PostgreSQL | [Live](https://projectloom.vercel.app/) |

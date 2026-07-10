@@ -57,6 +57,7 @@ const featuredProjects: Project[] = [
     ],
     tags: ["Next.js", "FastAPI", "Qdrant", "RRF Fusion", "Cross-Encoder", "Python"],
     github: "https://github.com/noviciusss/DoCopilot",
+    demo: "https://do-copilot.vercel.app/",
     blog: "https://medium.com/@samarthsin2006/docopilot-building-a-production-grade-rag-system-with-hybrid-search-reranking-and-safety-c943fc2626be",
   },
   {
