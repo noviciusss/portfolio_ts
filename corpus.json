@@ -16,7 +16,7 @@
     "source": "experience-amberflux"
   },
   {
-    "text": "Project: DoCopilot — RAG Document Q&A (December 2025). Stack: Next.js, FastAPI, Qdrant, Hybrid Search, Cross-Encoder Reranking. Built a full-stack RAG system for PDF and TXT document question answering. Features: hybrid search (BM25 plus dense vectors) with RRF fusion, cross-encoder reranking via ms-marco-MiniLM-L-6-v2, source-grounding citation filters, PII redaction, and prompt-injection detection guardrails. Measured result from a 40-query LLM-as-Judge ablation: correctness improved from 57.7% to 89.2% (+31 points over keyword baseline), 90.5% relevance, 100% source citation rate, 2.86 seconds average latency. Live at do-copilot.vercel.app. GitHub: github.com/noviciusss/DoCopilot.",
+    "text": "Project: DoCopilot — RAG Document Q&A (December 2025). Stack: Next.js, FastAPI, Qdrant, Hybrid Search, Cross-Encoder Reranking. Built a full-stack RAG system for PDF and TXT document question answering. Features: hybrid search (BM25 plus dense vectors) with RRF fusion, cross-encoder reranking via ms-marco-MiniLM-L-6-v2, source-grounding citation filters, PII redaction, and prompt-injection detection guardrails. Measured result from a 40-query LLM-as-Judge ablation: correctness improved from 57.7% to 89.2% (+31 points over keyword baseline), 90.5% relevance, 100% source citation rate, 2.86 seconds average latency. Live demo URL: https://do-copilot.vercel.app/. GitHub repository link: https://github.com/noviciusss/DoCopilot.",
     "source": "project-docopilot"
   },
   {
@@ -40,7 +40,35 @@
     "source": "contact"
   },
   {
-    "text": "Hobbies: I am an avid reader of manhwa, I love playing and watching cricket, and I enjoy playing video games.",
-    "source": "hobbies"
+    "text": "Hobbies and Interests: I am an avid reader of manhwa and enjoy playing video games. I love learning about AI and its core basics from the absolute fundamentals, and I am currently learning AI system design.",
+    "source": "interests"
+  },
+  {
+    "text": "Favorite Sports and Players: I love playing and watching cricket and football. My favorite players are Rohit Sharma in cricket and Cristiano Ronaldo in football (I absolutely love his competitive ego!).",
+    "source": "sports"
+  },
+  {
+    "text": "Favorite Food: I love Schezwan noodles, and nothing beats homemade food cooked by my mother.",
+    "source": "food"
+  },
+  {
+    "text": "Favorite Music: My favorite singer is Arijit Singh.",
+    "source": "music"
+  },
+  {
+    "text": "Hardware Setup: I own and proudly run a Lenovo Legion 5 Pro powerhouse laptop, packed with an Intel Core i9-14900HX processor and an NVIDIA RTX 4060 GPU. It is my main workstation for handling local agent testing, heavy tokenizers, and dataset evaluation runs.",
+    "source": "hardware"
+  },
+  {
+    "text": "Future Plans and Career Targets: I am actively targeting AI/ML and LLMOps engineering roles, applying both on-campus and off-campus to join dedicated AI teams and make significant contributions. Currently, I am learning AI system design, exploring Voice AI, Computer Vision (CV) AI, and advanced RAG architectures. I also plan to implement Andrej Karpathy's 'ChatGPT from scratch' series locally. I seek challenging, competitive roles that force me to innovate and try new things (and of course, roles that pay well too!).",
+    "source": "future-plans"
+  },
+  {
+    "text": "Engineering and Testing Philosophy: I believe that rigorous local testing is mandatory—you must manually verify and run different edge-case scenarios yourself before pushing code. Furthermore, robust evaluation (evals) is absolutely necessary for anything and everything in production AI/ML systems.",
+    "source": "philosophy"
+  },
+  {
+    "text": "Learning Influences and Resources: I stay updated on AI developments by watching Andrej Karpathy's deep-dives, CampusX tutorials, and reading Medium articles (often using a browser extension to read the premium articles for free... typical engineer hacks!).",
+    "source": "influences"
   }
 ]
