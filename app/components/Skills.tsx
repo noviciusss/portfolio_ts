@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import RagBuilder from "./RagBuilder";
 
 const skillsData = [
   {
@@ -77,6 +78,11 @@ export default function Skills() {
             </div>
           ))}
         </motion.div>
+
+        {/* Interactive RAG Pipeline Playground */}
+        <div className="mt-12">
+          <RagBuilder />
+        </div>
       </div>
     </section>
   );

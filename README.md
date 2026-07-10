@@ -1,6 +1,6 @@
-﻿# Samarth Pratap Singh — Portfolio
+# Samarth Pratap Singh — Portfolio
 
-> **GenAI & RAG Engineer | BTech CSE, VIT Bhopal (CGPA 8.45)**
+> **GenAI & RAG Engineer | BTech CSE, VIT Bhopal (CGPA 8.57)**
 > [portfolio-noviciusss.vercel.app](https://portfolio-noviciusss.vercel.app) · [GitHub](https://github.com/noviciusss) · [LinkedIn](https://www.linkedin.com/in/spsamar/) · [Medium](https://medium.com/@samarthsin2006) · [Hugging Face](https://huggingface.co/noviciusss)
 
 A production-grade personal portfolio built with Next.js 15, TypeScript, and Tailwind CSS v4 — showcasing projects, blog posts, skills, and live coding stats. Optimised for GenAI/LLMOps internship visibility.
@@ -12,7 +12,7 @@ A production-grade personal portfolio built with Next.js 15, TypeScript, and Tai
 | Section | Content |
 |---|---|
 | **Hero** | Name, role badge, CTA buttons, GitHub/LinkedIn hover cards |
-| **About** | Bio, stats (2+ yrs, 10+ projects, 8.45 CGPA), download resume |
+| **About** | Bio, stats (2+ yrs, 10+ projects, 8.57 CGPA), download resume |
 | **Skills** | 5-tab skill grid: LLMOps & GenAI, ML/DL, Languages, Full-Stack, Tools |
 | **Education** | VIT Bhopal BTech CSE timeline (2023–2027) |
 | **Coding Stats** | Live GitHub profile + stats card, live LeetCode problem count via SWR |
@@ -135,4 +135,4 @@ Deployed on **Vercel**:
 ---
 
 **Samarth Pratap Singh** · samarthsin2006@gmail.com · +91 9452026413
-BTech CSE · VIT Bhopal · CGPA 8.45 · Pratapgarh, U.P.
+BTech CSE · VIT Bhopal · CGPA 8.57 · Pratapgarh, U.P.

@@ -5,6 +5,7 @@ import { FiMenu, FiMoon, FiSun } from 'react-icons/fi';
 import { useTheme } from 'next-themes';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import LogoIcon from './LogoIcon';
 
 const navItems = [
   { label: "Home", href: "#hero" },
@@ -16,7 +17,6 @@ const navItems = [
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
@@ -28,11 +28,6 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 20;
-      if (isScrolled !== scrolled) {
-        setScrolled(isScrolled);
-      }
-      
       const sections = navItems.map(item => item.href.substring(1));
       const scrollPosition = window.scrollY + 120;
       
@@ -51,7 +46,7 @@ export default function Navbar() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [scrolled, activeSection]);
+  }, [activeSection]);
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
@@ -62,17 +57,14 @@ export default function Navbar() {
       initial={{ y: -80 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled 
-          ? 'bg-background/90 backdrop-blur-sm border-b-[3px] border-border' 
-          : 'bg-transparent'
-      }`}
+      className="fixed top-0 left-0 w-full z-50 bg-background border-b-[3px] border-border"
     >
       <div className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <a href="#" className="font-display text-sm uppercase tracking-wider font-extrabold text-foreground">
-            SAMARTH <span className="text-accent">→</span>
+          <a href="#" className="flex items-center gap-2 font-mono text-sm font-bold tracking-tight text-foreground group">
+            <LogoIcon className="w-6 h-6 text-foreground" />
+            <span>~/samarth.dev</span>
           </a>
 
           {/* Desktop Navigation */}
@@ -103,13 +95,19 @@ export default function Navbar() {
               })}
             </div>
 
+            {/* Placements Badge */}
+            <span className="flex items-center gap-2 font-mono text-xs font-bold uppercase border-l-2 border-border/20 pl-6 text-foreground">
+              <span className="inline-block size-2 border border-ink bg-phosphor rounded-full" aria-hidden="true" />
+              Open to placements 2026
+            </span>
+
             {/* Theme Toggle */}
             {mounted && (
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={toggleTheme}
-                className="rounded-none hover:bg-secondary w-8 h-8 flex items-center justify-center border-[3px] border-border text-foreground transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_var(--amber)] shadow-[4px_4px_0_0_var(--amber)]"
+                className="rounded-none hover:bg-secondary w-8 h-8 flex items-center justify-center border-[3px] border-border text-foreground transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_var(--amber)] shadow-[4px_4px_0_0_var(--amber)] cursor-pointer"
                 aria-label="Toggle theme"
               >
                 <AnimatePresence mode="wait" initial={false}>
@@ -153,8 +151,9 @@ export default function Navbar() {
               </SheetTrigger>
               <SheetContent side="right" className="w-[280px] bg-background border-l-[3px] border-border px-6 py-12 flex flex-col justify-between">
                 <div>
-                  <div className="font-display text-sm tracking-wider uppercase font-bold text-foreground border-b-[3px] border-border pb-4 mb-8">
-                    SAMARTH <span className="text-accent">→</span>
+                  <div className="flex items-center gap-2 font-mono text-sm font-bold tracking-tight text-foreground border-b-[3px] border-border pb-4 mb-8">
+                    <LogoIcon className="w-6 h-6 text-foreground" />
+                    <span>~/samarth.dev</span>
                   </div>
                   <nav className="flex flex-col gap-6">
                     {navItems.map((item) => {

@@ -10,25 +10,30 @@
   --font-display: var(--font-display);
   --font-mono: var(--font-mono);
   
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
+  --color-background: var(--canvas);
+  --color-foreground: var(--ink);
+  --color-border: var(--ink);
+  --color-card: var(--canvas);
+  --color-card-foreground: var(--ink);
   
+  --color-primary: var(--phosphor);
+  --color-primary-foreground: var(--canvas);
+  
+  --color-secondary: var(--canvas);
+  --color-secondary-foreground: var(--ink);
+  
+  --color-muted: var(--canvas);
+  --color-muted-foreground: var(--muted-foreground);
+  
+  --color-accent: var(--phosphor);
+  --color-accent-foreground: var(--ink);
+  
+  --color-destructive: var(--destructive);
+  --color-ring: var(--ink);
+  
+  --color-canvas: var(--canvas);
+  --color-ink: var(--ink);
+  --color-phosphor: var(--phosphor);
   --color-amber: var(--amber);
   
   --radius-sm: var(--radius);
@@ -41,50 +46,22 @@
   --radius: 0px;
   
   /* Neubrutalist Signal Block Light Theme */
-  --background: #EDEBE4;
-  --foreground: #14140F;
-  --card: #EDEBE4;
-  --card-foreground: #14140F;
-  --popover: #EDEBE4;
-  --popover-foreground: #14140F;
-  --primary: #14140F;
-  --primary-foreground: #EDEBE4;
-  --secondary: #D4D2CB;
-  --secondary-foreground: #14140F;
-  --muted: #D4D2CB;
-  --muted-foreground: #6B6960;
-  --accent: #7FE08A; /* Phosphor Green */
-  --accent-foreground: #14140F;
-  --destructive: #b91c1c;
-  --border: #14140F;
-  --input: rgba(20, 20, 15, 0.15);
-  --ring: #14140F;
-  
+  --canvas: #EDEBE4;
+  --ink: #111111;
+  --phosphor: #7FE08A;
   --amber: #FFC53D;
+  --muted-foreground: #6B6960;
+  --destructive: #b91c1c;
 }
 
 .dark {
   /* Neubrutalist Signal Block Dark Theme */
-  --background: #0B0D0C;
-  --foreground: #EDEBE4;
-  --card: #111410;
-  --card-foreground: #EDEBE4;
-  --popover: #0B0D0C;
-  --popover-foreground: #EDEBE4;
-  --primary: #EDEBE4;
-  --primary-foreground: #0B0D0C;
-  --secondary: #1B1E1C;
-  --secondary-foreground: #EDEBE4;
-  --muted: #1B1E1C;
-  --muted-foreground: #9B9990;
-  --accent: #7FE08A; /* Phosphor Green */
-  --accent-foreground: #0B0D0C;
-  --destructive: #ef4444;
-  --border: #EDEBE4;
-  --input: rgba(237, 235, 228, 0.15);
-  --ring: #EDEBE4;
-  
+  --canvas: #0B0D0C;
+  --ink: #EDEBE4;
+  --phosphor: #7FE08A; /* unchanged in dark mode */
   --amber: #FFC53D;
+  --muted-foreground: #9B9990;
+  --destructive: #ef4444;
 }
 
 @layer base {

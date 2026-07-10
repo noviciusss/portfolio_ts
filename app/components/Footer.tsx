@@ -2,6 +2,7 @@
 
 import { FaGithub, FaLinkedin, FaArrowUp } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
+import LogoIcon from './LogoIcon';
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -68,13 +69,16 @@ export default function Footer() {
         {/* Separator line */}
         <div className="my-8 border-t-[3px] border-border/20" />
 
-        <div className="text-center text-xs text-muted-foreground font-bold">
-          <p>
-            Built by Samarth. Measured, not vibes.
-          </p>
-          <p className="mt-1.5 text-[10px]">
-            Hosted and deployed on Vercel.
-          </p>
+        <div className="flex flex-col items-center justify-center gap-4 text-center text-xs text-muted-foreground font-bold">
+          <LogoIcon className="w-8 h-8 text-foreground opacity-80" />
+          <div>
+            <p>
+              Built by ~/samarth.dev. Measured, not vibes.
+            </p>
+            <p className="mt-1.5 text-[10px]">
+              Hosted and deployed on Vercel.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

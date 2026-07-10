@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { FiAward, FiStar, FiBookOpen, FiExternalLink } from "react-icons/fi";
+import useSWR from 'swr';
 
 const achievements = [
   {
@@ -39,6 +40,15 @@ const achievements = [
 ];
 
 export default function Achievements() {
+  const { data: hfData } = useSWR(
+    'https://huggingface.co/api/models?author=noviciusss',
+    (url) => fetch(url).then(res => res.json())
+  );
+
+  const hfDownloads = hfData 
+    ? hfData.reduce((acc: number, model: any) => acc + (model.downloads || 0), 0)
+    : null;
+
   if (achievements.length === 0) return null;
 
   return (
@@ -97,6 +107,12 @@ export default function Achievements() {
                   {achievement.description}
                 </p>
               </div>
+
+                {achievement.organization === "Hugging Face Hub" && hfDownloads !== null && (
+                  <div className="mt-3 font-mono text-[9px] uppercase tracking-wider text-accent border-t border-border/20 pt-3.5 font-bold">
+                    // live telemetry: {hfDownloads} downloads recorded
+                  </div>
+                )}
 
               <div className="font-mono text-[9px] text-muted-foreground border-t-2 border-border/20 pt-3 mt-4 font-bold">
                 TIMESTAMP: {achievement.date.toUpperCase()}

@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useTheme } from "next-themes";
 import useSWR from 'swr';
 
 const fetcher = (url: string) => fetch(url).then(res => res.json());
@@ -31,8 +32,16 @@ export default function CodingStats() {
     }
   );
   
+  // Use useTheme to dynamically switch SVG parameters
+  const { resolvedTheme } = useTheme();
+  
+  // Default to dark theme parameters during server side render to match baseline,
+  // then toggle dynamically based on resolvedTheme
+  const bg_color = mounted && resolvedTheme === "light" ? "EDEBE4" : "0B0D0C";
+  const text_color = mounted && resolvedTheme === "light" ? "111111" : "EDEBE4";
+
   // GitHub Stats Card URLs styled to match our phosphor green & near-black palette
-  const githubStatsUrl = `https://github-readme-stats.vercel.app/api?username=${GITHUB_USERNAME}&show_icons=true&bg_color=0B0D0C&text_color=EDEBE4&icon_color=7FE08A&title_color=7FE08A&count_private=true&hide_border=true`;
+  const githubStatsUrl = `https://github-readme-stats.vercel.app/api?username=${GITHUB_USERNAME}&show_icons=true&bg_color=${bg_color}&text_color=${text_color}&icon_color=7FE08A&title_color=7FE08A&count_private=true&hide_border=true`;
   
   // LeetCode API Fetch
   const { data: leetcodeData, error: leetcodeError, isLoading: leetcodeLoading } = useSWR(

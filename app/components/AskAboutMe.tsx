@@ -26,6 +26,7 @@ export default function AskAboutMe() {
   const [typedResponse, setTypedResponse] = useState("");
   const [placeholderIdx, setPlaceholderIdx] = useState(0);
   const [spinnerChar, setSpinnerChar] = useState("|");
+  const [telemetryLogs, setTelemetryLogs] = useState<string[]>([]);
   const terminalBodyRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const cursorRef = useRef<HTMLSpanElement>(null);
@@ -38,6 +39,39 @@ export default function AskAboutMe() {
     }, 3000);
     return () => clearInterval(interval);
   }, []);
+
+  // Live telemetry log simulator
+  useEffect(() => {
+    if (messages.length > 0 || loading) {
+      setTelemetryLogs([]);
+      return;
+    }
+
+    const sampleLogs = [
+      "RETRIEVER: Query 'PEFT/LoRA fine-tuning' matched AmberFlux_EdgeAI.pdf (score: 0.942)",
+      "EVAL: G-Eval Groundedness: 0.962 | Faithfulness: 0.948",
+      "ROUTING: Selected FastMCP tool dispatcher for ContextCore metadata query...",
+      "RETRIEVER: Dense semantic embedding matched Argus_Workflow.json (score: 0.887)",
+      "EVAL: BERTScore F1: 0.912 | Latency: 1.24s",
+      "PIPELINE: Executing reciprocal rank fusion (RRF) reranker...",
+    ];
+
+    setTelemetryLogs([sampleLogs[0], sampleLogs[1]]);
+
+    let logIdx = 2;
+    const interval = setInterval(() => {
+      setTelemetryLogs((prev) => {
+        const nextLogs = [...prev, sampleLogs[logIdx]];
+        if (nextLogs.length > 3) {
+          nextLogs.shift();
+        }
+        return nextLogs;
+      });
+      logIdx = (logIdx + 1) % sampleLogs.length;
+    }, 4500);
+
+    return () => clearInterval(interval);
+  }, [messages.length, loading]);
 
   // Cycling character spinner for loading state
   useEffect(() => {
@@ -72,13 +106,11 @@ export default function AskAboutMe() {
 
   const typeText = (text: string, sources: string[]) => {
     setTypedResponse("");
-    let i = 0;
     if (typingTlRef.current) typingTlRef.current.kill();
 
     const tl = gsap.timeline();
     typingTlRef.current = tl;
 
-    // Character-by-character reveal via a counter
     const counter = { val: 0 };
     tl.to(counter, {
       val: text.length,
@@ -146,18 +178,8 @@ export default function AskAboutMe() {
           </p>
         </div>
 
-        {/* Terminal Window */}
+        {/* Neubrutalist Block */}
         <div className="border-[3px] border-border bg-card max-w-2xl shadow-[6px_6px_0_0_var(--accent)]">
-          {/* Chrome Bar */}
-          <div className="flex items-center gap-2 px-4 py-3 border-b-[3px] border-border bg-foreground text-background">
-            <div className="w-2.5 h-2.5 rounded-full bg-[#E5484D] border border-border" />
-            <div className="w-2.5 h-2.5 rounded-full bg-[#FFC53D] border border-border" />
-            <div className="w-2.5 h-2.5 rounded-full bg-[#7FE08A] border border-border" />
-            <span className="ml-3 font-mono text-[10px] text-background/80 tracking-wider uppercase font-bold">
-              zsh — ask-about-samarth
-            </span>
-          </div>
-
           {/* Terminal Body */}
           <div
             ref={terminalBodyRef}
@@ -171,6 +193,18 @@ export default function AskAboutMe() {
                 # Corpus: resume · 4 projects · experience · skills · contact
               </span>
             </div>
+
+            {/* Live Telemetry Log Streamer */}
+            {messages.length === 0 && telemetryLogs.length > 0 && (
+              <div className="space-y-1.5 opacity-60 text-[10px] font-mono border-t border-border/20 pt-3">
+                <span className="text-accent/60 uppercase block font-bold">// LIVE SYSTEM TRACES:</span>
+                {telemetryLogs.map((log, lIdx) => (
+                  <div key={lIdx} className="text-muted-foreground leading-normal">
+                    <span className="text-phosphor/70">✦</span> {log}
+                  </div>
+                ))}
+              </div>
+            )}
 
             {/* Conversation history */}
             {messages.map((msg, idx) => (
