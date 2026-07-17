@@ -75,9 +75,6 @@ export default function Footer() {
             <p>
               Built by ~/samarth.dev. Measured, not vibes.
             </p>
-            <p className="mt-1.5 text-[10px]">
-              Hosted and deployed on Vercel.
-            </p>
           </div>
         </div>
       </div>

@@ -31,7 +31,7 @@ export default function Navbar() {
     const handleScroll = () => {
       const sections = navItems.map(item => item.href.substring(1));
       const scrollPosition = window.scrollY + 120;
-      
+
       for (const section of sections.reverse()) {
         const element = document.getElementById(section);
         if (element && element.offsetTop <= scrollPosition) {
@@ -77,11 +77,10 @@ export default function Navbar() {
                   <a
                     key={item.href}
                     href={item.href}
-                    className={`font-sans text-[11px] uppercase tracking-wider relative px-3.5 py-1.5 transition-colors font-bold ${
-                      isLinkActive 
-                        ? 'text-foreground' 
+                    className={`font-sans text-[11px] uppercase tracking-wider relative px-3.5 py-1.5 transition-colors font-bold ${isLinkActive
+                        ? 'text-foreground'
                         : 'text-muted-foreground hover:text-foreground'
-                    }`}
+                      }`}
                   >
                     <span className="relative z-10">{item.label}</span>
                     {isLinkActive && (
@@ -99,7 +98,7 @@ export default function Navbar() {
             {/* Placements Badge */}
             <span className="flex items-center gap-2 font-mono text-xs font-bold uppercase border-l-2 border-border/20 pl-6 text-foreground">
               <span className="inline-block size-2 border border-ink bg-phosphor rounded-full" aria-hidden="true" />
-              Open to placements 2026
+              Open to placements 2027
             </span>
 
             {/* Theme Toggle */}
@@ -139,11 +138,11 @@ export default function Navbar() {
                 {theme === "dark" ? <FiSun className="h-4 w-4" /> : <FiMoon className="h-4 w-4" />}
               </Button>
             )}
-            
+
             <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
               <SheetTrigger asChild>
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   size="icon"
                   className="rounded-none w-8 h-8 flex items-center justify-center border-[3px] border-border text-foreground shadow-[3px_3px_0_0_var(--accent)]"
                 >
@@ -164,11 +163,10 @@ export default function Navbar() {
                           key={item.href}
                           href={item.href}
                           onClick={() => setIsSheetOpen(false)}
-                          className={`font-sans text-xs uppercase tracking-widest py-2 border-b-2 border-border/20 ${
-                            isLinkActive 
-                              ? 'text-accent font-bold' 
+                          className={`font-sans text-xs uppercase tracking-widest py-2 border-b-2 border-border/20 ${isLinkActive
+                              ? 'text-accent font-bold'
                               : 'text-muted-foreground hover:text-foreground'
-                          }`}
+                            }`}
                         >
                           {item.label}
                         </a>
