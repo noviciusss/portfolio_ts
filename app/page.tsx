@@ -25,8 +25,8 @@ export default function Home() {
         <section id="ask">
           <AskAboutMe />
         </section>
-        <section id="about">
-          <About />
+        <section id="projects">
+          <Projects />
         </section>
         <section id="experience">
           <Experience />
@@ -34,23 +34,23 @@ export default function Home() {
         <section id="skills">
           <Skills />
         </section>
-        <section id="education">
-          <Education />
-        </section>
         <section id="coding-stats">
           <CodingStats />
         </section>
-        <section id="projects">
-          <Projects />
-        </section>
-        <section id="archive">
-          <Archive />
+        <section id="about">
+          <About />
         </section>
         <section id="building">
           <CurrentlyBuilding />
         </section>
         <section id="achievements">
           <Achievements />
+        </section>
+        <section id="education">
+          <Education />
+        </section>
+        <section id="archive">
+          <Archive />
         </section>
         <section id="contact">
           <Contact />

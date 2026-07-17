@@ -96,7 +96,7 @@ export default function Contact() {
   return (
     <section className="py-24 px-4 border-t-[3px] border-border bg-background">
       <div className="max-w-5xl mx-auto">
-        <span className="nb-section-label">SECTION 11</span>
+        <span className="nb-section-label">// OPEN_CHANNEL</span>
         <h2 className="nb-section-heading">Get in touch</h2>
 
         <div className="mb-12 max-w-xl text-sm text-muted-foreground">
@@ -163,7 +163,7 @@ export default function Contact() {
                             <Input
                               placeholder="Your full name"
                               {...field}
-                              className="bg-background border-[3px] border-border rounded-none font-sans text-xs transition-all p-3 focus:shadow-[3px_3px_0_0_var(--accent)]"
+                              className="rounded-none border-[3px] border-ink bg-canvas px-4 py-3 font-mono text-sm shadow-[3px_3px_0_0_var(--ink)] focus:border-amber focus:shadow-[1px_1px_0_0_var(--amber)] focus:outline-none transition-all"
                             />
                           </FormControl>
                           <FormMessage className="font-mono text-[9px]" />
@@ -183,7 +183,7 @@ export default function Contact() {
                               type="email"
                               placeholder="your@email.com"
                               {...field}
-                              className="bg-background border-[3px] border-border rounded-none font-sans text-xs transition-all p-3 focus:shadow-[3px_3px_0_0_var(--accent)]"
+                              className="rounded-none border-[3px] border-ink bg-canvas px-4 py-3 font-mono text-sm shadow-[3px_3px_0_0_var(--ink)] focus:border-amber focus:shadow-[1px_1px_0_0_var(--amber)] focus:outline-none transition-all"
                             />
                           </FormControl>
                           <FormMessage className="font-mono text-[9px]" />
@@ -204,7 +204,7 @@ export default function Contact() {
                           <Input
                             placeholder="Message subject line"
                             {...field}
-                            className="bg-background border-[3px] border-border rounded-none font-sans text-xs transition-all p-3 focus:shadow-[3px_3px_0_0_var(--accent)]"
+                            className="rounded-none border-[3px] border-ink bg-canvas px-4 py-3 font-mono text-sm shadow-[3px_3px_0_0_var(--ink)] focus:border-amber focus:shadow-[1px_1px_0_0_var(--amber)] focus:outline-none transition-all"
                           />
                         </FormControl>
                         <FormMessage className="font-mono text-[9px]" />
@@ -225,7 +225,7 @@ export default function Contact() {
                             placeholder="Enter transaction logs / notes payload..."
                             {...field}
                             rows={5}
-                            className="resize-none bg-background border-[3px] border-border rounded-none font-sans text-xs transition-all p-3 focus:shadow-[3px_3px_0_0_var(--accent)]"
+                            className="resize-none rounded-none border-[3px] border-ink bg-canvas px-4 py-3 font-mono text-sm shadow-[3px_3px_0_0_var(--ink)] focus:border-amber focus:shadow-[1px_1px_0_0_var(--amber)] focus:outline-none transition-all"
                           />
                         </FormControl>
                         <FormMessage className="font-mono text-[9px]" />

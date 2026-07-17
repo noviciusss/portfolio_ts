@@ -82,8 +82,8 @@ export default function CodingStats() {
   
   return (
     <section className="py-24 px-4 border-t-[3px] border-border bg-background" id="coding-stats">
-      <div className="max-w-4xl mx-auto">
-        <span className="nb-section-label">SECTION 06</span>
+      <div className="max-w-5xl mx-auto">
+        <span className="nb-section-label">// SIGNAL_METRICS</span>
         <h2 className="nb-section-heading">Activity Log</h2>
 
         <div className="mb-12 max-w-xl text-sm text-muted-foreground">
@@ -130,7 +130,7 @@ export default function CodingStats() {
               
               <CardContent className="space-y-6">
                 {/* Stats Readout Image */}
-                <div className="border-[3px] border-border bg-black/45 rounded-none overflow-hidden flex items-center justify-center p-2 shadow-[3px_3px_0_0_var(--border)]">
+                <div className="border-[3px] border-ink bg-canvas overflow-hidden flex items-center justify-center p-2 shadow-[3px_3px_0_0_var(--ink)]">
                   {mounted && (
                     <Image
                       src={githubStatsUrl}

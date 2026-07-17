@@ -167,7 +167,7 @@ export default function AskAboutMe() {
   return (
     <section className="py-24 px-4 border-t-[3px] border-border bg-background" id="ask">
       <div className="max-w-5xl mx-auto">
-        <span className="nb-section-label">SECTION 01</span>
+        <span className="nb-section-label">// COGNITIVE_SIGNAL</span>
         <h2 className="nb-section-heading">Ask me anything</h2>
 
         <div className="mb-10 max-w-xl">

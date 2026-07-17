@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 export default function About() {
   return (
     <section className="py-24 px-4 border-t-[3px] border-border bg-background">
-      <div className="max-w-4xl mx-auto">
-        <span className="nb-section-label">SECTION 02</span>
+      <div className="max-w-5xl mx-auto">
+        <span className="nb-section-label">// ORIGIN_LOG</span>
         <h2 className="nb-section-heading">The developer</h2>
 
         <div className="nb-card p-6 md:p-8 bg-card">

@@ -3,7 +3,6 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { motion } from "framer-motion";
 import { FiGithub, FiExternalLink, FiBookOpen, FiLock } from "react-icons/fi";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -28,12 +27,14 @@ type Project = {
   blog?: string;
   schematic?: string[];
   isInternal?: boolean;
+  isFlagship?: boolean;
 };
 
 const featuredProjects: Project[] = [
   {
     index: "01",
-    title: "DoCopilot — RAG Document Q&A",
+    title: "DoCopilot -- RAG Document Q&A",
+    isFlagship: true,
     problem:
       "Baseline keyword-search retrieval was producing relevant answers in only ~57.7% of multi-format document queries, suffering from hallucinated context and zero citation trace.",
     build:
@@ -62,7 +63,7 @@ const featuredProjects: Project[] = [
   },
   {
     index: "02",
-    title: "Argus — Multi-Agent Research Engine",
+    title: "Argus -- Multi-Agent Research Engine",
     problem:
       "Compiling research reports from Tavily, ArXiv, and Wikipedia was manual and time-consuming, requiring human iteration to trace sources and reject low-quality summaries.",
     build:
@@ -70,10 +71,10 @@ const featuredProjects: Project[] = [
     metrics: [
       {
         label: "Research Time",
-        value: "30–90s",
+        value: "30-90s",
         countFrom: 0,
         countTo: 90,
-        format: (n) => (n < 30 ? `${Math.round(n)}s` : `30–${Math.round(n)}s`),
+        format: (n) => (n < 30 ? `${Math.round(n)}s` : `30-${Math.round(n)}s`),
       },
       { label: "Specialists", value: "5 Agents" },
       { label: "Trace Engine", value: "LangSmith" },
@@ -84,7 +85,7 @@ const featuredProjects: Project[] = [
   },
   {
     index: "03",
-    title: "ContextCore — Stateful Memory Agent",
+    title: "ContextCore -- Stateful Memory Agent",
     problem:
       "Standard agents lose task/note context across sessions, and typical memory approaches hallucinate user preferences when querying vector databases directly.",
     build:
@@ -103,16 +104,17 @@ const featuredProjects: Project[] = [
     tags: ["FastMCP", "LangGraph", "Qdrant", "PostgreSQL", "MongoDB", "JSON-RPC"],
     github: "https://github.com/noviciusss/ContextCore-CLI",
     schematic: [
-      "[User Command] ──> [MCP Client/Agent]",
-      "                         │",
-      "        ┌────────────────┴────────────────┐",
-      "        ▼ (Intent Router)                 ▼ (Recall)",
+      "[User Command] --> [MCP Client/Agent]",
+      "                         |",
+      "        +----------------+----------------+",
+      "        v (Intent Router)                 v (Recall)",
       "  [PostgreSQL] (State)             [Qdrant] (Semantic)",
     ],
   },
   {
     index: "04",
-    title: "GFS-AI — Document Intelligence Pipeline",
+    title: "GFS-AI -- Document Intelligence Pipeline",
+    isInternal: true,
     problem:
       "Intake validation for multi-page (up to 400p) architectural PDF documents took up to 7 minutes with high rates of timeout errors and missing dimension listings.",
     build:
@@ -135,19 +137,20 @@ const featuredProjects: Project[] = [
       { label: "Batch Load", value: "400 pages" },
     ],
     tags: ["GPT-5 Vision", "ThreadPoolExecutor", "asyncio", "Docling", "Python"],
-    isInternal: true,
     schematic: [
-      "[PDF Source] ──> [Docling (Regex Checks)]",
-      "                        │",
+      "[PDF Source] --> [Docling (Regex Checks)]",
+      "                        |",
       "         (Missing field Fallback)",
-      "                        ▼",
-      "  [GPT-5 Vision (concurrent)] ──> [Structured JSON]",
+      "                        v",
+      "  [GPT-5 Vision (concurrent)] --> [Structured JSON]",
     ],
   },
 ];
 
 function MetricCell({
   metric,
+  cardIdx,
+  metricIdx,
 }: {
   metric: ProjectMetric;
   cardIdx: number;
@@ -156,7 +159,13 @@ function MetricCell({
   const valueRef = useRef<HTMLSpanElement>(null);
 
   useGSAP(() => {
-    if (!valueRef.current || metric.countFrom === undefined || metric.countTo === undefined || !metric.format) return;
+    if (
+      !valueRef.current ||
+      metric.countFrom === undefined ||
+      metric.countTo === undefined ||
+      !metric.format
+    )
+      return;
 
     const counter = { val: metric.countFrom };
     gsap.to(counter, {
@@ -177,7 +186,7 @@ function MetricCell({
   }, []);
 
   return (
-    <div className="border-2 border-border bg-accent/15 p-3 shadow-[2px_2px_0_0_var(--border)] font-mono flex flex-col justify-between">
+    <div className="border-[3px] border-ink bg-canvas p-3 shadow-[2px_2px_0_0_var(--phosphor)] font-mono flex flex-col justify-between">
       <span className="text-[9px] text-muted-foreground font-bold uppercase tracking-tight">
         {metric.label}
       </span>
@@ -193,155 +202,213 @@ function MetricCell({
   );
 }
 
-export default function Projects() {
+function ProjectCardInner({ project, idx }: { project: Project; idx: number }) {
   return (
-    <section className="py-24 px-4 border-t-[3px] border-border bg-background">
-      <div className="max-w-6xl mx-auto">
-        <span className="nb-section-label">SECTION 07</span>
+    <>
+      <div className="flex items-start justify-between border-b-[3px] border-border pb-4 mb-5">
+        <div>
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="font-mono text-xs text-accent font-bold uppercase">
+              CASE_FILE // {project.index}
+            </span>
+            {project.isInternal && (
+              <span className="font-mono text-[9px] text-foreground bg-amber border-2 border-border px-1.5 py-0.5 uppercase tracking-wider font-bold">
+                INTERNAL
+              </span>
+            )}
+          </div>
+          <h3 className="text-xl font-display font-black text-foreground mt-1 uppercase">
+            {project.title}
+          </h3>
+        </div>
+      </div>
+
+      {project.schematic && (
+        <div className="w-full mb-6 border-[3px] border-border p-4 bg-canvas font-mono text-[9px] sm:text-[10px] text-muted-foreground overflow-x-auto leading-relaxed whitespace-pre select-none shadow-[3px_3px_0_0_var(--ink)]">
+          <div className="text-[9px] uppercase tracking-wider text-accent border-b-[2px] border-border pb-1 mb-2 font-bold">
+            // ARCHITECTURE_SCHEMATIC
+          </div>
+          {project.schematic.join("\n")}
+        </div>
+      )}
+
+      <div className="mb-5">
+        <h4 className="font-mono text-[10px] uppercase text-muted-foreground tracking-wider mb-1.5 font-bold">
+          // PROBLEM
+        </h4>
+        <p className="text-sm leading-relaxed text-muted-foreground font-sans">
+          {project.problem}
+        </p>
+      </div>
+
+      <div className="mb-6">
+        <h4 className="font-mono text-[10px] uppercase text-muted-foreground tracking-wider mb-1.5 font-bold">
+          // BUILD
+        </h4>
+        <p className="text-sm leading-relaxed text-muted-foreground font-sans">
+          {project.build}
+        </p>
+      </div>
+
+      <div>
+        <div className="grid grid-cols-3 gap-3 border-t-[3px] border-b-[3px] border-border py-4 mb-5">
+          {project.metrics.map((metric, mIdx) => (
+            <MetricCell
+              key={mIdx}
+              metric={metric}
+              cardIdx={idx}
+              metricIdx={mIdx}
+            />
+          ))}
+        </div>
+
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex flex-wrap gap-2">
+            {project.tags.slice(0, 5).map((tag, tIdx) => (
+              <span
+                key={tIdx}
+                className={`font-mono text-[10px] text-foreground border-2 border-border bg-background px-2 py-0.5 shadow-[1.5px_1.5px_0_0_var(--border)] tag-tilt-${tIdx % 3}`}
+              >
+                {tag}
+              </span>
+            ))}
+            {project.tags.length > 5 && (
+              <span className="font-mono text-[9px] text-muted-foreground/60 px-1 py-0.5">
+                +{project.tags.length - 5}
+              </span>
+            )}
+          </div>
+
+          <div className="flex items-center gap-3 text-xs font-mono">
+            {project.isInternal ? (
+              <span className="text-muted-foreground/50 border-[2px] border-border px-2 py-1 flex items-center gap-1.5 text-[10px] uppercase font-bold">
+                <FiLock className="h-3 w-3" />
+                Internal
+              </span>
+            ) : (
+              project.github && (
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="nb-btn text-[10px] py-1 px-3 bg-background border-2 shadow-[2px_2px_0_0_var(--border)] hover:shadow-[1px_1px_0_0_var(--border)] hover:translate-x-[1px] hover:translate-y-[1px]"
+                >
+                  <FiGithub className="h-3 w-3" /> Code
+                </a>
+              )
+            )}
+
+            {project.demo && (
+              <a
+                href={project.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="nb-btn text-[10px] py-1 px-3 bg-accent text-accent-foreground border-2 shadow-[2px_2px_0_0_var(--border)] hover:shadow-[1px_1px_0_0_var(--border)] hover:translate-x-[1px] hover:translate-y-[1px]"
+              >
+                <FiExternalLink className="h-3 w-3" /> Live
+              </a>
+            )}
+
+            {project.blog && (
+              <a
+                href={project.blog}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="nb-btn text-[10px] py-1 px-3 bg-background border-2 shadow-[2px_2px_0_0_var(--border)] hover:shadow-[1px_1px_0_0_var(--border)] hover:translate-x-[1px] hover:translate-y-[1px]"
+              >
+                <FiBookOpen className="h-3 w-3" /> Analysis
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default function Projects() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      gsap.from(".project-card", {
+        opacity: 0,
+        y: 32,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+          once: true,
+        },
+      });
+    },
+    { scope: sectionRef }
+  );
+
+  const flagship = featuredProjects[0];
+  const midProjects = featuredProjects.slice(1, 3);
+  const internalProject = featuredProjects[3];
+
+  return (
+    <section
+      ref={sectionRef}
+      className="py-24 px-4 border-t-[3px] border-border bg-background"
+    >
+      <div className="max-w-5xl mx-auto">
+        <span className="nb-section-label">// CASE_FILES</span>
         <h2 className="nb-section-heading">Featured Projects</h2>
 
         <div className="mb-12 max-w-xl text-sm text-muted-foreground">
           <p>
-            Detailed case files for production-grade AI/ML architectures. Every project is measured
-            against exact performance indices — no aesthetic fluff, only verifiable metrics.
+            Production-grade AI/ML architectures -- every case file includes the
+            problem, the build, and verifiable performance metrics.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {featuredProjects.map((project, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.05 }}
-              className="nb-card p-6 bg-card flex flex-col justify-between"
-            >
-              <div>
-                {/* Card Header */}
-                <div className="flex items-start justify-between border-b-[3px] border-border pb-4 mb-5">
-                  <div>
-                    <span className="font-mono text-xs text-accent font-bold uppercase">
-                      CASE_FILE // {project.index}
-                    </span>
-                    {project.isInternal && (
-                      <span className="ml-2 font-mono text-[9px] text-foreground bg-amber border-2 border-border px-1.5 py-0.5 uppercase tracking-wider font-bold">
-                        INTERNAL
-                      </span>
-                    )}
-                    <h3 className="text-xl font-display font-black text-foreground mt-1 uppercase">
-                      {project.title}
-                    </h3>
-                  </div>
-                </div>
+        <div className="flex flex-col gap-8">
+          {/* DoCopilot - Full-width flagship */}
+          <div className="project-card border-[3px] border-ink bg-canvas shadow-[6px_6px_0_0_var(--phosphor)] flex flex-col">
+            <div className="w-full bg-phosphor px-8 py-2 border-b-[3px] border-ink">
+              <span className="font-mono text-[10px] font-black uppercase tracking-widest text-ink">
+                FLAGSHIP PROJECT -- CASE_FILE // 01
+              </span>
+            </div>
+            <div className="p-8 flex flex-col flex-1">
+              <ProjectCardInner project={flagship} idx={0} />
+            </div>
+          </div>
 
-                {/* Architecture Schematic */}
-                {project.schematic && (
-                  <div className="w-full mb-6 border-[3px] border-border p-4 bg-amber/5 font-mono text-[9px] sm:text-[10px] text-muted-foreground overflow-x-auto leading-relaxed whitespace-pre select-none shadow-[3px_3px_0_0_var(--border)]">
-                    <div className="text-[9px] uppercase tracking-wider text-accent border-b-[2px] border-border/30 pb-1 mb-2 font-bold">
-                      // ARCHITECTURE_SCHEMATIC
-                    </div>
-                    {project.schematic.join("\n")}
-                  </div>
-                )}
-
-                {/* Problem */}
-                <div className="mb-5">
-                  <h4 className="font-mono text-[10px] uppercase text-muted-foreground/75 tracking-wider mb-1.5 font-bold">
-                    // PROBLEM
-                  </h4>
-                  <p className="text-sm leading-relaxed text-muted-foreground font-sans">
-                    {project.problem}
-                  </p>
-                </div>
-
-                {/* Build */}
-                <div className="mb-6">
-                  <h4 className="font-mono text-[10px] uppercase text-muted-foreground/75 tracking-wider mb-1.5 font-bold">
-                    // BUILD
-                  </h4>
-                  <p className="text-sm leading-relaxed text-muted-foreground font-sans">
-                    {project.build}
-                  </p>
-                </div>
+          {/* Argus + ContextCore - 2-col grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {midProjects.map((project, i) => (
+              <div
+                key={project.index}
+                className={`project-card border-[3px] border-ink bg-canvas p-6 flex flex-col ${
+                  i === 0
+                    ? "shadow-[6px_6px_0_0_var(--ink)]"
+                    : "shadow-[6px_6px_0_0_var(--amber)]"
+                }`}
+              >
+                <ProjectCardInner project={project} idx={i + 1} />
               </div>
+            ))}
+          </div>
 
-              {/* Metrics Block */}
-              <div>
-                <div className="grid grid-cols-3 gap-3 border-t-[3px] border-b-[3px] border-border py-4 mb-5">
-                  {project.metrics.map((metric, mIdx) => (
-                    <MetricCell
-                      key={mIdx}
-                      metric={metric}
-                      cardIdx={idx}
-                      metricIdx={mIdx}
-                    />
-                  ))}
-                </div>
-
-                {/* Tags and Links */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.slice(0, 4).map((tag, tIdx) => (
-                      <span
-                        key={tIdx}
-                        className={`font-mono text-[10px] text-foreground border-2 border-border bg-background px-2 py-0.5 shadow-[1.5px_1.5px_0_0_var(--border)] tag-tilt-${tIdx % 3}`}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                    {project.tags.length > 4 && (
-                      <span className="font-mono text-[9px] text-muted-foreground/60 px-1 py-0.5">
-                        +{project.tags.length - 4}
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="flex items-center gap-3 text-xs font-mono">
-                    {project.isInternal ? (
-                      <span className="text-muted-foreground/50 border-[2px] border-border px-2 py-1 flex items-center gap-1.5 text-[10px] uppercase font-bold">
-                        <FiLock className="h-3 w-3" />
-                        Internal
-                      </span>
-                    ) : (
-                      project.github && (
-                        <a
-                          href={project.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="nb-btn text-[10px] py-1 px-3 bg-background border-2 shadow-[2px_2px_0_0_var(--border)] hover:shadow-[1px_1px_0_0_var(--border)] hover:translate-x-[1px] hover:translate-y-[1px]"
-                        >
-                          <FiGithub className="h-3 w-3" /> Code
-                        </a>
-                      )
-                    )}
-
-                    {project.demo && (
-                      <a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="nb-btn text-[10px] py-1 px-3 bg-accent text-accent-foreground border-2 shadow-[2px_2px_0_0_var(--border)] hover:shadow-[1px_1px_0_0_var(--border)] hover:translate-x-[1px] hover:translate-y-[1px]"
-                      >
-                        <FiExternalLink className="h-3 w-3" /> Live
-                      </a>
-                    )}
-
-                    {project.blog && (
-                      <a
-                        href={project.blog}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="nb-btn text-[10px] py-1 px-3 bg-background border-2 shadow-[2px_2px_0_0_var(--border)] hover:shadow-[1px_1px_0_0_var(--border)] hover:translate-x-[1px] hover:translate-y-[1px]"
-                      >
-                        <FiBookOpen className="h-3 w-3" /> Analysis
-                      </a>
-                    )}
-                  </div>
-                </div>
+          {/* GFS-AI - Full-width internal */}
+          <div className="project-card">
+            <div className="border-[3px] border-ink bg-canvas shadow-[6px_6px_0_0_var(--amber)] flex flex-col opacity-75 hover:opacity-100 transition-opacity duration-300">
+              <div className="w-full bg-amber px-8 py-2 border-b-[3px] border-ink">
+                <span className="font-mono text-[10px] font-black uppercase tracking-widest text-ink">
+                  INTERNAL WORK -- AmberFlux Pvt. Ltd. -- CASE_FILE // 04
+                </span>
               </div>
-            </motion.div>
-          ))}
+              <div className="p-8 flex flex-col flex-1">
+                <ProjectCardInner project={internalProject} idx={3} />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

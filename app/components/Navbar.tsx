@@ -9,10 +9,11 @@ import LogoIcon from './LogoIcon';
 
 const navItems = [
   { label: "Home", href: "#hero" },
-  { label: "About", href: "#about" },
+  { label: "Ask AI", href: "#ask" },
+  { label: "Projects", href: "#projects" },
   { label: "Experience", href: "#experience" },
   { label: "Skills", href: "#skills" },
-  { label: "Projects", href: "#projects" },
+  { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
 

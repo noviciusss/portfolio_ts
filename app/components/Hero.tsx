@@ -29,7 +29,7 @@ export default function Hero() {
 
   return (
     <section className="min-h-screen w-full bg-canvas font-sans text-ink pt-28 pb-16 px-5 md:px-8">
-      <div className="mx-auto max-w-6xl z-10">
+      <div className="mx-auto max-w-5xl z-10">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -144,8 +144,7 @@ export default function Hero() {
           {STACK.map((s, i) => (
             <span
               key={s}
-              style={{ transform: `rotate(${(i % 2 === 0 ? -1 : 1) * (1 + (i % 3))}deg)` }}
-              className="border-2 border-ink bg-canvas px-2.5 py-1 font-mono text-xs font-bold"
+              className={`border-2 border-ink bg-canvas px-2.5 py-1 font-mono text-xs font-bold tag-tilt-${i % 3}`}
             >
               {s}
             </span>
