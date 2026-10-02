@@ -1,32 +1,32 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
+import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import Script from "next/script";
 
 const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-display',
-  display: 'swap',
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-mono',
-  display: 'swap',
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
 });
 
 const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-sans',
-  display: 'swap',
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
 });
 
-// Enhanced metadata for maximum SEO - optimized for "Samarth Pratap Singh" searches
 export const metadata: Metadata = {
-  title: "Samarth Pratap Singh | AI/ML Engineer | BTech CSE VIT Bhopal",
-  description: "Samarth Pratap Singh - BTech CSE student (CGPA 8.57) at VIT Bhopal specializing in AI/ML, RAG systems, and LLMOps. Building production LLM applications with hybrid search, LoRA fine-tuning, and semantic retrieval. Published models on Hugging Face. Portfolio: https://portfolio-noviciusss.vercel.app | GitHub: github.com/noviciusss | LinkedIn: linkedin.com/in/spsamar",
-  keywords: "Samarth Pratap Singh, Samarth Singh, GenAI Engineer, RAG Engineer, AI/ML Engineer, Retrieval Augmented Generation, LLMOps, VIT Bhopal CSE, LangChain, Qdrant, FAISS, Vector Database, PEFT, LoRA, Transformers, FLAN-T5, RoBERTa, Hugging Face, FastAPI, PyTorch, Semantic Search, AI Engineer Intern, Machine Learning Intern, spsamar, noviciusss",
+  metadataBase: new URL("https://portfolio-noviciusss.vercel.app"),
+  title: "Samarth Pratap Singh — AI Engineer (RAG, LLM Agents, Evals)",
+  description:
+    "AI Engineer building RAG systems, LLM agents and evaluation harnesses. Final-year CSE at VIT Bhopal; AI/ML intern at AmberFlux EdgeAI. Open to 2027 roles.",
   authors: [{ name: "Samarth Pratap Singh", url: "https://github.com/noviciusss" }],
   creator: "Samarth Pratap Singh",
   publisher: "Samarth Pratap Singh",
@@ -34,26 +34,19 @@ export const metadata: Metadata = {
     canonical: "https://portfolio-noviciusss.vercel.app/",
   },
   openGraph: {
-    title: "Samarth Pratap Singh | AI/ML Engineer | Portfolio",
-    description: "Samarth Pratap Singh - Building production RAG systems and fine-tuning LLMs. 8.57 CGPA BTech CSE student at VIT Bhopal seeking AI/ML engineering roles.",
+    title: "Samarth Pratap Singh — AI Engineer (RAG, LLM Agents, Evals)",
+    description:
+      "AI Engineer building RAG systems, LLM agents and evaluation harnesses. Final-year CSE at VIT Bhopal; AI/ML intern at AmberFlux EdgeAI. Open to 2027 roles.",
     url: "https://portfolio-noviciusss.vercel.app/",
     siteName: "Samarth Pratap Singh Portfolio",
     locale: "en_US",
     type: "website",
-    images: [
-      {
-        url: "https://portfolio-noviciusss.vercel.app/logo.png",
-        width: 1200,
-        height: 630,
-        alt: "Samarth Pratap Singh - AI/ML Engineer Portfolio",
-      }
-    ]
   },
   twitter: {
     card: "summary_large_image",
-    title: "Samarth Pratap Singh | AI/ML Engineer",
-    description: "Samarth Pratap Singh - Specialist in RAG, LLMOps, and production LLM systems",
-    creator: "@samarthsingh",
+    title: "Samarth Pratap Singh — AI Engineer (RAG, LLM Agents, Evals)",
+    description:
+      "AI Engineer building RAG systems, LLM agents and evaluation harnesses. Final-year CSE at VIT Bhopal; AI/ML intern at AmberFlux EdgeAI. Open to 2027 roles.",
   },
   applicationName: "Samarth Pratap Singh Portfolio",
   formatDetection: {
@@ -68,9 +61,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   verification: {
@@ -89,136 +82,97 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+      suppressHydrationWarning
+    >
       <head>
-        {/* Preconnect to important domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        
-        {/* Add enhanced structured data for better SEO and Google Knowledge Graph */}
+
+        {/* Structured Data (JSON-LD) */}
         <Script id="person-schema" type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Person",
-            "name": "Samarth Pratap Singh",
-            "alternateName": ["Samarth Singh", "spsamar", "noviciusss"],
-            "url": "https://portfolio-noviciusss.vercel.app",
-            "image": "https://portfolio-noviciusss.vercel.app/logo.png",
-            "jobTitle": "AI/ML Engineer | BTech CSE Student",
-            "worksFor": {
-              "@type": "EducationalOrganization",
-              "name": "VIT Bhopal University"
+            name: "Samarth Pratap Singh",
+            alternateName: ["Samarth Singh", "spsamar", "noviciusss"],
+            url: "https://portfolio-noviciusss.vercel.app",
+            jobTitle: "AI Engineer",
+            worksFor: {
+              "@type": "Organization",
+              name: "AmberFlux EdgeAI Private Limited",
             },
-            "alumniOf": {
+            alumniOf: {
               "@type": "EducationalOrganization",
-              "name": "VIT Bhopal University",
-              "address": {
+              name: "VIT Bhopal University",
+              address: {
                 "@type": "PostalAddress",
-                "addressLocality": "Bhopal",
-                "addressRegion": "Madhya Pradesh",
-                "addressCountry": "India"
-              }
+                addressLocality: "Bhopal",
+                addressRegion: "Madhya Pradesh",
+                addressCountry: "India",
+              },
             },
-            "homeLocation": {
+            homeLocation: {
               "@type": "Place",
-              "address": {
+              address: {
                 "@type": "PostalAddress",
-                "addressLocality": "Pratapgarh",
-                "addressRegion": "Uttar Pradesh",
-                "addressCountry": "India"
-              }
+                addressLocality: "Pratapgarh",
+                addressRegion: "Uttar Pradesh",
+                addressCountry: "India",
+              },
             },
-            "sameAs": [
+            sameAs: [
               "https://github.com/noviciusss",
               "https://linkedin.com/in/spsamar",
               "https://huggingface.co/noviciusss",
               "https://leetcode.com/Sam_9415",
-              "https://portfolio-noviciusss.vercel.app"
             ],
-            "knowsAbout": [
-              "Generative AI", "RAG", "Retrieval Augmented Generation", "LLMOps",
-              "LangChain", "LangGraph", "Agno", "Qdrant", "FAISS", "Vector Databases",
-              "PEFT", "LoRA", "Transformers", "Fine-Tuning", "Hugging Face",
-              "PyTorch", "FastAPI", "Semantic Search", "Machine Learning",
-              "Python", "TypeScript", "Next.js", "React", "Node.js"
+            knowsAbout: [
+              "Generative AI",
+              "RAG",
+              "Retrieval Augmented Generation",
+              "LLM Agents",
+              "LangGraph",
+              "Evaluation Harnesses",
+              "Qdrant",
+              "FastMCP",
+              "FastAPI",
+              "PyTorch",
+              "TypeScript",
+              "Next.js",
+              "Docker",
             ],
-            "hasCredential": [
-              {
-                "@type": "EducationalOccupationalCredential",
-                "name": "Google IT Support Professional Certificate",
-                "credentialCategory": "Certificate",
-                "recognizedBy": {
-                  "@type": "Organization",
-                  "name": "Google"
-                }
-              },
-              {
-                "@type": "EducationalOccupationalCredential",
-                "name": "Applied Machine Learning in Python",
-                "credentialCategory": "Certificate",
-                "recognizedBy": {
-                  "@type": "Organization",
-                  "name": "Coursera"
-                }
-              }
-            ],
-            "description": "BTech CSE student (CGPA 8.57) at VIT Bhopal specializing in Artificial Intelligence, Machine Learning, RAG systems, and LLMOps. Building production LLM applications with hybrid search, LoRA fine-tuning, and semantic retrieval.",
-            "email": "samarthsin2006@gmail.com"
+            description:
+              "AI Engineer building RAG systems, LLM agents and evaluation harnesses. Final-year CSE at VIT Bhopal; AI/ML intern at AmberFlux EdgeAI.",
+            email: "samarthsin2006@gmail.com",
           })}
         </Script>
-        
-        {/* Portfolio/Website Schema */}
+
         <Script id="website-schema" type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebSite",
-            "name": "Samarth Pratap Singh Portfolio",
-            "alternateName": "Samarth Singh Portfolio",
-            "url": "https://portfolio-noviciusss.vercel.app",
-            "author": {
+            name: "Samarth Pratap Singh Portfolio",
+            url: "https://portfolio-noviciusss.vercel.app",
+            author: {
               "@type": "Person",
-              "name": "Samarth Pratap Singh"
+              name: "Samarth Pratap Singh",
             },
-            "description": "Official portfolio website of Samarth Pratap Singh - AI/ML Engineer, showcasing projects, skills, and achievements in AI/ML",
-            "potentialAction": {
-              "@type": "SearchAction",
-              "target": "https://portfolio-noviciusss.vercel.app/?s={search_term_string}",
-              "query-input": "required name=search_term_string"
-            }
-          })}
-        </Script>
-        
-        {/* Organization/ProfilePage Schema */}
-        <Script id="profile-schema" type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ProfilePage",
-            "mainEntity": {
-              "@type": "Person",
-              "name": "Samarth Pratap Singh",
-              "url": "https://portfolio-noviciusss.vercel.app",
-              "interactionStatistic": [
-                {
-                  "@type": "InteractionCounter",
-                  "interactionType": "https://schema.org/FollowAction",
-                  "userInteractionCount": "GitHub followers and connections"
-                }
-              ]
-            }
+            description:
+              "AI Engineer building RAG systems, LLM agents and evaluation harnesses.",
           })}
         </Script>
       </head>
-      <body className="font-sans antialiased">
-        <NextThemesProvider 
+      <body className="bg-background text-foreground antialiased font-sans">
+        <NextThemesProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
         >
           {children}
         </NextThemesProvider>
-        
-        {/* Preload crucial resources */}
-        <link rel="preload" as="image" href="/unnamed.jpg" />
       </body>
     </html>
   );
