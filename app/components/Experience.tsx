@@ -9,46 +9,49 @@ gsap.registerPlugin(ScrollTrigger);
 
 const experiences = [
   {
-    role: "AI/ML Engineer Intern",
-    company: "AmberFlux EdgeAI",
+    role: "AI/ML Engineering Intern",
+    company: "AmberFlux EdgeAI Private Limited",
     period: "May 2026 – Present",
-    location: "Remote",
+    location: "Remote (Hyderabad, Telangana)",
     metrics: [
-      { key: "Latency reduction", value: "7m → 90s" },
+      { key: "Latency reduction", value: "7m → 90s (~4.7×)" },
       { key: "Document range", value: "Up to 400p" },
-      { key: "Vision extraction", value: ">0.85 conf." }
+      { key: "Vision extraction", value: ">0.85 conf." },
     ],
     bullets: [
-      "Architected a vision extraction pipeline for multi-page architectural PDFs using GPT-5 — cut latency from ~7 min to ~90 sec on 20-page documents via concurrent batch dispatch (ThreadPoolExecutor + asyncio), with structured output enforcement and retry handling.",
-      "Built a cover/dimension intake pipeline combining non-AI heuristic extraction (regex/Docling) with conditional GPT-5 fallback — vision invoked only for missing fields — achieving >0.85 confidence and near-complete field extraction on real architectural lead sheets.",
-      "Designed a job aggregation layer consolidating multi-source document outputs into structured JSON for documents up to 400 pages, with page-level validation guardrails and LangGraph-based routing."
+      "Architected a vision extraction pipeline for multi-page architectural PDFs using GPT-5 — cut latency from ~7 min to ~90 sec on 20-page drawings (~4.7×) via concurrent batch dispatch (ThreadPoolExecutor + asyncio), with structured output enforcement and retry handling.",
+      "Built a cover/dimension intake pipeline combining non-AI heuristic extraction (regex/Docling) with conditional GPT-5 fallback — vision invoked only for missing fields — achieving >0.85 confidence on real architectural lead sheets.",
+      "Designed a job aggregation layer consolidating multi-source document outputs into structured JSON for documents up to 400 pages, with page-level validation guardrails, drawing-page exclusion, and LangGraph-routed aggregation.",
     ],
-    tech: ["GPT-5", "ThreadPoolExecutor", "asyncio", "LangGraph", "Docling", "Python"]
-  }
+    tech: ["GPT-5 Vision", "ThreadPoolExecutor", "asyncio", "LangGraph", "Docling", "Python"],
+  },
 ];
 
 export default function Experience() {
   const sectionRef = useRef<HTMLElement>(null);
 
-  useGSAP(() => {
-    gsap.from(".exp-record", {
-      opacity: 0,
-      x: -16,
-      duration: 0.6,
-      stagger: 0.15,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 75%",
-        once: true,
-      },
-    });
-  }, { scope: sectionRef });
+  useGSAP(
+    () => {
+      gsap.from(".exp-record", {
+        opacity: 0,
+        x: -16,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+          once: true,
+        },
+      });
+    },
+    { scope: sectionRef }
+  );
 
   return (
-    <section ref={sectionRef} className="py-24 px-4 border-t-[3px] border-border bg-background">
+    <section ref={sectionRef} id="experience" className="py-24 px-4 border-t-[3px] border-border bg-background scroll-mt-20">
       <div className="max-w-5xl mx-auto">
-        <span className="nb-section-label">// SIGNAL_HISTORY</span>
+        <span className="nb-section-label">// EXPERIENCE</span>
         <h2 className="nb-section-heading">Experience</h2>
 
         {/* Timeline */}
@@ -107,7 +110,7 @@ export default function Experience() {
                     </div>
 
                     {/* Bullets */}
-                    <div className="space-y-4 text-sm leading-relaxed text-muted-foreground mb-8">
+                    <div className="space-y-4 text-sm sm:text-base leading-relaxed text-muted-foreground mb-8">
                       {exp.bullets.map((bullet, bidx) => (
                         <p key={bidx} className="relative pl-5 font-sans">
                           <span className="absolute left-0 top-1 text-accent font-mono font-black">•</span>

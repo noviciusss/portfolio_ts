@@ -1,60 +1,60 @@
-import Hero from './components/Hero';
-import AskAboutMe from './components/AskAboutMe';
-import About from './components/About';
-import Experience from './components/Experience';
-import Skills from './components/Skills';
-import Education from './components/Education';
-import CodingStats from './components/CodingStats';
-import Projects from './components/Projects';
-import Archive from './components/Archive';
-import CurrentlyBuilding from './components/CurrentlyBuilding';
-import Achievements from './components/Achievements';
-import Contact from './components/Contact';
-import Navbar from './components/Navbar';
-import FloatingResumeButton from './components/FloatingResumeButton';
-import Footer from './components/Footer';
+import Hero from "./components/Hero";
+import Projects from "./components/Projects";
+import Experience from "./components/Experience";
+import Skills from "./components/Skills";
+import AskAboutMe from "./components/AskAboutMe";
+import About from "./components/About";
+import Education from "./components/Education";
+import Archive from "./components/Archive";
+import CodingStats from "./components/CodingStats";
+import RagBuilder from "./components/RagBuilder";
+import Contact from "./components/Contact";
+import Navbar from "./components/Navbar";
+import FloatingResumeButton from "./components/FloatingResumeButton";
+import Footer from "./components/Footer";
 
 export default function Home() {
   return (
     <>
       <Navbar />
       <main className="overflow-hidden relative z-[1]">
+        {/* 1. Hero */}
         <section id="hero">
           <Hero />
         </section>
-        <section id="ask">
-          <AskAboutMe />
-        </section>
-        <section id="projects">
-          <Projects />
-        </section>
-        <section id="experience">
-          <Experience />
-        </section>
-        <section id="skills">
-          <Skills />
-        </section>
-        <section id="coding-stats">
-          <CodingStats />
-        </section>
-        <section id="about">
-          <About />
-        </section>
-        <section id="building">
-          <CurrentlyBuilding />
-        </section>
-        <section id="achievements">
-          <Achievements />
-        </section>
-        <section id="education">
-          <Education />
-        </section>
-        <section id="archive">
-          <Archive />
-        </section>
-        <section id="contact">
-          <Contact />
-        </section>
+
+        {/* 2. Projects (at position 2) */}
+        <Projects />
+
+        {/* 3. Experience (AmberFlux) */}
+        <Experience />
+
+        {/* 4. Skills (7 categories matching resume) */}
+        <Skills />
+
+        {/* 5. Ask AI (grounded Q&A over resume/case files) */}
+        <AskAboutMe />
+
+        {/* 6. About */}
+        <About />
+
+        {/* 7. Education & Publications */}
+        <Education />
+
+        {/* 8. Fine-tuning & Earlier work */}
+        <Archive />
+
+        {/* 9. Interactive Simulation & Public Activity */}
+        <div className="py-16 px-4 border-t-[3px] border-border bg-background">
+          <div className="max-w-5xl mx-auto space-y-12">
+            <RagBuilder />
+          </div>
+        </div>
+        <CodingStats />
+
+        {/* 10. Contact */}
+        <Contact />
+
         <Footer />
       </main>
       <FloatingResumeButton />
