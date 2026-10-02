@@ -1,6 +1,6 @@
 # Samarth Pratap Singh — Portfolio
 
-> **GenAI & RAG Engineer | BTech CSE, VIT Bhopal (CGPA 8.61)**
+> **AI Engineer | "I build LLM systems, then measure them." | BTech CSE, VIT Bhopal (CGPA 8.61)**
 > [portfolio-noviciusss.vercel.app](https://portfolio-noviciusss.vercel.app) · [GitHub](https://github.com/noviciusss) · [LinkedIn](https://www.linkedin.com/in/spsamar/) · [Medium](https://medium.com/@samarthsin2006) · [Hugging Face](https://huggingface.co/noviciusss)
 
 A production-grade personal portfolio built with Next.js 15, TypeScript, and Tailwind CSS v4 — showcasing projects, blog posts, skills, and live coding stats. Optimised for GenAI/LLMOps internship visibility.
