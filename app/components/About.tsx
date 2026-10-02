@@ -1,62 +1,57 @@
 "use client";
-import { motion } from "framer-motion";
 import { FiDownload } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
 
 export default function About() {
   return (
-    <section className="py-24 px-4 border-t-[3px] border-border bg-background">
-      <div className="max-w-5xl mx-auto">
-        <span className="nb-section-label">// ORIGIN_LOG</span>
-        <h2 className="nb-section-heading">The developer</h2>
+    <section className="py-24 px-4 border-t-[3px] border-border bg-background scroll-mt-20" id="about">
+      <div className="max-w-4xl mx-auto">
+        <span className="nb-section-label">// BACKGROUND</span>
+        <h2 className="nb-section-heading">About</h2>
 
-        <div className="nb-card p-6 md:p-8 bg-card">
-          <h3 className="text-xl sm:text-2xl font-display font-extrabold text-foreground mb-4">
-            AI/ML Engineer & Systems Developer
-          </h3>
-          
-          <div className="space-y-4 text-sm leading-relaxed text-muted-foreground mb-8 font-sans">
+        <div className="nb-card p-6 md:p-8 bg-card shadow-[6px_6px_0_0_var(--ink)]">
+          <div className="space-y-5 text-base sm:text-lg leading-relaxed text-foreground/90 font-sans mb-8">
             <p>
-              I am Samarth Pratap Singh, a BTech Computer Science student at VIT Bhopal University (CGPA 8.57) specializing in Generative AI, RAG systems, and LLMOps. I focus on building robust retrieval pipelines and multi-agent graphs where performance is measured and verified. 
+              I&apos;m a final-year CSE student at VIT Bhopal and an AI/ML engineering intern at AmberFlux EdgeAI, where I own the AI vision-extraction layer of a document pipeline for architectural drawings. I like the unglamorous parts of AI systems: retrieval quality, evaluation harnesses, failure handling, and cost-aware routing.
             </p>
             <p>
-              My expertise includes designing hybrid search indexes, implementing reciprocal rank fusion (RRF) rerankers, fine-tuning LLMs with PEFT/LoRA, and automating systems validation using LLM-as-a-Judge frameworks. I seek to build scalable AI applications with clear, documented results.
+              Outside work I build agent systems end to end (RAG, LangGraph, MCP), measure them with LLM-judge evals, and ship them with CI/CD. I&apos;m looking for AI/LLM engineering roles starting 2027.
             </p>
           </div>
-          
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 w-full">
-            <div className="border-[3px] border-border p-4 bg-card shadow-[4px_4px_0_0_var(--border)]">
-              <span className="font-mono text-[9px] uppercase text-muted-foreground/60 tracking-wider">
-                // DOCOPILOT_RAG
+
+          {/* Quick Pillars */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 w-full font-mono">
+            <div className="border-[3px] border-border p-3.5 bg-background shadow-[3px_3px_0_0_var(--border)]">
+              <span className="text-[10px] uppercase text-muted-foreground tracking-wider font-bold">
+                // FOCUS
               </span>
-              <div className="text-base font-black text-accent mt-1">
-                89.2% Correctness
+              <div className="text-sm font-black text-accent mt-1">
+                RAG & LLM Agents
               </div>
             </div>
-            <div className="border-[3px] border-border p-4 bg-card shadow-[4px_4px_0_0_var(--border)]">
-              <span className="font-mono text-[9px] uppercase text-muted-foreground/60 tracking-wider">
-                // GFS_PIPELINE
+            <div className="border-[3px] border-border p-3.5 bg-background shadow-[3px_3px_0_0_var(--border)]">
+              <span className="text-[10px] uppercase text-muted-foreground tracking-wider font-bold">
+                // EVALUATION
               </span>
-              <div className="text-base font-black text-foreground mt-1">
-                7m → 90s Latency
+              <div className="text-sm font-black text-foreground mt-1">
+                LLM-as-a-Judge
               </div>
             </div>
-            <div className="border-[3px] border-border p-4 bg-card shadow-[4px_4px_0_0_var(--border)]">
-              <span className="font-mono text-[9px] uppercase text-muted-foreground/60 tracking-wider">
-                // ACADEMIC_CGPA
+            <div className="border-[3px] border-border p-3.5 bg-background shadow-[3px_3px_0_0_var(--border)]">
+              <span className="text-[10px] uppercase text-muted-foreground tracking-wider font-bold">
+                // TARGET
               </span>
-              <div className="text-base font-black text-foreground mt-1">
-                8.57 / 10
+              <div className="text-sm font-black text-foreground mt-1">
+                2027 AI Engineering
               </div>
             </div>
           </div>
-          
+
           {/* Download Button */}
-          <div className="w-full">
+          <div>
             <Button asChild className="nb-btn nb-btn-secondary">
-              <a href="/Resume.pdf" download="Samarth_Pratap_Singh_Resume">
-                <FiDownload className="h-4 w-4" /> DOWNLOAD_RESUME.PDF
+              <a href="/Samarth_Singh_FDE.pdf" download="Samarth_Singh_FDE.pdf">
+                <FiDownload className="h-4 w-4" /> Download Resume (PDF)
               </a>
             </Button>
           </div>
