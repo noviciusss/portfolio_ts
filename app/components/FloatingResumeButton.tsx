@@ -22,8 +22,8 @@ export default function FloatingResumeButton() {
 
   const handleDownload = () => {
     const link = document.createElement('a');
-    link.href = '/Resume.pdf';
-    link.download = 'Samarth_Pratap_Singh_Resume.pdf';
+    link.href = '/Samarth_Singh_FDE.pdf';
+    link.download = 'Samarth_Singh_FDE.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -43,6 +43,7 @@ export default function FloatingResumeButton() {
         >
           <button
             onClick={handleDownload}
+            aria-label="Download resume PDF"
             className="nb-btn nb-btn-primary flex items-center gap-2 px-5 py-3 shadow-[4px_4px_0_0_var(--border)] border-[3px] border-border hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_var(--border)]"
           >
             <FiDownload className="h-4 w-4 text-foreground" />
@@ -54,7 +55,7 @@ export default function FloatingResumeButton() {
           {/* Simple Clean Tooltip */}
           {isHovered && (
             <div className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-3 py-2 bg-foreground text-background font-mono text-[9px] uppercase tracking-wider border-2 border-border shadow-[3px_3px_0_0_var(--accent)] whitespace-nowrap font-bold">
-              AI/ML Engineer & RAG Specialist
+              AI Engineer · LLM Agents · RAG
             </div>
           )}
         </motion.div>

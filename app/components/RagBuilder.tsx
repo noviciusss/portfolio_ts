@@ -119,14 +119,19 @@ export default function RagBuilder() {
   return (
     <div className="border-[3px] border-ink bg-card p-6 md:p-8 shadow-[6px_6px_0_0_var(--ink)] w-full">
       <div className="mb-6">
-        <span className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground block mb-1">
-          // INTERACTIVE PIPELINE HARNESS
-        </span>
+        <div className="flex flex-wrap items-center gap-2 mb-1">
+          <span className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground">
+            // INTERACTIVE PIPELINE HARNESS
+          </span>
+          <span className="border-2 border-ink bg-amber px-2 py-0.5 font-mono text-[9px] font-black uppercase tracking-wider text-ink shadow-[2px_2px_0_0_var(--ink)]">
+            SIMULATION — illustrative numbers
+          </span>
+        </div>
         <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-foreground leading-none">
           RAG Pipeline compiler
         </h3>
         <p className="text-xs sm:text-sm text-muted-foreground mt-2 font-sans">
-          Click the pipeline blocks below to construct a retrieval-augmented generation pipeline. Compile and run to evaluate accuracy and speed index.
+          Interactive simulation demonstrating how retrieval components chain together to optimize accuracy and latency.
         </p>
       </div>
 
