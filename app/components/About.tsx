@@ -15,7 +15,7 @@ export default function About() {
               I&apos;m a final-year CSE student at VIT Bhopal and an AI/ML engineering intern at AmberFlux EdgeAI, where I own the AI vision-extraction layer of a document pipeline for architectural drawings. I like the unglamorous parts of AI systems: retrieval quality, evaluation harnesses, failure handling, and cost-aware routing.
             </p>
             <p>
-              Outside work I build agent systems end to end (RAG, LangGraph, MCP), measure them with LLM-judge evals, and ship them with CI/CD. I&apos;m looking for AI/LLM engineering roles starting 2027.
+              Outside work I build LLM systems end to end (RAG, tool-calling, MCP), measure them with LLM-judge evals, and ship them with CI/CD. I&apos;m looking for AI/LLM engineering roles starting 2027.
             </p>
           </div>
 

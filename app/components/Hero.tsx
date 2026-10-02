@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { SiHuggingface } from "react-icons/si";
 import { FiDownload } from "react-icons/fi";
 import samarthImg from "../../public/samarth.jpg";
 
@@ -38,7 +39,7 @@ const STATS: StatItem[] = [
   },
 ];
 
-const STACK = ["LangGraph", "Qdrant", "FastAPI", "Next.js", "FastMCP", "Docker"];
+const STACK = ["LangGraph", "Qdrant", "FastAPI", "PostgreSQL", "Azure", "MCP"];
 
 function StatTile({ item }: { item: StatItem }) {
   const numRef = useRef<HTMLSpanElement>(null);
@@ -57,7 +58,6 @@ function StatTile({ item }: { item: StatItem }) {
     const step = (now: number) => {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      // easeOutExpo
       const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
       const current = start + (target - start) * ease;
 
@@ -115,7 +115,13 @@ export default function Hero() {
                 variants={itemVariants}
                 className="inline-flex w-fit border-[3px] border-ink bg-phosphor px-3 py-1 font-mono text-xs font-bold uppercase tracking-widest shadow-[3px_3px_0_0_var(--ink)]"
               >
-                AI Engineer · LLM Agents · RAG · Evals
+                AI Engineer
+              </motion.span>
+              <motion.span
+                variants={itemVariants}
+                className="inline-flex items-center gap-1.5 border-[2px] border-ink bg-canvas px-2.5 py-1 font-mono text-xs font-bold uppercase tracking-wider shadow-[2px_2px_0_0_var(--ink)]"
+              >
+                Final-year CSE · VIT Bhopal
               </motion.span>
               <motion.span
                 variants={itemVariants}
@@ -128,11 +134,11 @@ export default function Hero() {
 
             <motion.h1
               variants={itemVariants}
-              className="max-w-4xl text-balance text-4xl font-black uppercase leading-[0.94] tracking-tight sm:text-6xl md:text-7xl lg:text-7xl font-display"
+              className="max-w-4xl text-balance text-4xl font-black uppercase leading-[0.96] tracking-tight sm:text-6xl md:text-7xl font-display"
             >
-              I build AI agents
+              I build LLM systems,
               <br />
-              that <span className="box-decoration-clone bg-ink px-2 text-canvas inline-block">actually work.</span>
+              then <span className="box-decoration-clone bg-ink px-2 text-canvas inline-block">measure them.</span>
             </motion.h1>
 
             <motion.p
@@ -150,15 +156,15 @@ export default function Hero() {
                 href="#projects"
                 className="border-[3px] border-ink bg-phosphor px-6 py-3 font-mono text-xs sm:text-sm font-bold uppercase tracking-widest shadow-[6px_6px_0_0_var(--ink)] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[3px_3px_0_0_var(--ink)]"
               >
-                View Work
+                View work
               </a>
               <a
-                href="/Samarth_Singh_FDE.pdf"
+                href="/Samarth_Pratap_Singh_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="border-[3px] border-ink bg-canvas px-6 py-3 font-mono text-xs sm:text-sm font-bold uppercase tracking-widest shadow-[6px_6px_0_0_var(--amber)] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[3px_3px_0_0_var(--amber)] inline-flex items-center gap-2"
               >
-                <FiDownload className="h-4 w-4" /> Download Resume
+                <FiDownload className="h-4 w-4" /> Download resume
               </a>
               <a
                 href="#ask"
@@ -169,7 +175,7 @@ export default function Hero() {
             </motion.div>
 
             {/* Social handles */}
-            <motion.div variants={itemVariants} className="mt-6 flex items-center gap-6">
+            <motion.div variants={itemVariants} className="mt-6 flex flex-wrap items-center gap-5 sm:gap-6">
               <a
                 href="https://github.com/noviciusss"
                 target="_blank"
@@ -189,6 +195,16 @@ export default function Hero() {
               >
                 <FaLinkedin size={18} />
                 <span>linkedin.com/in/spsamar</span>
+              </a>
+              <a
+                href="https://huggingface.co/noviciusss"
+                target="_blank"
+                rel="noreferrer"
+                className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 font-mono text-xs font-bold"
+                aria-label="Hugging Face profile"
+              >
+                <SiHuggingface size={18} />
+                <span>huggingface.co/noviciusss</span>
               </a>
             </motion.div>
           </div>
