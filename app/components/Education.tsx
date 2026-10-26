@@ -68,14 +68,6 @@ export default function Education() {
               </div>
             </div>
 
-            {/* Single verified CGPA display */}
-            <div className="border-[3px] border-border bg-accent p-3.5 shadow-[4px_4px_0_0_var(--border)] font-mono flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
-              <span className="text-[10px] uppercase text-foreground/80 tracking-wider font-extrabold">
-                // VERIFIED_ACADEMIC_CGPA
-              </span>
-              <span className="text-xl font-black text-foreground">8.61 / 10</span>
-            </div>
-
             {/* Coursework */}
             <div>
               <h4 className="font-mono text-[10px] uppercase text-muted-foreground tracking-wider mb-2.5 font-bold">
