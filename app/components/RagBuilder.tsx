@@ -1,16 +1,19 @@
 "use client";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { FiPlay, FiTrash2, FiCheckCircle, FiAlertTriangle } from "react-icons/fi";
 
 const AVAILABLE_BLOCKS = [
   { id: "corpus", name: "Docs Corpus", color: "bg-canvas text-foreground border-ink" },
   { id: "chunker", name: "Recursive Chunker", color: "bg-canvas text-foreground border-ink" },
   { id: "embedder", name: "Vector Embedder", color: "bg-canvas text-foreground border-ink" },
-  { id: "qdrant", name: "Qdrant Store", color: "bg-canvas text-foreground border-ink" },
+  { id: "qdrant", name: "Vector Index", color: "bg-canvas text-foreground border-ink" },
   { id: "rerank", name: "Cross-Encoder Rerank", color: "bg-canvas text-foreground border-ink" },
   { id: "llm", name: "Groq LLM", color: "bg-canvas text-foreground border-ink" },
 ];
+
+const INGESTION_FLOW = ["Documents", "Chunking", "Embedding", "Index"];
+const QUERY_FLOW = ["Question", "Retrieval", "Optional reranking", "Context", "Answer"];
 
 export default function RagBuilder() {
   const [pipeline, setPipeline] = useState<string[]>([]);
@@ -111,8 +114,8 @@ export default function RagBuilder() {
     setResult({
       status: "success",
       message: hasReranker
-        ? "SUCCESS: Reranked Hybrid RAG Pipeline compiled! Accuracy: 89.2% | Latency: 1.4s | Cross-encoder rerank active."
-        : "SUCCESS: Standard Vector RAG Pipeline compiled! Accuracy: 74.5% | Latency: 1.8s. (Tip: Try adding 'Cross-Encoder Rerank' before the LLM to boost accuracy to 89.2%!).",
+         ? "Valid flow: retrieve context, rerank the selected candidates, then generate an answer. Reranking adds compute and may improve ordering for a given evaluation."
+         : "Valid flow: retrieve context, then generate an answer. This explorer does not execute a real RAG pipeline or measure quality/latency.",
     });
   };
 
@@ -123,16 +126,27 @@ export default function RagBuilder() {
           <span className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground">
             // INTERACTIVE PIPELINE HARNESS
           </span>
-          <span className="border-2 border-ink bg-amber px-2 py-0.5 font-mono text-[9px] font-black uppercase tracking-wider text-ink shadow-[2px_2px_0_0_var(--ink)]">
+          <span className="border-2 border-ink bg-amber px-2 py-0.5 font-mono text-[9px] font-black uppercase tracking-wider text-on-accent shadow-[2px_2px_0_0_var(--ink)]">
             SIMULATION — illustrative numbers
           </span>
         </div>
         <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-foreground leading-none">
-          RAG Pipeline compiler
+           RAG flow explorer
         </h3>
         <p className="text-xs sm:text-sm text-muted-foreground mt-2 font-sans">
-          Interactive simulation demonstrating how retrieval components chain together to optimize accuracy and latency.
+          An educational simulation of an ingestion/query flow. It validates ordering only; it does not execute retrieval or report benchmark results.
         </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8 font-mono text-[10px]">
+        <div className="border-2 border-border bg-background p-3">
+          <div className="font-bold text-accent uppercase mb-2">Ingestion</div>
+          <div className="text-muted-foreground">{INGESTION_FLOW.join(" → ")}</div>
+        </div>
+        <div className="border-2 border-border bg-background p-3">
+          <div className="font-bold text-accent uppercase mb-2">Query time</div>
+          <div className="text-muted-foreground">{QUERY_FLOW.join(" → ")}</div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
@@ -146,7 +160,8 @@ export default function RagBuilder() {
                 <button
                   key={block.id}
                   disabled={selected}
-                  onClick={() => addBlock(block.id)}
+                   onClick={() => addBlock(block.id)}
+                   type="button"
                   className={`border-2 border-ink px-3 py-2 text-xs font-mono font-bold text-left transition-all ${
                     selected
                       ? "opacity-35 cursor-not-allowed bg-muted"
@@ -166,7 +181,8 @@ export default function RagBuilder() {
             <span className="font-mono text-[10px] font-bold text-foreground/60 uppercase">// Current Layout:</span>
             {pipeline.length > 0 && (
               <button
-                onClick={clearPipeline}
+                 onClick={clearPipeline}
+                type="button"
                 className="font-mono text-[10px] font-bold text-[#e5484d] hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <FiTrash2 /> Reset
@@ -197,7 +213,9 @@ export default function RagBuilder() {
                         {idx + 1}. {block?.name}
                       </span>
                       <button
-                        onClick={() => removeBlock(item)}
+                         onClick={() => removeBlock(item)}
+                        type="button"
+                        aria-label={`Remove ${block?.name ?? "pipeline block"}`}
                         className="text-muted-foreground hover:text-foreground text-xs font-bold cursor-pointer"
                       >
                         &times;
@@ -212,10 +230,11 @@ export default function RagBuilder() {
           {/* Action Row */}
           <div className="flex gap-3">
             <button
-              onClick={runPipeline}
+               onClick={runPipeline}
+              type="button"
               className="nb-btn nb-btn-primary flex-1 flex items-center justify-center gap-2"
             >
-              <FiPlay className="h-3 w-3" /> COMPILE_&_RUN
+              <FiPlay className="h-3 w-3" /> Validate pipeline
             </button>
           </div>
 
@@ -224,6 +243,8 @@ export default function RagBuilder() {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
+              role="status"
+              aria-live="polite"
               className={`border-[3px] border-ink p-4 font-mono text-xs ${
                 result.status === "success"
                   ? "bg-phosphor/20 text-foreground shadow-[4px_4px_0_0_var(--phosphor)]"

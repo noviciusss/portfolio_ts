@@ -6,9 +6,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: var(--font-sans);
-  --font-display: var(--font-display);
-  --font-mono: var(--font-mono);
+  --font-sans: var(--font-body-family);
+  --font-display: var(--font-display-family);
+  --font-mono: var(--font-mono-family);
   
   --color-background: var(--canvas);
   --color-foreground: var(--ink);
@@ -17,7 +17,7 @@
   --color-card-foreground: var(--ink);
   
   --color-primary: var(--phosphor);
-  --color-primary-foreground: var(--canvas);
+  --color-primary-foreground: var(--on-accent);
   
   --color-secondary: var(--canvas);
   --color-secondary-foreground: var(--ink);
@@ -26,7 +26,7 @@
   --color-muted-foreground: var(--muted-foreground);
   
   --color-accent: var(--phosphor);
-  --color-accent-foreground: var(--ink);
+  --color-accent-foreground: var(--on-accent);
   
   --color-destructive: var(--destructive);
   --color-ring: var(--ink);
@@ -35,6 +35,7 @@
   --color-ink: var(--ink);
   --color-phosphor: var(--phosphor);
   --color-amber: var(--amber);
+  --color-on-accent: var(--on-accent);
   
   --radius-sm: var(--radius);
   --radius-md: var(--radius);
@@ -52,6 +53,7 @@
   --amber: #FFC53D;
   --muted-foreground: #6B6960;
   --destructive: #b91c1c;
+  --on-accent: #0B0D0C;
 }
 
 .dark {
@@ -62,6 +64,7 @@
   --amber: #FFC53D;
   --muted-foreground: #9B9990;
   --destructive: #ef4444;
+  --on-accent: #0B0D0C;
 }
 
 @layer base {

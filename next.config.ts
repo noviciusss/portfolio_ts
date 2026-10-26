@@ -32,6 +32,10 @@ const nextConfig = {
     ];
   },
   async rewrites() {
+    if (process.env.NODE_ENV !== "development") {
+      return [];
+    }
+
     return [
       {
         source: '/api/ask',

@@ -42,7 +42,7 @@ export default function Archive() {
                   <h3 className="text-base font-display font-extrabold text-foreground uppercase tracking-tight">
                     {proj.title}
                   </h3>
-                  <span className="font-mono text-[9px] text-foreground bg-amber border-2 border-border px-1.5 py-0.5 uppercase tracking-wider font-bold">
+                  <span className="font-mono text-[9px] text-on-accent bg-amber border-2 border-border px-1.5 py-0.5 uppercase tracking-wider font-bold">
                     MODEL
                   </span>
                 </div>

@@ -1,6 +1,7 @@
 "use client";
 import { FiDownload } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
+import { siteConfig } from "@/lib/site-config";
 
 export default function About() {
   return (
@@ -50,8 +51,8 @@ export default function About() {
           {/* Download Button */}
           <div>
             <Button asChild className="nb-btn nb-btn-secondary">
-              <a href="/Samarth_Singh_FDE.pdf" download="Samarth_Singh_FDE.pdf">
-                <FiDownload className="h-4 w-4" /> Download Resume (PDF)
+              <a href={siteConfig.resumeUrl} target="_blank" rel="noopener noreferrer">
+                <FiDownload className="h-4 w-4" /> View résumé (PDF)
               </a>
             </Button>
           </div>

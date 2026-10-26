@@ -1,82 +1,43 @@
 "use client";
-import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Image from "next/image";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { SiHuggingface } from "react-icons/si";
 import { FiDownload } from "react-icons/fi";
 import samarthImg from "../../public/samarth.jpg";
+import { siteConfig } from "@/lib/site-config";
 
 interface StatItem {
   value: string;
-  num?: number;
-  suffix?: string;
   caption: string;
 }
 
 const STATS: StatItem[] = [
   {
-    value: "89.2%",
-    num: 89.2,
-    suffix: "%",
-    caption: "answer correctness · 40-question eval · DoCopilot",
+    value: "0.8925 / 1",
+    caption: "mean LLM-judge correctness · 40 AWS-document questions · DoCopilot",
+  },
+  {
+    value: "0.905 / 1",
+    caption: "mean LLM-judge relevance · 40 AWS-document questions · DoCopilot",
   },
   {
     value: "2.86s",
-    num: 2.86,
-    suffix: "s",
-    caption: "avg latency · DoCopilot",
+    caption: "mean local query-pipeline time · DoCopilot",
   },
   {
     value: "7m → 90s",
-    caption: "PDF extraction, 20 pages · internship project",
-  },
-  {
-    value: "92%",
-    num: 92,
-    suffix: "%",
-    caption: "pass rate · 50-case eval · ContextCore",
+    caption: "PDF extraction on 20-page drawings · AmberFlux",
   },
 ];
 
 const STACK = ["LangGraph", "Qdrant", "FastAPI", "PostgreSQL", "Azure", "MCP"];
 
 function StatTile({ item }: { item: StatItem }) {
-  const numRef = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    if (!item.num || !numRef.current) return;
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mediaQuery.matches) return;
-
-    let start = 0;
-    const duration = 1200;
-    const startTime = performance.now();
-    const target = item.num;
-    const isFloat = !Number.isInteger(target);
-
-    const step = (now: number) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-      const current = start + (target - start) * ease;
-
-      if (numRef.current) {
-        numRef.current.textContent = `${isFloat ? current.toFixed(target >= 10 ? 1 : 2) : Math.round(current)}${item.suffix || ""}`;
-      }
-
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      }
-    };
-
-    requestAnimationFrame(step);
-  }, [item.num, item.suffix]);
-
   return (
     <div className="border-[3px] border-ink bg-canvas p-4 shadow-[6px_6px_0_0_var(--phosphor)] flex flex-col justify-between">
       <dd className="text-2xl sm:text-3xl font-extrabold tracking-tight text-ink font-display">
-        <span ref={numRef}>{item.value}</span>
+        <span>{item.value}</span>
       </dd>
       <dt className="mt-2 font-mono text-[11px] leading-snug font-medium text-muted-foreground">
         {item.caption}
@@ -159,12 +120,12 @@ export default function Hero() {
                 View work
               </a>
               <a
-                href="/Samarth_Pratap_Singh_Resume.pdf"
+                 href={siteConfig.resumeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="border-[3px] border-ink bg-canvas px-6 py-3 font-mono text-xs sm:text-sm font-bold uppercase tracking-widest shadow-[6px_6px_0_0_var(--amber)] transition-all hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-[3px_3px_0_0_var(--amber)] inline-flex items-center gap-2"
               >
-                <FiDownload className="h-4 w-4" /> Download resume
+                 <FiDownload className="h-4 w-4" /> View résumé
               </a>
               <a
                 href="#ask"

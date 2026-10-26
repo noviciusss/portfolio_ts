@@ -1,6 +1,6 @@
 [
   {
-    "text": "Samarth Pratap Singh is an AI Engineer currently pursuing B.Tech in Computer Science Engineering at VIT Bhopal University (2023–2027) with a CGPA of 8.61. Headline: 'I build LLM systems, then measure them.' He builds RAG pipelines, document extraction, and the evaluation harnesses behind them. He is actively seeking AI/LLM engineering roles for 2027.",
+    "text": "Samarth Pratap Singh is an AI Engineer currently pursuing B.Tech in Computer Science Engineering at VIT Bhopal University (2023–2027). Headline: 'I build LLM systems, then measure them.' He builds RAG pipelines, document extraction, and the evaluation harnesses behind them. He is actively seeking AI/LLM engineering roles and internships for 2027.",
     "source": "bio"
   },
   {
@@ -12,20 +12,24 @@
     "source": "experience-amberflux"
   },
   {
-    "text": "Project: DoCopilot — Multi-Tenant RAG Document Q&A. Stack: Next.js, FastAPI, Qdrant, Hybrid Search, Cross-Encoder Reranking, Docker, Azure Container Apps. Multi-tenant RAG system featuring JWT auth, Qdrant payload-filtered retrieval, SHA-256 upload dedup, Celery + Redis async ingestion, hybrid retrieval (MiniLM dense + BM25, RRF), and cross-encoder rerank top-20 to top-5. Evaluated with 40-question test harness (Llama-3.1-8B judging Qwen3-32B) achieving 89.2% correctness, 90.5% relevance, and 2.86s average latency. Live demo: https://do-copilot.vercel.app/. GitHub: https://github.com/noviciusss/DoCopilot.",
+    "text": "Project: DoCopilot — Multi-Tenant RAG Document Q&A. Stack: Next.js, FastAPI, Qdrant, Hybrid Search, Cross-Encoder Reranking, Docker, Azure Container Apps. Multi-tenant RAG system featuring JWT auth, Qdrant payload-filtered retrieval, SHA-256 upload dedup, Celery + Redis async ingestion, hybrid retrieval (MiniLM dense + BM25, RRF), and cross-encoder rerank top-20 to top-5. A historical repository evaluation used 40 AWS-document questions and reported mean LLM-judge correctness of 0.8925/1, mean relevance of 0.905/1, and 2.86s mean local non-streaming query-pipeline time. The historical model configuration and execution date were not preserved; these are not groundedness, citation-correctness, deployed-latency, or p95 results. Live demo: https://do-copilot.vercel.app/. GitHub: https://github.com/noviciusss/DoCopilot.",
     "source": "project-docopilot"
   },
   {
-    "text": "Project: Argus — Multi-Agent Research Engine. Stack: FastAPI, LangGraph, Docker, LangSmith, SQLite/Postgres. Built an autonomous research supervisor graph with 4 specialists (planner, researcher, critic, writer) routed dynamically via Command(goto). Features 3 depth tiers (~20/45/90s), HITL interrupt isolated in own node, maximum 3 critique loops, 30-min auto-finalize, and LangSmith observability. GitHub: github.com/noviciusss/argus. Live demo: argus-h0uw.onrender.com.",
+    "text": "Project: Argus — Multi-Agent Research Engine. Stack: FastAPI, LangGraph, Docker, LangSmith, SQLite/Postgres. Built an autonomous research supervisor graph with 4 specialists (planner, researcher, critic, writer) routed dynamically via Command(goto). Features three research-depth modes with approximate completion estimates, HITL interrupt isolated in its own node, maximum 3 critique loops, 30-minute review auto-finalization, and LangSmith tracing. Actual duration varies and no research accuracy or citation-quality benchmark is claimed. GitHub: https://github.com/noviciusss/Argus. Live demo: https://argus-h0uw.onrender.com/.",
     "source": "project-argus"
   },
   {
-    "text": "Project: ContextCore — Stateful Memory Agent. Stack: LangGraph, PostgreSQL, Qdrant, MongoDB, FastMCP. LangGraph CLI agent with intent router and custom FastMCP server. Three memory layers: Postgres checkpointing for execution state, Qdrant semantic recall, MongoDB user profile. LLM-judge eval over 50 test cases with 92% pass rate. GitHub: github.com/noviciusss/ContextCore-CLI.",
+    "text": "Project: ContextCore — Stateful Memory Agent. Stack: LangGraph, PostgreSQL, Qdrant, MongoDB, FastMCP. LangGraph CLI agent with intent router and custom FastMCP server. Three memory layers: Postgres checkpointing for execution state, Qdrant semantic recall, MongoDB user profile. The repository includes an assertion-based evaluation harness for intent routing, tool selection, response assertions, and memory scenarios; its current dataset, runner, and committed report are out of sync, so no unsupported percentage result is claimed. GitHub: https://github.com/noviciusss/ContextCore-CLI.",
     "source": "project-contextcore"
   },
   {
     "text": "Project: GFS-AI — Document Intelligence Pipeline (AmberFlux EdgeAI internship). Stack: GPT-5 Vision, ThreadPoolExecutor, asyncio, Docling, LangGraph, Python. Vision extraction pipeline combining regex/Docling checks with GPT-5 fallback. Cut latency from ~7 min to ~90 sec on 20-page architectural drawings (~4.7×). Tested on documents up to 400 pages with >0.85 confidence on real lead sheets.",
     "source": "project-gfsai"
+  },
+  {
+    "text": "Project: AgentGuard — AI Agent Linter. Python static analysis for reliability, cost, and security risks in AI-agent codebases. The repository documents 15 built-in rules, JSON/SARIF reporting, a generic Python analysis core, and dedicated LangGraph integration. It includes deliberately unsafe fixtures and rule documentation such as missing timeout detection. Inspect or run the offline scanner locally; no detection-accuracy, false-positive, speed, or adoption benchmark is claimed. GitHub: https://github.com/noviciusss/AgentGuard. PyPI: https://pypi.org/project/agentguard-linter/.",
+    "source": "project-agentguard"
   },
   {
     "text": "Published Models and Archive: FLAN-T5 Dialogue Summarizer: LoRA fine-tuned FLAN-T5-base on SAMSum (14,700 dialogues), updating 2% of parameters. Achieved 49.01 ROUGE-1, 72.25 BERTScore F1, 42.51 METEOR. Hosted on Hugging Face Spaces. RoBERTa Banking77 Classifier: Fine-tuned RoBERTa-base on Banking77 dataset (77 intents, 13K queries) achieving 93.7% accuracy and 93.6% macro-F1. Project Loom: Next.js full-stack project board.",

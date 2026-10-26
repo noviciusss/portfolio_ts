@@ -171,7 +171,7 @@ export default async function Image() {
                 color: "#EDEBE4",
               }}
             >
-              92%
+               0.905 / 1
             </div>
             <div
               style={{
@@ -181,7 +181,7 @@ export default async function Image() {
                 marginTop: "4px",
               }}
             >
-              Pass Rate · 50 Cases (ContextCore)
+               Relevance · 40-Q Eval (DoCopilot)
             </div>
           </div>
         </div>
