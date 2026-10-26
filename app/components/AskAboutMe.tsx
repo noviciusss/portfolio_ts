@@ -1,9 +1,6 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
 
-gsap.registerPlugin();
+import { useEffect, useRef, useState } from "react";
 
 const SUGGESTED_QUESTIONS = [
   "What did you build at AmberFlux?",
@@ -19,18 +16,27 @@ type Message = {
   isError?: boolean;
 };
 
+const SOURCE_LINKS: Record<string, { label: string; href?: string }> = {
+  bio: { label: "About", href: "#about" },
+  skills: { label: "Skills", href: "#skills" },
+  "experience-amberflux": { label: "Experience", href: "#experience" },
+  "project-docopilot": { label: "DoCopilot", href: "#projects" },
+  "project-argus": { label: "Argus", href: "https://github.com/noviciusss/Argus" },
+  "project-contextcore": { label: "ContextCore", href: "https://github.com/noviciusss/ContextCore-CLI" },
+  "project-gfsai": { label: "GFS-AI", href: "#experience" },
+  "project-agentguard": { label: "AgentGuard", href: "https://github.com/noviciusss/AgentGuard" },
+  archive: { label: "Earlier work", href: "#archive" },
+  contact: { label: "Contact", href: "#contact" },
+};
+
 export default function AskAboutMe() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
-  const [typedResponse, setTypedResponse] = useState("");
   const [spinnerChar, setSpinnerChar] = useState("|");
   const terminalBodyRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const cursorRef = useRef<HTMLSpanElement>(null);
-  const typingTlRef = useRef<gsap.core.Timeline | null>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
-  // Cycling character spinner for loading state
   useEffect(() => {
     if (!loading) return;
     const chars = ["|", "/", "-", "\\"];
@@ -42,86 +48,64 @@ export default function AskAboutMe() {
     return () => clearInterval(interval);
   }, [loading]);
 
-  // Blink cursor
-  useGSAP(() => {
-    if (!cursorRef.current) return;
-    gsap.to(cursorRef.current, {
-      opacity: 0,
-      repeat: -1,
-      yoyo: true,
-      duration: 0.5,
-      ease: "none",
-    });
-  }, []);
-
-  // Auto-scroll terminal body
   useEffect(() => {
     if (terminalBodyRef.current) {
       terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
     }
-  }, [messages, typedResponse]);
-
-  const typeText = (text: string, sources: string[]) => {
-    setTypedResponse("");
-    if (typingTlRef.current) typingTlRef.current.kill();
-
-    const tl = gsap.timeline();
-    typingTlRef.current = tl;
-
-    const counter = { val: 0 };
-    tl.to(counter, {
-      val: text.length,
-      duration: Math.min(text.length * 0.02, 4),
-      ease: "none",
-      onUpdate() {
-        const idx = Math.round(counter.val);
-        setTypedResponse(text.slice(0, idx));
-      },
-      onComplete() {
-        setMessages((prev) => [
-          ...prev,
-          { role: "assistant", text, sources },
-        ]);
-        setTypedResponse("");
-        setLoading(false);
-      },
-    });
-  };
+  }, [messages, loading]);
 
   const executeQuestion = async (queryText: string) => {
     const question = queryText.trim();
-    if (!question || loading) return;
+    if (!question || loading || question.length > 1000) return;
 
     setInput("");
     setMessages((prev) => [...prev, { role: "user", text: question }]);
     setLoading(true);
+
+    abortControllerRef.current?.abort();
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+    const timeoutId = window.setTimeout(() => controller.abort(), 9000);
 
     try {
       const res = await fetch("/api/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question }),
+        signal: controller.signal,
       });
 
       if (!res.ok) {
         if (res.status === 429) {
           throw new Error("Rate limit reached. Please wait a moment and try again.");
         }
-        throw new Error("Couldn't reach the model, please try again.");
+        if (res.status === 400 || res.status === 422) {
+          throw new Error("Please enter a focused question of 1,000 characters or fewer.");
+        }
+        throw new Error("Couldn’t reach the model. Please try again or use the contact form.");
       }
 
       const data = await res.json();
-      typeText(data.answer, data.sources ?? []);
-    } catch (err: any) {
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", text: data.answer, sources: data.sources ?? [] },
+      ]);
+    } catch (err: unknown) {
+      const error = err instanceof Error ? err : new Error("Couldn’t reach the model. Please try again.");
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          text: err.message || "Couldn't reach the model, please try again or contact me directly.",
+          text:
+            error.name === "AbortError"
+              ? "The assistant took too long to respond. Please try again or use the contact form."
+              : error.message,
           sources: [],
           isError: true,
         },
       ]);
+    } finally {
+      window.clearTimeout(timeoutId);
       setLoading(false);
     }
   };
@@ -139,55 +123,51 @@ export default function AskAboutMe() {
 
         <div className="mb-8 max-w-2xl">
           <p className="text-sm text-muted-foreground font-sans leading-relaxed">
-            Grounded Q&A over my resume, internship, and project write-ups.
+            Grounded Q&amp;A over my resume, internship, and project write-ups.
             <br />
-            <span className="font-semibold text-foreground/80">Lightweight version:</span> BM25 keyword retrieval over a static corpus + Groq. DoCopilot's full hybrid pipeline (dense + BM25, RRF, cross-encoder rerank) is in the case file above.
+            <span className="font-semibold text-foreground/80">Lightweight version:</span> BM25 keyword retrieval over a static corpus + Groq. DoCopilot&apos;s full hybrid pipeline (dense + BM25, RRF, cross-encoder rerank) is in the case file above.
           </p>
         </div>
 
-        {/* Suggested Quick Questions */}
         <div className="mb-4 flex flex-wrap items-center gap-2">
           <span className="font-mono text-[10px] uppercase font-bold text-muted-foreground">Try asking:</span>
-          {SUGGESTED_QUESTIONS.map((q, idx) => (
+          {SUGGESTED_QUESTIONS.map((question) => (
             <button
-              key={idx}
+              key={question}
               type="button"
-              onClick={() => executeQuestion(q)}
+              onClick={() => executeQuestion(question)}
               disabled={loading}
-              className="font-mono text-xs border-2 border-border bg-canvas px-2.5 py-1 text-foreground hover:bg-phosphor hover:text-ink transition-colors disabled:opacity-50 cursor-pointer shadow-[2px_2px_0_0_var(--border)]"
+              className="font-mono text-xs border-2 border-border bg-canvas px-2.5 py-1 text-foreground hover:bg-phosphor hover:text-on-accent transition-colors disabled:opacity-50 cursor-pointer shadow-[2px_2px_0_0_var(--border)]"
             >
-              {q}
+              {question}
             </button>
           ))}
         </div>
 
-        {/* Neubrutalist Terminal Block */}
         <div className="border-[3px] border-border bg-card max-w-3xl shadow-[6px_6px_0_0_var(--accent)]">
-          {/* Header bar */}
           <div className="bg-canvas border-b-[2px] border-border px-4 py-2 flex items-center justify-between font-mono text-[11px]">
             <div className="flex items-center gap-2 font-bold text-foreground">
               <span className="size-2.5 rounded-full bg-phosphor border border-ink" />
               <span>TERMINAL // bm25-groq-runtime</span>
             </div>
-            <span className="text-muted-foreground text-[10px]">CORPUS: RESUME_V8.61</span>
+            <span className="text-muted-foreground text-[10px]">CORPUS: PUBLIC_PROJECT_NOTES</span>
           </div>
 
-          {/* Terminal Body */}
           <div
             ref={terminalBodyRef}
             className="font-mono text-xs p-5 min-h-[200px] max-h-[380px] overflow-y-auto space-y-4 text-foreground bg-background/50"
             aria-live="polite"
+            aria-busy={loading}
           >
             {messages.length === 0 && (
               <div className="text-muted-foreground/75 font-mono text-xs">
                 <span className="text-accent font-bold">❯</span> ask --about samarth
                 <div className="mt-1 text-[11px] text-muted-foreground">
-                  Ask any question about my technical experience, architecture decisions, or internship at AmberFlux.
+                  Ask about technical experience, architecture decisions, or the AmberFlux internship.
                 </div>
               </div>
             )}
 
-            {/* Conversation history */}
             {messages.map((msg, idx) => (
               <div key={idx}>
                 {msg.role === "user" ? (
@@ -200,14 +180,28 @@ export default function AskAboutMe() {
                     <p className="leading-relaxed whitespace-pre-wrap font-sans text-sm">{msg.text}</p>
                     {msg.sources && msg.sources.length > 0 && (
                       <div className="flex flex-wrap gap-1.5 pt-1">
-                        {msg.sources.map((src, sIdx) => (
-                          <span
-                            key={sIdx}
-                            className="text-[9px] uppercase tracking-wider text-foreground bg-accent/20 border border-border px-1.5 py-0.5 font-bold font-mono"
-                          >
-                            [{src}]
-                          </span>
-                        ))}
+                        {msg.sources.map((sourceId, sourceIndex) => {
+                          const source = SOURCE_LINKS[sourceId];
+                          const label = `[${source?.label ?? sourceId}]`;
+                          return source?.href ? (
+                            <a
+                              key={sourceIndex}
+                              href={source.href}
+                              target={source.href.startsWith("http") ? "_blank" : undefined}
+                              rel={source.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                              className="text-[9px] uppercase tracking-wider text-foreground bg-accent/20 border border-border px-1.5 py-0.5 font-bold font-mono underline underline-offset-2"
+                            >
+                              {label}
+                            </a>
+                          ) : (
+                            <span
+                              key={sourceIndex}
+                              className="text-[9px] uppercase tracking-wider text-foreground bg-accent/20 border border-border px-1.5 py-0.5 font-bold font-mono"
+                            >
+                              {label}
+                            </span>
+                          );
+                        })}
                       </div>
                     )}
                   </div>
@@ -215,34 +209,22 @@ export default function AskAboutMe() {
               </div>
             ))}
 
-            {/* In-flight typing response */}
-            {typedResponse && (
-              <div className="pl-3 border-l-[3px] border-accent/40">
-                <p className="leading-relaxed whitespace-pre-wrap font-sans text-sm">{typedResponse}</p>
-              </div>
-            )}
-
-            {/* Loading state indicator */}
-            {loading && !typedResponse && (
-              <div className="flex items-center gap-2 text-accent font-mono text-xs">
+            {loading && (
+              <div role="status" className="flex items-center gap-2 text-accent font-mono text-xs">
                 <span>{spinnerChar}</span>
-                <span>Retrieving context & generating grounded answer...</span>
+                <span>Retrieving context &amp; generating grounded answer...</span>
               </div>
             )}
           </div>
 
-          {/* Input Form */}
-          <form
-            onSubmit={handleSubmit}
-            className="flex items-center border-t-[3px] border-border bg-card p-3 gap-2"
-          >
+          <form onSubmit={handleSubmit} className="flex items-center border-t-[3px] border-border bg-card p-3 gap-2">
             <span className="font-mono text-accent font-bold pl-2 select-none">❯</span>
             <input
-              ref={inputRef}
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               disabled={loading}
+              maxLength={1000}
               placeholder="Ask a question about my work or internship..."
               className="flex-1 bg-transparent px-2 py-1 font-sans text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none disabled:opacity-50"
               aria-label="Ask about Samarth"
@@ -254,6 +236,15 @@ export default function AskAboutMe() {
             >
               Ask
             </button>
+            {messages.length > 0 && (
+              <button
+                type="button"
+                onClick={() => setMessages([])}
+                className="font-mono text-[10px] underline underline-offset-2 text-muted-foreground hover:text-foreground"
+              >
+                Clear
+              </button>
+            )}
           </form>
         </div>
       </div>
