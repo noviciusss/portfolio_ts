@@ -27,6 +27,8 @@ type Project = {
   metrics: ProjectMetric[];
   tags: string[];
   github?: string;
+  packageUrl?: string;
+  caseStudy?: string;
   demo?: string;
   demoNote?: string;
   blog?: string;
@@ -37,39 +39,31 @@ const featuredProjects: Project[] = [
   {
     index: "01",
     title: "DoCopilot — Multi-Tenant RAG",
-    outcome: "Multi-tenant RAG with 89.2% correctness and 2.86s average latency on a 40-question eval harness.",
-    evalNote: "Eval: 40 questions · LLM judge Llama-3.1-8B judging Qwen3-32B",
+    outcome: "Multi-tenant RAG evaluated on 40 AWS-document questions with mean LLM-judge scores for correctness and relevance.",
+    evalNote: "Historical repository result · model configuration and execution date were not preserved",
     isFlagship: true,
     problem:
       "Document Q&A across multi-format business files suffered from hallucinated context, absent source attribution, and lack of strict multi-tenant boundary isolation.",
     build:
-      "Engineered a production-ready multi-tenant RAG platform with JWT authentication and Qdrant payload-filtered retrieval. Features SHA-256 upload deduplication, Celery + Redis async ingestion, hybrid search (MiniLM dense vectors + BM25 with Reciprocal Rank Fusion), and cross-encoder reranking from top-20 down to top-5. Implemented SSE token streaming, source-cited grounded answers, PII/regex guardrails, per-IP rate limiting, and CI/CD via GitHub Actions (pytest → Docker → ACR → Azure Container Apps).",
+      "Built a multi-tenant RAG platform with JWT authentication and Qdrant payload-filtered retrieval. Features SHA-256 upload deduplication, Celery + Redis async ingestion, hybrid search (MiniLM dense vectors + BM25 with Reciprocal Rank Fusion), and cross-encoder reranking from top-20 down to top-5. Implemented SSE token streaming, source-cited answers, PII/regex guardrails, per-IP rate limiting, and CI/CD via GitHub Actions (pytest → Docker → ACR → Azure Container Apps).",
     metrics: [
       {
         label: "Correctness",
-        value: "89.2%",
-        countFrom: 60,
-        countTo: 89.2,
-        format: (n) => `${n.toFixed(1)}%`,
+        value: "0.8925 / 1",
       },
       {
         label: "Relevance",
-        value: "90.5%",
-        countFrom: 70,
-        countTo: 90.5,
-        format: (n) => `${n.toFixed(1)}%`,
+        value: "0.905 / 1",
       },
       {
         label: "Avg Latency",
         value: "2.86s",
-        countFrom: 6.0,
-        countTo: 2.86,
-        format: (n) => `${n.toFixed(2)}s`,
       },
     ],
     tags: ["FastAPI", "Next.js", "Qdrant", "Hybrid Search (RRF)", "Cross-Encoder", "Docker", "Azure Container Apps"],
     github: "https://github.com/noviciusss/DoCopilot",
     demo: "https://do-copilot.vercel.app/",
+    caseStudy: "/projects/docopilot",
     blog: "https://medium.com/@samarthsin2006/docopilot-building-a-production-grade-rag-system-with-hybrid-search-reranking-and-safety-c943fc2626be",
   },
   {
@@ -80,11 +74,11 @@ const featuredProjects: Project[] = [
     problem:
       "Compiling deep research reports across heterogeneous web sources (Tavily, ArXiv, Wikipedia) was manual and unverified, requiring repetitive human oversight to filter noise and reject weak summaries.",
     build:
-      "Built a LangGraph supervisor agent orchestrating 4 specialists (planner, researcher, critic, writer) routed dynamically via Command(goto). Features 3 configurable depth tiers (~20s / 45s / 90s), isolated Human-In-The-Loop interrupt nodes, maximum 3 critique feedback loops before 30-minute auto-finalization, SSE streaming, SQLite/Postgres auto-switching checkpoint persistence, and complete execution tracing in LangSmith packaged with Docker.",
+      "Built a LangGraph supervisor agent orchestrating 4 specialists (planner, researcher, critic, writer) routed dynamically via Command(goto). Features three research-depth modes with approximate completion estimates, isolated Human-In-The-Loop interrupt nodes, maximum 3 critique feedback loops before 30-minute auto-finalization, SSE streaming, SQLite/Postgres auto-switching checkpoint persistence, and LangSmith tracing packaged with Docker.",
     metrics: [
       {
-        label: "Depth Tiers",
-        value: "~20/45/90s",
+        label: "Depth Modes",
+        value: "Quick / standard / deep",
       },
       {
         label: "Specialists",
@@ -98,24 +92,22 @@ const featuredProjects: Project[] = [
     tags: ["LangGraph", "FastAPI", "LangSmith", "Docker", "Tavily", "SQLite/Postgres"],
     github: "https://github.com/noviciusss/argus",
     demo: "https://argus-h0uw.onrender.com/",
+    caseStudy: "/projects/argus",
     demoNote: "Hosted on Render — cold start may take ~30s",
   },
   {
     index: "03",
     title: "ContextCore — Stateful Memory Agent",
-    outcome: "LangGraph CLI agent with 3-tier memory persistence achieving 92% pass rate across 50 eval cases.",
-    evalNote: "Eval: 50 cases · 92% pass rate · Hardened tool schemas",
+    outcome: "LangGraph CLI agent separating checkpoint state, semantic recall, and profile data across three stores.",
+    evalNote: "Assertion-based evaluation coverage is being synchronized with the current implementation",
     problem:
       "CLI agents lose state across sessions, and standard single-vector memory stores hallucinate user profile data or overwrite active execution states.",
     build:
-      "Designed an intent-routed LangGraph CLI agent (task / memory-recall / chat) backed by a custom FastMCP server on PostgreSQL. Implements three distinct memory layers: Postgres checkpointing for exact step states, Qdrant for semantic recall, and MongoDB for persistent user profiles. Features astream_events token streaming, async background memory persistence, and an LLM-judge test suite with 92% pass rate across 50 test cases.",
+      "Designed an intent-routed LangGraph CLI agent (task / memory-recall / chat) backed by a custom FastMCP server on PostgreSQL. Implements three distinct memory layers: Postgres checkpointing for exact step states, Qdrant for semantic recall, and MongoDB for persistent user profiles. Features astream_events token streaming, async background memory persistence, and an assertion-based evaluation harness for intent routing, tool selection, response assertions, and memory scenarios.",
     metrics: [
       {
-        label: "Eval Pass Rate",
-        value: "92%",
-        countFrom: 70,
-        countTo: 92,
-        format: (n) => `${Math.round(n)}%`,
+        label: "Current Cases",
+        value: "40 defined",
       },
       {
         label: "Memory Stores",
@@ -128,6 +120,7 @@ const featuredProjects: Project[] = [
     ],
     tags: ["FastMCP", "LangGraph", "PostgreSQL", "Qdrant", "MongoDB", "Python"],
     github: "https://github.com/noviciusss/ContextCore-CLI",
+    caseStudy: "/projects/contextcore",
     diagramType: "contextcore",
   },
   {
@@ -156,6 +149,26 @@ const featuredProjects: Project[] = [
     ],
     tags: ["GPT-5 Vision", "ThreadPoolExecutor", "asyncio", "Docling", "LangGraph", "Python"],
     diagramType: "gfsai",
+    caseStudy: "/projects/gfs-ai",
+  },
+  {
+    index: "05",
+    title: "AgentGuard — AI Agent Linter",
+    outcome: "Python static analysis for reliability, cost, and security risks in AI-agent codebases.",
+    evalNote: "15 documented rules · JSON/SARIF output · LangGraph integration",
+    problem:
+      "Agent workflows can hide unbounded retries, missing timeouts, unreachable graph nodes, and other operational risks inside ordinary Python code.",
+    build:
+      "Built a framework-aware Python linter with a generic analysis core, dedicated LangGraph integration, documented rules, JSON/SARIF reporting, graph output, and dry-run fix previews. The repository includes deliberately unsafe fixtures and rule documentation for local inspection.",
+    metrics: [
+      { label: "Rules", value: "15 documented" },
+      { label: "Reports", value: "JSON / SARIF" },
+      { label: "Framework", value: "LangGraph" },
+    ],
+    tags: ["Python", "Static Analysis", "LangGraph", "JSON", "SARIF"],
+    github: "https://github.com/noviciusss/AgentGuard",
+    packageUrl: "https://pypi.org/project/agentguard-linter/",
+    caseStudy: "/projects/agentguard",
   },
 ];
 
@@ -277,7 +290,7 @@ function ProjectCardInner({ project }: { project: Project }) {
             CASE_FILE // {project.index}
           </span>
           {project.isInternal && (
-            <span className="font-mono text-[9px] text-foreground bg-amber border-2 border-border px-1.5 py-0.5 uppercase tracking-wider font-bold">
+            <span className="font-mono text-[9px] text-on-accent bg-amber border-2 border-border px-1.5 py-0.5 uppercase tracking-wider font-bold">
               INTERNAL
             </span>
           )}
@@ -380,6 +393,18 @@ function ProjectCardInner({ project }: { project: Project }) {
             )
           )}
 
+          {project.packageUrl && (
+            <a
+              href={project.packageUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nb-btn text-[10px] py-1 px-3 bg-background border-2 shadow-[2px_2px_0_0_var(--border)] hover:shadow-[1px_1px_0_0_var(--border)] hover:translate-x-[1px] hover:translate-y-[1px]"
+              aria-label={`View ${project.title} package`}
+            >
+              <FiExternalLink className="h-3.5 w-3.5" /> Package
+            </a>
+          )}
+
           {project.demo && (
             <div className="flex flex-col items-start">
               <a
@@ -408,6 +433,16 @@ function ProjectCardInner({ project }: { project: Project }) {
               aria-label={`Read ${project.title} architectural writeup`}
             >
               <FiBookOpen className="h-3.5 w-3.5" /> Analysis
+            </a>
+          )}
+
+          {project.caseStudy && (
+            <a
+              href={project.caseStudy}
+              className="nb-btn text-[10px] py-1 px-3 bg-background border-2 shadow-[2px_2px_0_0_var(--border)] hover:shadow-[1px_1px_0_0_var(--border)] hover:translate-x-[1px] hover:translate-y-[1px]"
+              aria-label={`Read the ${project.title} case study`}
+            >
+              <FiBookOpen className="h-3.5 w-3.5" /> Case study
             </a>
           )}
         </div>
@@ -440,6 +475,7 @@ export default function Projects() {
   const flagship = featuredProjects[0];
   const midProjects = featuredProjects.slice(1, 3);
   const internalProject = featuredProjects[3];
+  const agentGuard = featuredProjects[4];
 
   return (
     <section
@@ -503,6 +539,13 @@ export default function Projects() {
               <div className="p-6 sm:p-8 flex flex-col flex-1">
                 <ProjectCardInner project={internalProject} />
               </div>
+            </div>
+          </div>
+
+          {/* AgentGuard - secondary public project */}
+          <div className="project-card border-[3px] border-ink bg-canvas shadow-[6px_6px_0_0_var(--phosphor)] flex flex-col">
+            <div className="p-6 sm:p-8 flex flex-col flex-1">
+              <ProjectCardInner project={agentGuard} />
             </div>
           </div>
         </div>
