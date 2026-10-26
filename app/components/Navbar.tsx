@@ -1,11 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { FiMenu, FiMoon, FiSun, FiDownload } from "react-icons/fi";
 import { useTheme } from "next-themes";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import LogoIcon from "./LogoIcon";
+import { siteConfig } from "@/lib/site-config";
 
 const navItems = [
   { label: "Projects", href: "#projects" },
@@ -100,7 +101,7 @@ export default function Navbar() {
 
             {/* Resume Button */}
             <a
-              href="/Samarth_Singh_FDE.pdf"
+              href={siteConfig.resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="nb-btn nb-btn-primary text-xs py-1.5 px-3.5 font-mono shadow-[3px_3px_0_0_var(--border)]"
@@ -135,7 +136,7 @@ export default function Navbar() {
           {/* Mobile Actions */}
           <div className="flex items-center gap-2 md:hidden">
             <a
-              href="/Samarth_Singh_FDE.pdf"
+              href={siteConfig.resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="nb-btn text-[10px] py-1 px-2.5 bg-accent text-accent-foreground border-2 shadow-[2px_2px_0_0_var(--border)] font-mono"

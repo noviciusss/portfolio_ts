@@ -1,6 +1,7 @@
 "use client";
 import { FaGithub, FaLinkedin, FaArrowUp } from "react-icons/fa";
 import LogoIcon from "./LogoIcon";
+import { siteConfig } from "@/lib/site-config";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -51,7 +52,7 @@ export default function Footer() {
               </a>
             ))}
             <a
-              href="/Samarth_Singh_FDE.pdf"
+              href={siteConfig.resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="nb-btn text-[11px] py-1.5 px-3 bg-canvas border-2 shadow-[2px_2px_0_0_var(--border)] font-mono font-bold"

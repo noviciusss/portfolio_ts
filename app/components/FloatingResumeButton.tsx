@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { FiDownload } from "react-icons/fi";
+import { siteConfig } from "@/lib/site-config";
 
 export default function FloatingResumeButton() {
   const [isVisible, setIsVisible] = useState(false);
@@ -20,15 +21,6 @@ export default function FloatingResumeButton() {
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
 
-  const handleDownload = () => {
-    const link = document.createElement('a');
-    link.href = '/Samarth_Singh_FDE.pdf';
-    link.download = 'Samarth_Singh_FDE.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   return (
     <AnimatePresence>
       {isVisible && (
@@ -41,16 +33,18 @@ export default function FloatingResumeButton() {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <button
-            onClick={handleDownload}
-            aria-label="Download resume PDF"
+            <a
+              href={siteConfig.resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            aria-label="View résumé PDF"
             className="nb-btn nb-btn-primary flex items-center gap-2 px-5 py-3 shadow-[4px_4px_0_0_var(--border)] border-[3px] border-border hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_0_var(--border)]"
           >
             <FiDownload className="h-4 w-4 text-foreground" />
             <span className="font-sans text-xs uppercase tracking-wider font-extrabold text-foreground">
               RESUME
             </span>
-          </button>
+            </a>
 
           {/* Simple Clean Tooltip */}
           {isHovered && (
